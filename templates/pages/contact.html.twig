@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <!-- contact us start-->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-us-content p-4">
+                        <h1 class="pt-3">Salut, comment puis-je t'aider?</h1>
+                        <p class="pt-3 pb-5"> </div>
+                </div>
+                <div class="col-md-6">
+                    {{form(messageForm)}}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- contact us end -->
+
+{% endblock content %}
