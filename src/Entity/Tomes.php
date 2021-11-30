@@ -124,4 +124,15 @@ class Tomes
 
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+
+    public function prePersis() :void{
+        $this->date = new \DateTime();
+    }
+
+
 }
+

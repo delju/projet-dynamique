@@ -21,7 +21,6 @@ class TomeType extends AbstractType
             ->add('number')
             ->add('title')
             ->add('summary')
-            ->add('date')
             ->add('rel_date')
             ->add('image', FileType::class, [
                 'required' => false,
