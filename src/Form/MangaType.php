@@ -28,6 +28,7 @@ class MangaType extends AbstractType
             ->add('classification', EntityType::class, ['class'=> Classification::class])
             ->add('summary', TextareaType::class)
             ->add('anime')
+            ->add('statut', EntityType::class, ['class'=> Statut::class])
             ->add('submit', SubmitType::class)
         ;
     }

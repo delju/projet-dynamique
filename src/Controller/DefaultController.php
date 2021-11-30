@@ -93,37 +93,33 @@ class DefaultController extends AbstractController
         return $this->render('pages/single.html.twig');
     }
 
+
     /**
      * @Route("/admin-books", name="admin-books")
      */
-    public function createTome(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
+
         $tome = new Tomes();
-        $form = $this->createForm(TomeType::class, $tome);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        $formTome = $this->createForm(TomeType::class, $tome);
+        $formTome->handleRequest($request);
+        if($formTome->isSubmitted() && $formTome->isValid()){
             $em->persist($tome);
         }
 
-        return $this->render('pages/admin-books.html.twig', ['tomeForm' => $form->createView()]);
-    }
-
-   public function createManga(Request $request, EntityManagerInterface $em): Response
-    {
         $manga = new Manga();
-        $form = $this->createForm(mangaType::class, $manga);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        $formManga = $this->createForm(mangaType::class, $manga);
+        $formManga->handleRequest($request);
+        if($formManga->isSubmitted() && $formManga->isValid()){
             $em->persist($manga);
         }
 
-        return $this->render('pages/admin-books.html.twig', ['mangaForm' => $form->createView()]);
+        return $this->render('pages/admin-books.html.twig',   ['tomeForm' => $formTome->createView(),
+                                                                    'mangaForm' => $formManga->createView()]);
     }
 
-    public function adminBooks(): Response
-    {
-        return $this->render('pages/admin-books.html.twig');
-    }
+
+
 
     /**
      * @Route("/admin-reviews", name="admin-reviews")

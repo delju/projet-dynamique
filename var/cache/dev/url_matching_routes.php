@@ -21,7 +21,7 @@ return [
         '/login' => [[['_route' => 'login', '_controller' => 'App\\Controller\\DefaultController::login'], null, null, null, false, false, null]],
         '/register' => [[['_route' => 'register', '_controller' => 'App\\Controller\\DefaultController::register'], null, null, null, false, false, null]],
         '/single' => [[['_route' => 'single', '_controller' => 'App\\Controller\\DefaultController::single'], null, null, null, false, false, null]],
-        '/admin-books' => [[['_route' => 'admin-books', '_controller' => 'App\\Controller\\DefaultController::createTome'], null, null, null, false, false, null]],
+        '/admin-books' => [[['_route' => 'admin-books', '_controller' => 'App\\Controller\\DefaultController::create'], null, null, null, false, false, null]],
         '/admin-reviews' => [[['_route' => 'admin-reviews', '_controller' => 'App\\Controller\\DefaultController::adminReviews'], null, null, null, false, false, null]],
         '/admin-messages' => [[['_route' => 'admin-messages', '_controller' => 'App\\Controller\\DefaultController::adminMessages'], null, null, null, false, false, null]],
         '/search' => [[['_route' => 'search', '_controller' => 'App\\Controller\\DefaultController::viewGenre'], null, null, null, false, false, null]],

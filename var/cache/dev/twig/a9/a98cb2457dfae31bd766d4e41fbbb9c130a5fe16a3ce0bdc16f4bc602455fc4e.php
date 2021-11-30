@@ -163,7 +163,11 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                         </button>
                                     </div>
                                     <div class=\"modal-body\">
-
+                                        <h2 class=\"text-center\">Ajoute un Manga</h2>
+                                    ";
+        // line 94
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["mangaForm"]) || array_key_exists("mangaForm", $context) ? $context["mangaForm"] : (function () { throw new RuntimeError('Variable "mangaForm" does not exist.', 94, $this->source); })()), 'form');
+        echo "
                                     </div>
 
                                 </div>
@@ -182,9 +186,10 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                         </button>
                                     </div>
                                     <div class=\"modal-body\">
+                                        <h2 class=\"text-center\">Ajoute un tome</h2>
                                     ";
-        // line 112
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["tomeForm"]) || array_key_exists("tomeForm", $context) ? $context["tomeForm"] : (function () { throw new RuntimeError('Variable "tomeForm" does not exist.', 112, $this->source); })()), 'form');
+        // line 114
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["tomeForm"]) || array_key_exists("tomeForm", $context) ? $context["tomeForm"] : (function () { throw new RuntimeError('Variable "tomeForm" does not exist.', 114, $this->source); })()), 'form');
         echo "
                                     </div>
 
@@ -447,7 +452,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
     public function getDebugInfo()
     {
-        return array (  187 => 112,  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  192 => 114,  169 => 94,  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -544,7 +549,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                         </button>
                                     </div>
                                     <div class=\"modal-body\">
-
+                                        <h2 class=\"text-center\">Ajoute un Manga</h2>
+                                    {{ form(mangaForm) }}
                                     </div>
 
                                 </div>
@@ -563,6 +569,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                         </button>
                                     </div>
                                     <div class=\"modal-body\">
+                                        <h2 class=\"text-center\">Ajoute un tome</h2>
                                     {{ form(tomeForm) }}
                                     </div>
 

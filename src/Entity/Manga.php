@@ -72,7 +72,11 @@ class Manga
      */
     private $tomes;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity=Statut::class, inversedBy="mangas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $statut;
 
     public function __construct()
     {
@@ -246,6 +250,16 @@ class Manga
         return $this->frenchTitle;
     }
 
+    public function getStatut(): ?Statut
+    {
+        return $this->statut;
+    }
 
+    public function setStatut(?Statut $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
 
 }

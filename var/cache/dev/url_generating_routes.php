@@ -22,7 +22,7 @@ return [
     'login' => [[], ['_controller' => 'App\\Controller\\DefaultController::login'], [], [['text', '/login']], [], []],
     'register' => [[], ['_controller' => 'App\\Controller\\DefaultController::register'], [], [['text', '/register']], [], []],
     'single' => [[], ['_controller' => 'App\\Controller\\DefaultController::single'], [], [['text', '/single']], [], []],
-    'admin-books' => [[], ['_controller' => 'App\\Controller\\DefaultController::createTome'], [], [['text', '/admin-books']], [], []],
+    'admin-books' => [[], ['_controller' => 'App\\Controller\\DefaultController::create'], [], [['text', '/admin-books']], [], []],
     'admin-reviews' => [[], ['_controller' => 'App\\Controller\\DefaultController::adminReviews'], [], [['text', '/admin-reviews']], [], []],
     'admin-messages' => [[], ['_controller' => 'App\\Controller\\DefaultController::adminMessages'], [], [['text', '/admin-messages']], [], []],
     'search' => [[], ['_controller' => 'App\\Controller\\DefaultController::viewGenre'], [], [['text', '/search']], [], []],
