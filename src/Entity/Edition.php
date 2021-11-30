@@ -73,4 +73,8 @@ class Edition
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->name;
+    }
 }

@@ -339,6 +339,9 @@
         <argument type="service" id=".service_locator.W9y3dzm.App\Controller\DefaultController"/>
       </call>
     </service>
+    <service id="App\Form\MangaType" class="App\Form\MangaType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
     <service id="App\Form\MessageType" class="App\Form\MessageType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
@@ -970,6 +973,7 @@
         <argument>Symfony\Bridge\Doctrine\Form\Type</argument>
       </argument>
       <argument type="collection">
+        <argument>App\Form\MangaType</argument>
         <argument>App\Form\MessageType</argument>
         <argument>App\Form\TomeType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
@@ -1377,7 +1381,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.BKVgHm4"/>
+      <argument type="service" id=".service_locator.1sxY7dJ"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -5564,6 +5568,8 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\DefaultController" class="App\Controller\DefaultController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\DefaultController" class="App\Controller\DefaultController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\DefaultController" class="App\Controller\DefaultController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\MangaType" class="App\Form\MangaType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\MangaType" class="App\Form\MangaType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\MessageType" class="App\Form\MessageType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\MessageType" class="App\Form\MessageType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\TomeType" class="App\Form\TomeType" autowire="true" abstract="true"/>
@@ -5919,9 +5925,10 @@
         <argument key="genreRepository" type="service_closure" id="App\Repository\GenreRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.bdkm9Ui" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.m5SFjSE" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Controller\DefaultController::createManga" type="service_closure" id=".service_locator.5miB8_X"/>
         <argument key="App\Controller\DefaultController::createMessage" type="service_closure" id=".service_locator.5miB8_X"/>
         <argument key="App\Controller\DefaultController::createTome" type="service_closure" id=".service_locator.5miB8_X"/>
         <argument key="App\Controller\DefaultController::viewGenre" type="service_closure" id=".service_locator.NN15POn"/>
@@ -5931,6 +5938,7 @@
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.KfbR3DY"/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.KfbR3DY"/>
         <argument key="kernel::terminate" type="service_closure" id=".service_locator.KfwZsne"/>
+        <argument key="App\Controller\DefaultController:createManga" type="service_closure" id=".service_locator.5miB8_X"/>
         <argument key="App\Controller\DefaultController:createMessage" type="service_closure" id=".service_locator.5miB8_X"/>
         <argument key="App\Controller\DefaultController:createTome" type="service_closure" id=".service_locator.5miB8_X"/>
         <argument key="App\Controller\DefaultController:viewGenre" type="service_closure" id=".service_locator.NN15POn"/>
@@ -5998,9 +6006,10 @@
       <argument type="service" id="debug.argument_resolver.not_tagged_controller.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.BKVgHm4" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.1sxY7dJ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Form\MangaType" type="service_closure" id="App\Form\MangaType"/>
         <argument key="App\Form\MessageType" type="service_closure" id="App\Form\MessageType"/>
         <argument key="App\Form\TomeType" type="service_closure" id="App\Form\TomeType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service_closure" id="form.type.entity"/>
@@ -6451,12 +6460,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.bdkm9Ui"/>
+      <argument type="service" id=".service_locator.m5SFjSE"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.bdkm9Ui"/>
+      <argument type="service" id=".service_locator.m5SFjSE"/>
     </service>
     <service id=".debug.http_client.inner" class="Symfony\Contracts\HttpClient\HttpClientInterface">
       <argument type="collection"/>
@@ -7309,7 +7318,7 @@
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.0GV1BZZ" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.bdkm9Ui"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.m5SFjSE"/>
     <service id="session" alias=".session.do-not-use" public="true">
       <deprecated package="symfony/framework-bundle" version="5.3">The "%alias_id%" service and "SessionInterface" alias are deprecated, use "$requestStack-&gt;getSession()" instead.</deprecated>
     </service>

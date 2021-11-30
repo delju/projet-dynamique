@@ -97,7 +97,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                 </li>
                             </ul>
                         </div>
-
+                    </div>
+                </div>
                         <!-- delete-account modal -->
                         <!-- delete account popup modal start-->
                         <!-- Modal Delete -->
@@ -151,6 +152,25 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                             </div>
                         </div>
 
+                        <!-- Modal Manga Form-->
+                        <div class=\"modal fade\" id=\"addmanga\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
+                             aria-hidden=\"true\">
+                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
+                                <div class=\"modal-content\">
+                                    <div class=\"modal-header border-bottom-0\">
+                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
+                                            <span aria-hidden=\"true\">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class=\"modal-body\">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
                         <!-- Modal Tome Form-->
                         <div class=\"modal fade\" id=\"addtome\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
                              aria-hidden=\"true\">
@@ -163,8 +183,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                     </div>
                                     <div class=\"modal-body\">
                                     ";
-        // line 92
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["tomeForm"]) || array_key_exists("tomeForm", $context) ? $context["tomeForm"] : (function () { throw new RuntimeError('Variable "tomeForm" does not exist.', 92, $this->source); })()), 'form');
+        // line 112
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["tomeForm"]) || array_key_exists("tomeForm", $context) ? $context["tomeForm"] : (function () { throw new RuntimeError('Variable "tomeForm" does not exist.', 112, $this->source); })()), 'form');
         echo "
                                     </div>
 
@@ -174,8 +194,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                         </div>
 
 
-                    </div>
-                </div>
+
+
                 <div class=\"col-md-10 offset-md-1 col-lg-9 offset-lg-0\">
                     <!-- Recently Favorited -->
                     <div class=\"widget dashboard-container my-adslist\">
@@ -427,7 +447,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
     public function getDebugInfo()
     {
-        return array (  167 => 92,  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  187 => 112,  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -458,7 +478,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                 </li>
                             </ul>
                         </div>
-
+                    </div>
+                </div>
                         <!-- delete-account modal -->
                         <!-- delete account popup modal start-->
                         <!-- Modal Delete -->
@@ -512,6 +533,25 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                             </div>
                         </div>
 
+                        <!-- Modal Manga Form-->
+                        <div class=\"modal fade\" id=\"addmanga\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
+                             aria-hidden=\"true\">
+                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
+                                <div class=\"modal-content\">
+                                    <div class=\"modal-header border-bottom-0\">
+                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
+                                            <span aria-hidden=\"true\">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class=\"modal-body\">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
                         <!-- Modal Tome Form-->
                         <div class=\"modal fade\" id=\"addtome\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
                              aria-hidden=\"true\">
@@ -532,8 +572,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                         </div>
 
 
-                    </div>
-                </div>
+
+
                 <div class=\"col-md-10 offset-md-1 col-lg-9 offset-lg-0\">
                     <!-- Recently Favorited -->
                     <div class=\"widget dashboard-container my-adslist\">

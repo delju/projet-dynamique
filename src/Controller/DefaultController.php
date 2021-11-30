@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Manga;
 use App\Entity\Message;
 use App\Entity\Tomes;
+use App\Form\MangaType;
 use App\Form\MessageType;
 use App\Form\TomeType;
 use App\Repository\GenreRepository;
@@ -105,6 +107,19 @@ class DefaultController extends AbstractController
 
         return $this->render('pages/admin-books.html.twig', ['tomeForm' => $form->createView()]);
     }
+
+   public function createManga(Request $request, EntityManagerInterface $em): Response
+    {
+        $manga = new Manga();
+        $form = $this->createForm(mangaType::class, $manga);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($manga);
+        }
+
+        return $this->render('pages/admin-books.html.twig', ['mangaForm' => $form->createView()]);
+    }
+
     public function adminBooks(): Response
     {
         return $this->render('pages/admin-books.html.twig');
