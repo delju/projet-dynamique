@@ -138,3 +138,5 @@ e7598f,127.0.0.1,GET,http://localhost:4100/admin-books,1638285555,,200
 04b332,127.0.0.1,GET,http://localhost:4100/search,1638285563,,200
 aac68b,127.0.0.1,GET,http://localhost:4100/single,1638285596,,200
 1b39ff,127.0.0.1,GET,http://localhost:4100/single,1638285632,,200
+1c4fb9,127.0.0.1,GET,http://localhost:4100/,1638285889,,200
+a84c68,127.0.0.1,GET,http://localhost:4100/admin-books,1638285891,,200

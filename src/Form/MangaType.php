@@ -10,10 +10,12 @@ use App\Entity\Manga;
 use App\Entity\Statut;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class MangaType extends AbstractType
 {
@@ -29,6 +31,15 @@ class MangaType extends AbstractType
             ->add('summary', TextareaType::class)
             ->add('anime')
             ->add('statut', EntityType::class, ['class'=> Statut::class])
+            ->add('image', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k'
+                    ])
+                ],
+            ])
             ->add('submit', SubmitType::class)
         ;
     }

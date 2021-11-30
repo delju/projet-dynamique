@@ -242,7 +242,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                     <div class=\"\">
                                         <ul class=\"list-inline justify-content-center\">
                                             <li class=\"list-inline-item\">
-                                                <a data-toggle=\"tooltip\" data-placement=\"top\" title=\"View\" class=\"view\" href=\"search.html\">
+                                                <a data-toggle=\"tooltip\" data-placement=\"top\" title=\"View\" class=\"view\" href=\"\">
                                                     <i class=\"fa fa-eye\"></i>
                                                 </a>
                                             </li>
@@ -427,7 +427,6 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                 </div>
             </div>
             <!-- Row End -->
-        </div>
         <!-- Container End -->
     </section>
 
@@ -622,7 +621,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                     <div class=\"\">
                                         <ul class=\"list-inline justify-content-center\">
                                             <li class=\"list-inline-item\">
-                                                <a data-toggle=\"tooltip\" data-placement=\"top\" title=\"View\" class=\"view\" href=\"search.html\">
+                                                <a data-toggle=\"tooltip\" data-placement=\"top\" title=\"View\" class=\"view\" href=\"\">
                                                     <i class=\"fa fa-eye\"></i>
                                                 </a>
                                             </li>
@@ -807,7 +806,6 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                 </div>
             </div>
             <!-- Row End -->
-        </div>
         <!-- Container End -->
     </section>
 
