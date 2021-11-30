@@ -100,7 +100,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
                         <!-- delete-account modal -->
                         <!-- delete account popup modal start-->
-                        <!-- Modal -->
+                        <!-- Modal Delete -->
                         <div class=\"modal fade\" id=\"deleteitem\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
                              aria-hidden=\"true\">
                             <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
@@ -122,8 +122,6 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                             </div>
                         </div>
 
-                        <!-- delete account popup modal end-->
-                        <!-- delete-account modal -->
 
                         <!-- add item modal -->
                         <div class=\"modal fade\" id=\"additem\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
@@ -137,23 +135,43 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                     </div>
                                     <div class=\"modal-body\">
                                         <h2 class=\"text-center\">Que veux-tu ajouter?</h2>
-                                        <form action=\"#\">
+
                                             <fieldset class=\"p-4 modal-footer border-top-0 mb-3 mx-5 justify-content-center\">
-                                                <button type=\"button\" class=\"btn btn-primary\">Manga</button>
-                                                <button type=\"button\" class=\"btn btn-primary\">Tome</button>
+
+                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addmanga\" href=\"\" data-target=\"#addmanga\">Manga</button>
+
+                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addtome\" href=\"\" data-target=\"#addtome\">Tome</button>
 
                                             </fieldset>
-                                        </form>
+
 
                                     </div>
-                                    <div class=\"modal-footer border-top-0 mb-3 mx-5 \">
-                                        <button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Annuler</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Tome Form-->
+                        <div class=\"modal fade\" id=\"addtome\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
+                             aria-hidden=\"true\">
+                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
+                                <div class=\"modal-content\">
+                                    <div class=\"modal-header border-bottom-0\">
+                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
+                                            <span aria-hidden=\"true\">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class=\"modal-body\">
+                                    ";
+        // line 92
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["tomeForm"]) || array_key_exists("tomeForm", $context) ? $context["tomeForm"] : (function () { throw new RuntimeError('Variable "tomeForm" does not exist.', 92, $this->source); })()), 'form');
+        echo "
+                                    </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
 
                     </div>
@@ -409,7 +427,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
     public function getDebugInfo()
     {
-        return array (  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  167 => 92,  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -443,7 +461,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
                         <!-- delete-account modal -->
                         <!-- delete account popup modal start-->
-                        <!-- Modal -->
+                        <!-- Modal Delete -->
                         <div class=\"modal fade\" id=\"deleteitem\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
                              aria-hidden=\"true\">
                             <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
@@ -465,8 +483,6 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                             </div>
                         </div>
 
-                        <!-- delete account popup modal end-->
-                        <!-- delete-account modal -->
 
                         <!-- add item modal -->
                         <div class=\"modal fade\" id=\"additem\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
@@ -480,23 +496,40 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                                     </div>
                                     <div class=\"modal-body\">
                                         <h2 class=\"text-center\">Que veux-tu ajouter?</h2>
-                                        <form action=\"#\">
+
                                             <fieldset class=\"p-4 modal-footer border-top-0 mb-3 mx-5 justify-content-center\">
-                                                <button type=\"button\" class=\"btn btn-primary\">Manga</button>
-                                                <button type=\"button\" class=\"btn btn-primary\">Tome</button>
+
+                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addmanga\" href=\"\" data-target=\"#addmanga\">Manga</button>
+
+                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addtome\" href=\"\" data-target=\"#addtome\">Tome</button>
 
                                             </fieldset>
-                                        </form>
+
 
                                     </div>
-                                    <div class=\"modal-footer border-top-0 mb-3 mx-5 \">
-                                        <button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Annuler</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Tome Form-->
+                        <div class=\"modal fade\" id=\"addtome\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
+                             aria-hidden=\"true\">
+                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
+                                <div class=\"modal-content\">
+                                    <div class=\"modal-header border-bottom-0\">
+                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
+                                            <span aria-hidden=\"true\">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class=\"modal-body\">
+                                    {{ form(tomeForm) }}
+                                    </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
 
                     </div>
@@ -731,6 +764,6 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
         <!-- Container End -->
     </section>
 
-{% endblock content %}", "pages/admin-books.html.twig", "/home/delvauxjulene/projet_dynamqiue-0305feaf41799d1708c7702a120c054be1a34d54/templates/pages/admin-books.html.twig");
+{% endblock content %}", "pages/admin-books.html.twig", "/home/delvauxjulene/projet_dynamqiue/templates/pages/admin-books.html.twig");
     }
 }

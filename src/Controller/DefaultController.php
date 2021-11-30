@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Entity\Tomes;
 use App\Form\MessageType;
+use App\Form\TomeType;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,10 +55,14 @@ class DefaultController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function createMessage(EntityManagerInterface $entityManager): Response
+    public function createMessage(Request $request, EntityManagerInterface $em): Response
     {
     $message = new Message();
     $form = $this->createForm(MessageType::class, $message);
+    $form->handleRequest($request);
+    if($form->isSubmitted() && $form->isValid()){
+        $em->persist($message);
+    }
 
     return $this->render('pages/contact.html.twig', ['messageForm' => $form->createView()]);
     }
@@ -88,6 +94,17 @@ class DefaultController extends AbstractController
     /**
      * @Route("/admin-books", name="admin-books")
      */
+    public function createTome(Request $request, EntityManagerInterface $em): Response
+    {
+        $tome = new Tomes();
+        $form = $this->createForm(TomeType::class, $tome);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($tome);
+        }
+
+        return $this->render('pages/admin-books.html.twig', ['tomeForm' => $form->createView()]);
+    }
     public function adminBooks(): Response
     {
         return $this->render('pages/admin-books.html.twig');
