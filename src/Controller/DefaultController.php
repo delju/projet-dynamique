@@ -53,12 +53,12 @@ class DefaultController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function createMessage(Request $request, EntityManagerInterface $entityManager): Response
+    public function createMessage(EntityManagerInterface $entityManager): Response
     {
     $message = new Message();
     $form = $this->createForm(MessageType::class, $message);
-        return $this->render('contact.html.twig', ['messageForm' => $form->createView()]);
 
+    return $this->render('pages/contact.html.twig', ['messageForm' => $form->createView()]);
     }
 
     /**

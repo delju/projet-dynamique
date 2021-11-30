@@ -34,6 +34,11 @@ class Message
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,5 +79,25 @@ class Message
         $this->category = $category;
 
         return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+
+    public function prePersis() :void{
+        $this->date = new \DateTime();
     }
 }

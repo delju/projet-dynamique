@@ -133,6 +133,7 @@
     <parameter key="serializer.mapping.cache.file">/home/delvauxjulene/projet_dynamqiue/var/cache/dev/serialization.php</parameter>
     <parameter key="twig.form.resources" type="collection">
       <parameter>form_div_layout.html.twig</parameter>
+      <parameter>bootstrap_4_horizontal_layout.html.twig</parameter>
     </parameter>
     <parameter key="twig.default_path">/home/delvauxjulene/projet_dynamqiue/templates</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
