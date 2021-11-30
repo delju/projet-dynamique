@@ -8,7 +8,9 @@ use App\Entity\Tomes;
 use App\Form\MangaType;
 use App\Form\MessageType;
 use App\Form\TomeType;
+use App\Repository\ClassificationRepository;
 use App\Repository\GenreRepository;
+use App\Repository\StatutRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,10 +142,15 @@ class DefaultController extends AbstractController
     /**
      *@Route("/search", name="search")
      */
-    public function viewGenre(GenreRepository $genreRepository): Response
+    public function viewGenre(GenreRepository $genreRepository, StatutRepository $statutRepository,ClassificationRepository $classificationRepository): Response
     {
         $genres = $genreRepository->findBy([], ['name'=>'asc']);
-        return $this->render('pages/search.html.twig', ['genres' => $genres]);
+        $statuts= $statutRepository->findBy([], ['id'=>'asc']);
+        $classifiction =
+
+        return $this->render('pages/search.html.twig', ['genres' => $genres,
+                                                            'statut'=>$statuts]);
+
     }
 
 
