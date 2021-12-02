@@ -42,37 +42,50 @@
                         <div class="widget category-list">
                             <h4 class="widget-header">Classification</h4>
                             <ul class="category-list">
-                                {% for classification in classifications %}
-                                    <li>
-                                        <input type="checkbox" name="{{ classification.name }}" id="{{ classification.name }}">
-                                        <label for="action">{{ classification.name | capitalize }}</label>
-                                    </li>
-                                {% endfor %}
+                                <li>
+                                    <input type="checkbox" name="kodomo" id="kodomo">
+                                    <label for="kodomo">Kodomo</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="shonen" id="shonen">
+                                    <label for="shonen">Shonen</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="shojo" id="shojo">
+                                    <label for="shojo">Shojo</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="seinen" id="seinen">
+                                    <label for="seinen">Seinen</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="josei" id="josei">
+                                    <label for="josei">Josei</label>
+                                </li>
                             </ul>
                         </div>
 
 
                         <!-- Filtre par genre-->
                         <div class="widget category-list">
-                            <h4 class="widget-header">Genres</h4>
+                            <h4 class="widget-header">Genre</h4>
                             <ul class="category-list">
-                                {% for genre in genres %}
-                                <li>
-                                    <input type="checkbox" name="{{ genre.name }}" id="{{ genre.name }}">
-                                    <label for="action">{{ genre.name | capitalize }}</label>
-                                </li>
-                                {% endfor %}
+
                             </ul>
                         </div>
 
-                        <!-- Filtre par éditeur -->
+                        <!-- Filtre par édition -->
                         <div class="widget ">
-                            <h4 class="widget-header">Editeurs</h4>
+                            <h4 class="widget-header">Editions</h4>
                             <select name="edition" id="edition">
                                 <option selected>Select menu</option>
-                            {% for editor in editors %}
-                                    <option value="{{ edition.name }}">{{ edition.name | capitalize }}</option>
-                            {% endfor %}
+                                <option value="aaltair">Aaltaïr</option>
+                                <option value="glenat">Glénat</option>
+                                <option value="kana">Kana</option>
+                                <option value="kaze">Kazé</option>
+                                <option value="ohayo">Ohayo</option>
+                                <option value="panini">Panini</option>
+
                             </select>
                         </div>
 
@@ -80,12 +93,6 @@
                         <div class="widget category-list">
                             <h4 class="widget-header">Statut</h4>
                             <ul class="category-list">
-                                {% for  in genres %}
-                                    <li>
-                                        <input type="checkbox" name="{{ genre.name }}" id="{{ genre.name }}">
-                                        <label for="action">{{ genre.name | capitalize }}</label>
-                                    </li>
-                                {% endfor %}
                                 <li>
                                     <input type="checkbox" name="inProgress" id="inProgress">
                                     <label for="inProgress">En cours</label>

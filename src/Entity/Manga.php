@@ -78,6 +78,12 @@ class Manga
      */
     private $statut;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Editor::class, inversedBy="mangas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $editor;
+
     public function __construct()
     {
         $this->editions = new ArrayCollection();
@@ -258,6 +264,18 @@ class Manga
     public function setStatut(?Statut $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getEditor(): ?Editor
+    {
+        return $this->editor;
+    }
+
+    public function setEditor(?Editor $editor): self
+    {
+        $this->editor = $editor;
 
         return $this;
     }

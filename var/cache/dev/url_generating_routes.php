@@ -25,6 +25,7 @@ return [
     'admin-books' => [[], ['_controller' => 'App\\Controller\\DefaultController::adminBooks'], [], [['text', '/admin-books']], [], []],
     'create-manga' => [[], ['_controller' => 'App\\Controller\\DefaultController::createManga'], [], [['text', '/create-manga']], [], []],
     'create-tome' => [[], ['_controller' => 'App\\Controller\\DefaultController::createTome'], [], [['text', '/create-tome']], [], []],
+    'edit_manga' => [['id'], ['_controller' => 'App\\Controller\\DefaultController::editManga'], ['id' => '\\d+'], [['variable', '/', '\\d+', 'id', true], ['text', '/edit-manga']], [], []],
     'admin-reviews' => [[], ['_controller' => 'App\\Controller\\DefaultController::adminReviews'], [], [['text', '/admin-reviews']], [], []],
     'admin-messages' => [[], ['_controller' => 'App\\Controller\\DefaultController::adminMessages'], [], [['text', '/admin-messages']], [], []],
     'search' => [[], ['_controller' => 'App\\Controller\\DefaultController::viewGenre'], [], [['text', '/search']], [], []],

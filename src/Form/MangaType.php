@@ -25,7 +25,7 @@ class MangaType extends AbstractType
             ->add('originalTitle' )
             ->add('frenchTitle')
             ->add('author', EntityType::class, ['label'=>'Auteur', 'class' => Author::class])
-//          ->add('Editor', EntityType::class, ['label'=>'Editeur','class'=> Editor::class])
+             ->add('editor', EntityType::class, ['label'=>'Editeur','class'=> Editor::class])
             ->add('genre', EntityType::class, ['label'=>'Genre','class'=>Genre::class])
             ->add('classification', EntityType::class, ['label'=>'Classification','class'=> Classification::class])
             ->add('summary', TextareaType::class, ['label'=>'Résumé'])

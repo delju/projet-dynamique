@@ -29,9 +29,15 @@ class Editor
      */
     private $editions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Manga::class, mappedBy="editor")
+     */
+    private $mangas;
+
     public function __construct()
     {
         $this->editions = new ArrayCollection();
+        $this->mangas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,5 +89,35 @@ class Editor
 
     public function __toString(){
     return $this->name;
+    }
+
+    /**
+     * @return Collection|Manga[]
+     */
+    public function getMangas(): Collection
+    {
+        return $this->mangas;
+    }
+
+    public function addManga(Manga $manga): self
+    {
+        if (!$this->mangas->contains($manga)) {
+            $this->mangas[] = $manga;
+            $manga->setEditor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeManga(Manga $manga): self
+    {
+        if ($this->mangas->removeElement($manga)) {
+            // set the owning side to null (unless already changed)
+            if ($manga->getEditor() === $this) {
+                $manga->setEditor(null);
+            }
+        }
+
+        return $this;
     }
 }
