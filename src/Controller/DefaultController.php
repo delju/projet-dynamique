@@ -5,12 +5,17 @@ namespace App\Controller;
 use App\Entity\Manga;
 use App\Entity\Message;
 use App\Entity\Tomes;
+use App\Form\AdvertType;
 use App\Form\MangaType;
 use App\Form\MessageType;
 use App\Form\TomeType;
+use App\Repository\AdvertRepository;
 use App\Repository\ClassificationRepository;
+use App\Repository\EditorRepository;
 use App\Repository\GenreRepository;
+use App\Repository\MangaRepository;
 use App\Repository\StatutRepository;
+use App\Services\PhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,15 +104,17 @@ class DefaultController extends AbstractController
     /**
      * @Route("/admin-books", name="admin-books")
      */
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function adminBooks(): Response
     {
+        return $this->render('pages/admin-books.html.twig');
+    }
 
-        $tome = new Tomes();
-        $formTome = $this->createForm(TomeType::class, $tome);
-        $formTome->handleRequest($request);
-        if($formTome->isSubmitted() && $formTome->isValid()){
-            $em->persist($tome);
-        }
+
+    /**
+     * @Route("/create-manga", name="create-manga")
+     */
+    public function createManga(Request $request, EntityManagerInterface $em): Response
+    {
 
         $manga = new Manga();
         $formManga = $this->createForm(mangaType::class, $manga);
@@ -116,10 +123,39 @@ class DefaultController extends AbstractController
             $em->persist($manga);
         }
 
-        return $this->render('pages/admin-books.html.twig',   ['tomeForm' => $formTome->createView(),
-                                                                    'mangaForm' => $formManga->createView()]);
+        return $this->render('pages/create-manga.html.twig', ['mangaForm' => $formManga->createView()]);
     }
 
+
+    /**
+     * @Route("/create-tome", name="create-tome")
+     */
+    public function createTome(Request $request, EntityManagerInterface $em): Response
+    {
+        $tome = new Tomes();
+        $formTome = $this->createForm(TomeType::class, $tome);
+        $formTome->handleRequest($request);
+        if ($formTome->isSubmitted() && $formTome->isValid()) {
+            $em->persist($tome);
+        }
+        return $this->render('pages/create-tome.html.twig', ['tomeForm' => $formTome->createView()]);
+    }
+
+    /**
+     * @Route("/edit-manga/{id<\d+>}", name="edit_manga")
+     */
+    public function editManga(int $id, Request $request, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
+    {
+        $manga = $mangaRepository->find($id);
+        $form = $this->createForm(MangaType::class, $manga);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($manga);
+            }
+
+            return $this->redirectToRoute('view_advert', ['id' => $manga->getId()]);
+
+    }
 
 
 
@@ -142,14 +178,10 @@ class DefaultController extends AbstractController
     /**
      *@Route("/search", name="search")
      */
-    public function viewGenre(GenreRepository $genreRepository, StatutRepository $statutRepository,ClassificationRepository $classificationRepository): Response
+    public function viewGenre(): Response
     {
-        $genres = $genreRepository->findBy([], ['name'=>'asc']);
-        $statuts= $statutRepository->findBy([], ['id'=>'asc']);
-        $classifiction =
 
-        return $this->render('pages/search.html.twig', ['genres' => $genres,
-                                                            'statut'=>$statuts]);
+        return $this->render('pages/search.html.twig');
 
     }
 

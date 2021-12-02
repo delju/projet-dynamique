@@ -106,50 +106,54 @@ class __TwigTemplate_3f452a7b821604fc35c2a45ac9df310cf793521c60266d390437abcfc1c
                         <div class=\"widget category-list\">
                             <h4 class=\"widget-header\">Classification</h4>
                             <ul class=\"category-list\">
-                                <li>
-                                    <input type=\"checkbox\" name=\"kodomo\" id=\"kodomo\">
-                                    <label for=\"kodomo\">Kodomo</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"shonen\" id=\"shonen\">
-                                    <label for=\"shonen\">Shonen</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"shojo\" id=\"shojo\">
-                                    <label for=\"shojo\">Shojo</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"seinen\" id=\"seinen\">
-                                    <label for=\"seinen\">Seinen</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"josei\" id=\"josei\">
-                                    <label for=\"josei\">Josei</label>
-                                </li>
-                            </ul>
+                                ";
+        // line 45
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["classifications"]) || array_key_exists("classifications", $context) ? $context["classifications"] : (function () { throw new RuntimeError('Variable "classifications" does not exist.', 45, $this->source); })()));
+        foreach ($context['_seq'] as $context["_key"] => $context["classification"]) {
+            // line 46
+            echo "                                    <li>
+                                        <input type=\"checkbox\" name=\"";
+            // line 47
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["classification"], "name", [], "any", false, false, false, 47), "html", null, true);
+            echo "\" id=\"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["classification"], "name", [], "any", false, false, false, 47), "html", null, true);
+            echo "\">
+                                        <label for=\"action\">";
+            // line 48
+            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, $context["classification"], "name", [], "any", false, false, false, 48)), "html", null, true);
+            echo "</label>
+                                    </li>
+                                ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['classification'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 51
+        echo "                            </ul>
                         </div>
 
 
                         <!-- Filtre par genre-->
                         <div class=\"widget category-list\">
-                            <h4 class=\"widget-header\">Genre</h4>
+                            <h4 class=\"widget-header\">Genres</h4>
                             <ul class=\"category-list\">
                                 ";
-        // line 73
+        // line 59
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable((isset($context["genres"]) || array_key_exists("genres", $context) ? $context["genres"] : (function () { throw new RuntimeError('Variable "genres" does not exist.', 73, $this->source); })()));
+        $context['_seq'] = twig_ensure_traversable((isset($context["genres"]) || array_key_exists("genres", $context) ? $context["genres"] : (function () { throw new RuntimeError('Variable "genres" does not exist.', 59, $this->source); })()));
         foreach ($context['_seq'] as $context["_key"] => $context["genre"]) {
-            // line 74
+            // line 60
             echo "                                <li>
                                     <input type=\"checkbox\" name=\"";
-            // line 75
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, false, 75), "html", null, true);
+            // line 61
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, false, 61), "html", null, true);
             echo "\" id=\"";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, false, 75), "html", null, true);
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, false, 61), "html", null, true);
             echo "\">
                                     <label for=\"action\">";
-            // line 76
-            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, false, 76)), "html", null, true);
+            // line 62
+            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, false, 62)), "html", null, true);
             echo "</label>
                                 </li>
                                 ";
@@ -157,23 +161,33 @@ class __TwigTemplate_3f452a7b821604fc35c2a45ac9df310cf793521c60266d390437abcfc1c
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['genre'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 79
+        // line 65
         echo "                            </ul>
                         </div>
 
-                        <!-- Filtre par édition -->
+                        <!-- Filtre par éditeur -->
                         <div class=\"widget \">
-                            <h4 class=\"widget-header\">Editions</h4>
+                            <h4 class=\"widget-header\">Editeurs</h4>
                             <select name=\"edition\" id=\"edition\">
                                 <option selected>Select menu</option>
-                                <option value=\"aaltair\">Aaltaïr</option>
-                                <option value=\"glenat\">Glénat</option>
-                                <option value=\"kana\">Kana</option>
-                                <option value=\"kaze\">Kazé</option>
-                                <option value=\"ohayo\">Ohayo</option>
-                                <option value=\"panini\">Panini</option>
-
-                            </select>
+                            ";
+        // line 73
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["editors"]) || array_key_exists("editors", $context) ? $context["editors"] : (function () { throw new RuntimeError('Variable "editors" does not exist.', 73, $this->source); })()));
+        foreach ($context['_seq'] as $context["_key"] => $context["editor"]) {
+            // line 74
+            echo "                                    <option value=\"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["edition"]) || array_key_exists("edition", $context) ? $context["edition"] : (function () { throw new RuntimeError('Variable "edition" does not exist.', 74, $this->source); })()), "name", [], "any", false, false, false, 74), "html", null, true);
+            echo "\">";
+            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["edition"]) || array_key_exists("edition", $context) ? $context["edition"] : (function () { throw new RuntimeError('Variable "edition" does not exist.', 74, $this->source); })()), "name", [], "any", false, false, false, 74)), "html", null, true);
+            echo "</option>
+                            ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['editor'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 76
+        echo "                            </select>
                         </div>
 
                         <!-- Filtre par Statut -->
@@ -715,7 +729,7 @@ class __TwigTemplate_3f452a7b821604fc35c2a45ac9df310cf793521c60266d390437abcfc1c
 
     public function getDebugInfo()
     {
-        return array (  161 => 79,  152 => 76,  146 => 75,  143 => 74,  139 => 73,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  190 => 76,  179 => 74,  175 => 73,  165 => 65,  156 => 62,  150 => 61,  147 => 60,  143 => 59,  133 => 51,  124 => 48,  118 => 47,  115 => 46,  111 => 45,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -764,33 +778,19 @@ class __TwigTemplate_3f452a7b821604fc35c2a45ac9df310cf793521c60266d390437abcfc1c
                         <div class=\"widget category-list\">
                             <h4 class=\"widget-header\">Classification</h4>
                             <ul class=\"category-list\">
-                                <li>
-                                    <input type=\"checkbox\" name=\"kodomo\" id=\"kodomo\">
-                                    <label for=\"kodomo\">Kodomo</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"shonen\" id=\"shonen\">
-                                    <label for=\"shonen\">Shonen</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"shojo\" id=\"shojo\">
-                                    <label for=\"shojo\">Shojo</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"seinen\" id=\"seinen\">
-                                    <label for=\"seinen\">Seinen</label>
-                                </li>
-                                <li>
-                                    <input type=\"checkbox\" name=\"josei\" id=\"josei\">
-                                    <label for=\"josei\">Josei</label>
-                                </li>
+                                {% for classification in classifications %}
+                                    <li>
+                                        <input type=\"checkbox\" name=\"{{ classification.name }}\" id=\"{{ classification.name }}\">
+                                        <label for=\"action\">{{ classification.name | capitalize }}</label>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
 
 
                         <!-- Filtre par genre-->
                         <div class=\"widget category-list\">
-                            <h4 class=\"widget-header\">Genre</h4>
+                            <h4 class=\"widget-header\">Genres</h4>
                             <ul class=\"category-list\">
                                 {% for genre in genres %}
                                 <li>
@@ -801,18 +801,14 @@ class __TwigTemplate_3f452a7b821604fc35c2a45ac9df310cf793521c60266d390437abcfc1c
                             </ul>
                         </div>
 
-                        <!-- Filtre par édition -->
+                        <!-- Filtre par éditeur -->
                         <div class=\"widget \">
-                            <h4 class=\"widget-header\">Editions</h4>
+                            <h4 class=\"widget-header\">Editeurs</h4>
                             <select name=\"edition\" id=\"edition\">
                                 <option selected>Select menu</option>
-                                <option value=\"aaltair\">Aaltaïr</option>
-                                <option value=\"glenat\">Glénat</option>
-                                <option value=\"kana\">Kana</option>
-                                <option value=\"kaze\">Kazé</option>
-                                <option value=\"ohayo\">Ohayo</option>
-                                <option value=\"panini\">Panini</option>
-
+                            {% for editor in editors %}
+                                    <option value=\"{{ edition.name }}\">{{ edition.name | capitalize }}</option>
+                            {% endfor %}
                             </select>
                         </div>
 
@@ -1334,6 +1330,6 @@ class __TwigTemplate_3f452a7b821604fc35c2a45ac9df310cf793521c60266d390437abcfc1c
         </div>
     </section>
 
-{% endblock content %}", "pages/search.html.twig", "/home/delvauxjulene/projet_dynamqiue-0305feaf41799d1708c7702a120c054be1a34d54/templates/pages/search.html.twig");
+{% endblock content %}", "pages/search.html.twig", "/home/delvauxjulene/projet_dynamqiue/templates/pages/search.html.twig");
     }
 }

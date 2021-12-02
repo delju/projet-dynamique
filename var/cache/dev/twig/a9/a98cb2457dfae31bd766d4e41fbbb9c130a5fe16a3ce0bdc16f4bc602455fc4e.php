@@ -139,9 +139,15 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
                                             <fieldset class=\"p-4 modal-footer border-top-0 mb-3 mx-5 justify-content-center\">
 
-                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addmanga\" href=\"\" data-target=\"#addmanga\">Manga</button>
+                                                <a href=\"";
+        // line 69
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("create-manga");
+        echo "\"><button type=\"button\" class=\"btn btn-primary\" >Manga</button></a>
 
-                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addtome\" href=\"\" data-target=\"#addtome\">Tome</button>
+                                                <a href=\"";
+        // line 71
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("create-tome");
+        echo "\"><button type=\"button\" class=\"btn btn-primary\" >Tome</button></a>
 
                                             </fieldset>
 
@@ -152,51 +158,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                             </div>
                         </div>
 
-                        <!-- Modal Manga Form-->
-                        <div class=\"modal fade\" id=\"addmanga\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
-                             aria-hidden=\"true\">
-                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
-                                <div class=\"modal-content\">
-                                    <div class=\"modal-header border-bottom-0\">
-                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
-                                            <span aria-hidden=\"true\">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class=\"modal-body\">
-                                        <h2 class=\"text-center\">Ajoute un Manga</h2>
-                                    ";
-        // line 94
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["mangaForm"]) || array_key_exists("mangaForm", $context) ? $context["mangaForm"] : (function () { throw new RuntimeError('Variable "mangaForm" does not exist.', 94, $this->source); })()), 'form');
-        echo "
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
 
 
-                        <!-- Modal Tome Form-->
-                        <div class=\"modal fade\" id=\"addtome\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
-                             aria-hidden=\"true\">
-                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
-                                <div class=\"modal-content\">
-                                    <div class=\"modal-header border-bottom-0\">
-                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
-                                            <span aria-hidden=\"true\">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class=\"modal-body\">
-                                        <h2 class=\"text-center\">Ajoute un tome</h2>
-                                    ";
-        // line 114
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["tomeForm"]) || array_key_exists("tomeForm", $context) ? $context["tomeForm"] : (function () { throw new RuntimeError('Variable "tomeForm" does not exist.', 114, $this->source); })()), 'form');
-        echo "
-                                    </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
 
@@ -451,7 +414,7 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
     public function getDebugInfo()
     {
-        return array (  192 => 114,  169 => 94,  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
+        return array (  149 => 71,  144 => 69,  95 => 23,  89 => 20,  83 => 17,  68 => 4,  58 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -524,9 +487,9 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
 
                                             <fieldset class=\"p-4 modal-footer border-top-0 mb-3 mx-5 justify-content-center\">
 
-                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addmanga\" href=\"\" data-target=\"#addmanga\">Manga</button>
+                                                <a href=\"{{ url('create-manga') }}\"><button type=\"button\" class=\"btn btn-primary\" >Manga</button></a>
 
-                                                <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-placement=\"top\" title=\"Add\" class=\"addtome\" href=\"\" data-target=\"#addtome\">Tome</button>
+                                                <a href=\"{{ url('create-tome') }}\"><button type=\"button\" class=\"btn btn-primary\" >Tome</button></a>
 
                                             </fieldset>
 
@@ -537,45 +500,8 @@ class __TwigTemplate_fa4e77bd5ca1a0a415789c33c5c879b33863722b1c6ae3c53f46f80a881
                             </div>
                         </div>
 
-                        <!-- Modal Manga Form-->
-                        <div class=\"modal fade\" id=\"addmanga\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
-                             aria-hidden=\"true\">
-                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
-                                <div class=\"modal-content\">
-                                    <div class=\"modal-header border-bottom-0\">
-                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
-                                            <span aria-hidden=\"true\">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class=\"modal-body\">
-                                        <h2 class=\"text-center\">Ajoute un Manga</h2>
-                                    {{ form(mangaForm) }}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
 
 
-                        <!-- Modal Tome Form-->
-                        <div class=\"modal fade\" id=\"addtome\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\"
-                             aria-hidden=\"true\">
-                            <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
-                                <div class=\"modal-content\">
-                                    <div class=\"modal-header border-bottom-0\">
-                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
-                                            <span aria-hidden=\"true\">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class=\"modal-body\">
-                                        <h2 class=\"text-center\">Ajoute un tome</h2>
-                                    {{ form(tomeForm) }}
-                                    </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
 
