@@ -247,3 +247,11 @@ e354c2,127.0.0.1,GET,http://localhost:4100/search,1638455014,,200
 18faf8,127.0.0.1,GET,http://localhost:4100/create-manga,1638457557,b1caa6,500
 b1caa6,127.0.0.1,GET,http://localhost:4100/create-manga,1638457557,,500
 4ddf18,127.0.0.1,GET,http://localhost:4100/create-manga,1638458004,,200
+68465f,127.0.0.1,GET,http://localhost:4100/admin-books,1638458314,,200
+0ec517,127.0.0.1,GET,http://localhost:4100/create-tome,1638458319,,200
+dfbc96,127.0.0.1,GET,http://localhost:4100/create-tome,1638458471,,200
+5ba892,127.0.0.1,GET,http://localhost:4100/admin-books,1638458646,,200
+8fbc58,127.0.0.1,GET,http://localhost:4100/create-manga,1638458650,,200
+2cec44,127.0.0.1,GET,http://localhost:4100/admin-books,1638458654,,200
+741e64,127.0.0.1,GET,http://localhost:4100/create-tome,1638458657,,200
+624412,127.0.0.1,GET,http://localhost:4100/create-tome,1638458736,,200

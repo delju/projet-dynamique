@@ -18,10 +18,10 @@ class TomeType extends AbstractType
     {
         $builder
             ->add('manga', EntityType::class, ['class' =>Manga::class])
-            ->add('number')
-            ->add('title')
-            ->add('summary')
-            ->add('rel_date')
+            ->add('number', null ,['label'=>'Numéro'])
+            ->add('title', null, ['label'=>'Titre' ])
+            ->add('summary', null, ['label'=>'Résumé' ])
+            ->add('rel_date', null, ['label'=>'Date de sortie' ])
             ->add('image', FileType::class, [
                 'required' => false,
                 'mapped' => false,

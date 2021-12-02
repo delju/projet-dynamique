@@ -43,7 +43,7 @@ class AppFixtures extends Fixture
             $manager->persist($statut);
         }
 
-        $editorNames=["Aaltaïr", "Glénat", "Kana", "Kazé", "Ohayo", "Panini", "ki-oon" ];
+        $editorNames=["Aaltaïr", "Glénat", "Kana", "Kazé", "Ohayo", "Panini", "Ki-oon" ];
         $editors=[];
         foreach ($editorNames as $editorName){
             $editor = new Editor();

@@ -22,8 +22,8 @@ class MangaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('originalTitle' )
-            ->add('frenchTitle')
+            ->add('originalTitle', null, ['label'=>'Titre Original'])
+            ->add('frenchTitle', null, ['label' =>'Titre Français'])
             ->add('author', EntityType::class, ['label'=>'Auteur', 'class' => Author::class])
              ->add('editor', EntityType::class, ['label'=>'Editeur','class'=> Editor::class])
             ->add('genre', EntityType::class, ['label'=>'Genre','class'=>Genre::class])
