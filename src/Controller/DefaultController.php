@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Manga;
 use App\Entity\Message;
+use App\Entity\Photo;
 use App\Entity\Tomes;
 use App\Form\MangaType;
 use App\Form\MessageType;
+use App\Form\PhotoType;
 use App\Form\TomeType;
 use App\Repository\ClassificationRepository;
 use App\Repository\EditorRepository;
 use App\Repository\GenreRepository;
 use App\Repository\MangaRepository;
 use App\Repository\StatutRepository;
+use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,14 +113,25 @@ class DefaultController extends AbstractController
     /**
      * @Route("/create-manga", name="create-manga")
      */
-    public function createManga(Request $request, EntityManagerInterface $em): Response
+    public function createManga(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
     {
 
         $manga = new Manga();
         $formManga = $this->createForm(mangaType::class, $manga);
         $formManga->handleRequest($request);
         if($formManga->isSubmitted() && $formManga->isValid()){
+
+            $photo = new Photo();
+            $form = $this->createForm(PhotoType::class, $photo);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $mangaPhotoUploader->uploadPhoto($form); // le service a bien entendu été injecté via les arguments de la method
+                $em->persist($manga->getPhoto());
+            }
+
             $em->persist($manga);
+            $em->flush();
         }
 
         return $this->render('pages/create-manga.html.twig', ['mangaForm' => $formManga->createView()]);
@@ -127,13 +141,24 @@ class DefaultController extends AbstractController
     /**
      * @Route("/create-tome", name="create-tome")
      */
-    public function createTome(Request $request, EntityManagerInterface $em): Response
+    public function createTome(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
     {
         $tome = new Tomes();
         $formTome = $this->createForm(TomeType::class, $tome);
         $formTome->handleRequest($request);
         if ($formTome->isSubmitted() && $formTome->isValid()) {
+            $photo = new Photo();
+            $form = $this->createForm(PhotoType::class, $photo);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $mangaPhotoUploader->uploadFilesFromForm($form); // le service a bien entendu été injecté via les arguments de la method
+
+                $em->persist($tome->getPhoto());
+            }
+
             $em->persist($tome);
+            $em->flush();
         }
         return $this->render('pages/create-tome.html.twig', ['tomeForm' => $formTome->createView()]);
     }

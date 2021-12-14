@@ -31,15 +31,7 @@ class MangaType extends AbstractType
             ->add('summary', TextareaType::class, ['label'=>'Résumé'])
             ->add('anime')
             ->add('statut', EntityType::class, ['label'=>'Statut', 'class'=> Statut::class])
-            ->add('image', FileType::class, [
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new Image([
-                        'maxSize' => '1024k'
-                    ])
-                ],
-            ])
+            ->add('photo', PhotoType::class)
             ->add('submit', SubmitType::class)
         ;
     }

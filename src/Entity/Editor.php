@@ -24,10 +24,7 @@ class Editor
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Edition::class, mappedBy="editor")
-     */
-    private $editions;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Manga::class, mappedBy="editor")
@@ -57,35 +54,8 @@ class Editor
         return $this;
     }
 
-    /**
-     * @return Collection|Edition[]
-     */
-    public function getEditions(): Collection
-    {
-        return $this->editions;
-    }
 
-    public function addEdition(Edition $edition): self
-    {
-        if (!$this->editions->contains($edition)) {
-            $this->editions[] = $edition;
-            $edition->setEditor($this);
-        }
 
-        return $this;
-    }
-
-    public function removeEdition(Edition $edition): self
-    {
-        if ($this->editions->removeElement($edition)) {
-            // set the owning side to null (unless already changed)
-            if ($edition->getEditor() === $this) {
-                $edition->setEditor(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function __toString(){
     return $this->name;

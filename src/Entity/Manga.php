@@ -62,10 +62,7 @@ class Manga
      */
     private $author;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Edition::class, mappedBy="manga")
-     */
-    private $editions;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Tomes::class, mappedBy="manga")
@@ -84,9 +81,14 @@ class Manga
      */
     private $editor;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Photo::class, inversedBy="manga", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $photo;
+
     public function __construct()
     {
-        $this->editions = new ArrayCollection();
         $this->tomes = new ArrayCollection();
     }
 
@@ -191,35 +193,6 @@ class Manga
         return $this;
     }
 
-    /**
-     * @return Collection|Edition[]
-     */
-    public function getEditions(): Collection
-    {
-        return $this->editions;
-    }
-
-    public function addEdition(Edition $edition): self
-    {
-        if (!$this->editions->contains($edition)) {
-            $this->editions[] = $edition;
-            $edition->setManga($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEdition(Edition $edition): self
-    {
-        if ($this->editions->removeElement($edition)) {
-            // set the owning side to null (unless already changed)
-            if ($edition->getManga() === $this) {
-                $edition->setManga(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Tomes[]
@@ -276,6 +249,18 @@ class Manga
     public function setEditor(?Editor $editor): self
     {
         $this->editor = $editor;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?Photo
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(Photo $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

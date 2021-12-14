@@ -48,6 +48,12 @@ class Tomes
      */
     private $manga;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Photo::class, inversedBy="tomes", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $photo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -131,6 +137,18 @@ class Tomes
 
     public function prePersis() :void{
         $this->date = new \DateTime();
+    }
+
+    public function getPhoto(): ?Photo
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(Photo $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
     }
 
 

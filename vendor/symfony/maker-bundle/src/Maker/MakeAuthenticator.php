@@ -36,7 +36,9 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -264,7 +266,10 @@ final class MakeAuthenticator extends AbstractMaker
             $this->generator->generateClass(
                 $authenticatorClass,
                 sprintf('authenticator/%sEmptyAuthenticator.tpl.php', $this->useSecurity52 ? 'Security52' : ''),
-                ['provider_key_type_hint' => $this->providerKeyTypeHint()]
+                [
+                    'provider_key_type_hint' => $this->getGuardProviderKeyTypeHint(),
+                    'use_legacy_passport_interface' => $this->shouldUseLegacyPassportInterface(),
+                ]
             );
 
             return;
@@ -286,7 +291,8 @@ final class MakeAuthenticator extends AbstractMaker
                 'username_field_var' => Str::asLowerCamelCase($userNameField),
                 'user_needs_encoder' => $this->userClassHasEncoder($securityData, $userClass),
                 'user_is_entity' => $this->doctrineHelper->isClassAMappedEntity($userClass),
-                'provider_key_type_hint' => $this->providerKeyTypeHint(),
+                'provider_key_type_hint' => $this->getGuardProviderKeyTypeHint(),
+                'use_legacy_passport_interface' => $this->shouldUseLegacyPassportInterface(),
             ]
         );
     }
@@ -400,8 +406,16 @@ final class MakeAuthenticator extends AbstractMaker
         );
     }
 
-    private function providerKeyTypeHint(): string
+    /**
+     * Calculates the type-hint used for the $provider argument (string or nothing) for Guard.
+     */
+    private function getGuardProviderKeyTypeHint(): string
     {
+        // doesn't matter: this only applies to non-Guard authenticators
+        if (!class_exists(AbstractFormLoginAuthenticator::class)) {
+            return '';
+        }
+
         $reflectionMethod = new \ReflectionMethod(AbstractFormLoginAuthenticator::class, 'onAuthenticationSuccess');
         $type = $reflectionMethod->getParameters()[2]->getType();
 
@@ -410,5 +424,24 @@ final class MakeAuthenticator extends AbstractMaker
         }
 
         return sprintf('%s ', $type->getName());
+    }
+
+    private function shouldUseLegacyPassportInterface(): bool
+    {
+        // only applies to new authenticator security
+        if (!$this->useSecurity52) {
+            return false;
+        }
+
+        // legacy: checking for Symfony 5.2 & 5.3 before PassportInterface deprecation
+        $class = new \ReflectionClass(AuthenticatorInterface::class);
+        $method = $class->getMethod('authenticate');
+
+        // 5.4 where return type is temporarily removed
+        if (!$method->getReturnType()) {
+            return false;
+        }
+
+        return PassportInterface::class === $method->getReturnType()->getName();
     }
 }
