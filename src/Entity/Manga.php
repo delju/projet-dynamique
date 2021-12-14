@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=MangaRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Manga
 {
@@ -265,4 +266,12 @@ class Manga
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+
+    public function prePersist(): void {
+        $this->date = new \DateTime();
+    }
 }
+

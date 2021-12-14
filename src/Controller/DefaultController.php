@@ -10,11 +10,7 @@ use App\Form\MangaType;
 use App\Form\MessageType;
 use App\Form\PhotoType;
 use App\Form\TomeType;
-use App\Repository\ClassificationRepository;
-use App\Repository\EditorRepository;
-use App\Repository\GenreRepository;
 use App\Repository\MangaRepository;
-use App\Repository\StatutRepository;
 use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,28 +23,32 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home() {
+    public function home(): Response
+    {
         return $this->render('pages/home.html.twig');
     }
 
     /**
      * @Route("/search", name="search")
      */
-    public function search() {
+    public function search(): Response
+    {
         return $this->render('pages/search.html.twig');
     }
 
     /**
      * @Route("/collection", name="collection")
      */
-    public function collection() {
+    public function collection(): Response
+    {
         return $this->render('pages/collection.html.twig');
     }
 
     /**
      * @Route("/wishlist", name="wishlist")
      */
-    public function wishlist() {
+    public function wishlist(): Response
+    {
         return $this->render('pages/wishlist.html.twig');
     }
 
@@ -104,9 +104,10 @@ class DefaultController extends AbstractController
     /**
      * @Route("/admin-books", name="admin-books")
      */
-    public function adminBooks(): Response
+    public function adminBooks(MangaRepository $mangaRepository): Response
     {
-        return $this->render('pages/admin-books.html.twig');
+        $manga = $mangaRepository->findAll();
+        return $this->render('pages/admin-books.html.twig', ['mangas' => $manga]);
     }
 
 
@@ -117,21 +118,17 @@ class DefaultController extends AbstractController
     {
 
         $manga = new Manga();
-        $formManga = $this->createForm(mangaType::class, $manga);
+        $formManga = $this->createForm(MangaType::class, $manga);
         $formManga->handleRequest($request);
         if($formManga->isSubmitted() && $formManga->isValid()){
 
-            $photo = new Photo();
-            $form = $this->createForm(PhotoType::class, $photo);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $mangaPhotoUploader->uploadPhoto($form); // le service a bien entendu été injecté via les arguments de la method
-                $em->persist($manga->getPhoto());
-            }
-
+            $photo = $mangaPhotoUploader->uploadPhoto($formManga->get('photo')); // le service a bien entendu été injecté via les arguments de la method
+            $manga->setPhoto($photo);
+            $em->persist($manga->getPhoto());
             $em->persist($manga);
             $em->flush();
+
+            return $this->redirectToRoute('admin-books');
         }
 
         return $this->render('pages/create-manga.html.twig', ['mangaForm' => $formManga->createView()]);
@@ -147,24 +144,20 @@ class DefaultController extends AbstractController
         $formTome = $this->createForm(TomeType::class, $tome);
         $formTome->handleRequest($request);
         if ($formTome->isSubmitted() && $formTome->isValid()) {
-            $photo = new Photo();
-            $form = $this->createForm(PhotoType::class, $photo);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $mangaPhotoUploader->uploadFilesFromForm($form); // le service a bien entendu été injecté via les arguments de la method
-
-                $em->persist($tome->getPhoto());
-            }
-
+            $photo = $mangaPhotoUploader->uploadPhoto($formTome->get('photo')); // le service a bien entendu été injecté via les arguments de la method
+            $tome->setPhoto($photo);
+            $em->persist($tome->getPhoto());
             $em->persist($tome);
             $em->flush();
+
+            return $this->redirectToRoute('admin-books');
         }
+
         return $this->render('pages/create-tome.html.twig', ['tomeForm' => $formTome->createView()]);
     }
 
     /**
-     * @Route("/edit-manga/{id<\d+>}", name="edit_manga")
+     * @Route("/edit_manga/{id<\d+>}", name="edit_manga")
      */
     public function editManga(int $id, Request $request, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
     {
@@ -175,7 +168,7 @@ class DefaultController extends AbstractController
             $em->persist($manga);
             }
 
-            return $this->redirectToRoute('view_advert', ['id' => $manga->getId()]);
+            return $this->render('pages/create-manga.html.twig', ['id' => $manga->getId()]);
 
     }
 

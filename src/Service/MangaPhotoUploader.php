@@ -14,7 +14,7 @@ class MangaPhotoUploader
 
     /**
      * MangaPhotoUploader constructor.
-     * @param $parameterBag
+     * @param ParameterBagInterface $parameterBag
      */
     public function __construct(ParameterBagInterface $parameterBag)
     {
@@ -23,9 +23,10 @@ class MangaPhotoUploader
 
 
 
-    public function uploadPhoto(FormInterface $photoField): ?photo {
+    public function uploadPhoto(FormInterface $photoField): ?Photo {
 
         $imageFile = $photoField->get('image')->getData();
+        dump($imageFile);
         if ($imageFile) {
             $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
             // this is needed to safely include the file name as part of the URL
@@ -35,11 +36,12 @@ class MangaPhotoUploader
             // Move the file to the directory where brochures are stored
             try {
                 $imageFile->move(
-                    $this->parameterBag->get('manga_images_path'),
+                    $this->parameterBag->get('images_path'),
                     $newFilename
                 );
             } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+               dump($e);
+               die;
             }
             $photoField->getData()->setUrl($newFilename);
             return $photoField->getData();
