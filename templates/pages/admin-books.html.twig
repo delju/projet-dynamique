@@ -17,10 +17,10 @@
                                     <a href="{{ url('admin-books') }}"><i class="fa fa-bookmark-o"></i> Livres</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('admin-reviews') }}"><i class="fa fa-star-o"></i>Commentaires</a>
+                                    <a href="{{ url('admin-reviews') }}"><i class="fa fa-comment-o"></i>Commentaires</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('admin-messages') }}"><i class="fa fa-star-o"></i>Messages</a>
+                                    <a href="{{ url('admin-messages') }}"><i class="fa fa-envelope-o"></i>Messages</a>
                                 </li>
                             </ul>
                         </div>
@@ -109,14 +109,14 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             {% for manga in mangas %}
                             <tr>
-
                                 <td class="product-thumb">
                                     <img width="120px" height="auto" src="{{ asset('uploads/'~manga.photo.url) }}" alt="image description"></td>
                                 <td class="product-details">
                                     <h3 class="title">{{ manga.frenchTitle }}</h3>
-                                    <span class="summery">{{ manga.summary }}</span>
+                                    <div class="overflow-auto bg-light p-2" style=" height: 100px"><span class="summery">{{ manga.summary }}</span></div>
                                 </td>
                                 <td class="tomes"><span class="categories">56</span></td>
                                 <td class="author"><span class="categories">{{ manga.author }}</span></td>
@@ -129,7 +129,7 @@
                                                 </a>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ url('/edit_manga') }}">
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ url('edit_manga', {'id': manga.id}) }}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </li>
@@ -138,9 +138,59 @@
                                                 </a>
                                             </li>
                                         </ul>
+                                        <a data-toggle="collapse" href="#manga{{ manga.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            Tomes
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="5" class="tomes-details collapse" id="manga{{ manga.id }}">
+                                    <h2 class="widget-header">Les Tomes</h2>
+                                        <table class="table table-responsive product-dashboard-table">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">Numéro</th>
+                                                <th class="text-center">Image</th>
+                                                <th class="text-center">Informations</th>
+                                                <th class="text-center">Date de sortie</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                             <tr>
+
+                                                <td class="product-category"><span class="categories"></span></td>
+                                                <td class="product-thumb">
+                                                    <img width="80px" height="auto" src="" alt="image description"></td>
+                                                <td class="product-details">
+                                                    <h3 class="title"></h3>
+                                                    <span class="summery"></span>
+                                                </td>
+                                                <td class="product-category"><span class="categories"></span></td>
+                                                <td class="action" data-title="Action">
+                                                    <div class="">
+                                                        <ul class="list-inline justify-content-center">
+                                                            <li class="list-inline-item">
+                                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <a data-placement="top" title="Delete" class="delete" href="" data-toggle="modal" data-target="#deleteitem">													<i class="fa fa-trash"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                                                    </td>
+                            </tr>
+
                             {% endfor %}
                             </tbody>
                         </table>

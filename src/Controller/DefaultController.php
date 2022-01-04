@@ -11,6 +11,8 @@ use App\Form\MessageType;
 use App\Form\PhotoType;
 use App\Form\TomeType;
 use App\Repository\MangaRepository;
+use App\Repository\MessageRepository;
+use App\Repository\TomesRepository;
 use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -71,9 +73,9 @@ class DefaultController extends AbstractController
     $form->handleRequest($request);
     if($form->isSubmitted() && $form->isValid()){
         $em->persist($message);
+        $em->flush();
     }
-
-    return $this->render('pages/contact.html.twig', ['messageForm' => $form->createView()]);
+      return $this->render('pages/contact.html.twig', ['messageForm' => $form->createView()]);
     }
 
     /**
@@ -104,7 +106,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/admin-books", name="admin-books")
      */
-    public function adminBooks(MangaRepository $mangaRepository): Response
+    public function adminBooks(TomesRepository $tomesRepository, MangaRepository $mangaRepository): Response
     {
         $manga = $mangaRepository->findAll();
         return $this->render('pages/admin-books.html.twig', ['mangas' => $manga]);
@@ -166,9 +168,13 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($manga);
+            $em->flush();
+
+            return $this->redirectToRoute('admin-books');
+
             }
 
-            return $this->render('pages/create-manga.html.twig', ['id' => $manga->getId()]);
+            return $this->render('pages/create-manga.html.twig',['mangaForm' => $form->createView()]);
 
     }
 
@@ -185,9 +191,11 @@ class DefaultController extends AbstractController
     /**
      * @Route("/admin-messages", name="admin-messages")
      */
-    public function adminMessages(): Response
+    public function adminMessages(MessageRepository $messageRepository): Response
     {
-        return $this->render('pages/admin-messages.html.twig');
+        $messages = $messageRepository->findBy([], ['date'=>'desc']);
+
+        return $this->render('pages/admin-messages.html.twig', ['messages'=>$messages]);
     }
 
     /**

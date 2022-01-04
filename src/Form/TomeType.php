@@ -22,15 +22,7 @@ class TomeType extends AbstractType
             ->add('title', null, ['label'=>'Titre' ])
             ->add('summary', null, ['label'=>'Résumé' ])
             ->add('rel_date', null, ['label'=>'Date de sortie' ])
-            ->add('image', FileType::class, [
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new Image([
-                        'maxSize' => '1024k'
-                    ])
-                ],
-            ])
+            ->add('photo', PhotoType::class)
             ->add('submit', SubmitType::class)
         ;
     }

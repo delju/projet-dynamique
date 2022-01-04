@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Manga;
 use App\Entity\Tomes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,16 @@ class TomesRepository extends ServiceEntityRepository
         parent::__construct($registry, Tomes::class);
     }
 
+
+    public function findAllWithTomes() : Tomes{
+        $qb = $this->createQueryBuilder('t')
+                    ->select('t')
+                    ->leftJoin('t.manga', 'm')
+                    ->addSelect('m');
+
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
     // /**
     //  * @return Tomes[] Returns an array of Tomes objects
     //  */

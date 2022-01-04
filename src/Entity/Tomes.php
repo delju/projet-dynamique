@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TomesRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Tomes
 {
@@ -151,6 +152,12 @@ class Tomes
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
 
+    public function prePersist(): void {
+        $this->date = new \DateTime();
+    }
 }
 
