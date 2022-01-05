@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Manga;
 use App\Entity\Message;
 use App\Entity\Photo;
 use App\Entity\Tomes;
+use App\Form\CommentType;
 use App\Form\MangaType;
 use App\Form\MessageType;
 use App\Form\PhotoType;
@@ -82,12 +84,21 @@ class DefaultController extends AbstractController
     /**
      * @Route("/single/{slug}", name="single")
      */
-    public function viewManga(string $slug, MangaRepository $mangaRepository, TomesRepository $tomesRepository): Response
+    public function viewManga(string $slug, MangaRepository $mangaRepository, TomesRepository $tomesRepository, Request $request, EntityManagerInterface $em): Response
     {
         $manga = $mangaRepository->findOneBySlug($slug);
+        $comment = new Comment();
+        $comment->setManga($manga);
+        $tomes = $manga->getTomes();
+        $commentForm = $this->createForm(CommentType::class, $comment);
 
-
-        return $this->render('pages/single.html.twig', ['manga' => $manga]);
+        $commentForm->handleRequest($request);
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $em->persist($comment);
+            $em->flush();
+            return $this->redirectToRoute('single', ['slug' => $manga->getSlug()]);
+        }
+        return $this->render('pages/single.html.twig', ['manga' => $manga, 'tomes'=>$tomes, 'commentForm'=>$commentForm->createView()]);
     }
 
 

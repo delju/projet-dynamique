@@ -25,7 +25,7 @@ class Comment
 
     /**
      * @ORM\Column(type="datetime")
-     * @Gedmo\Translatable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $date;
 
@@ -40,6 +40,12 @@ class Comment
      * @Gedmo\Blameable(on="create")
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $manga;
 
     public function getId(): ?int
     {
@@ -90,6 +96,18 @@ class Comment
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getManga(): ?Manga
+    {
+        return $this->manga;
+    }
+
+    public function setManga(?Manga $manga): self
+    {
+        $this->manga = $manga;
 
         return $this;
     }

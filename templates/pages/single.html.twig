@@ -118,15 +118,17 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% for tome in manga.tomes %}
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td class="product-thumb">
-                                                <img width="80px" height="auto" src="images/products/products-1.jpg" alt="image description"></td>
+                                            <td class="text-center">{{ tome.number }}</td>
+                                            <td class="">
+                                                <img width="80px" height="auto" src="{{ asset('uploads/'~tome.photo.url) }}" alt="image description"></td>
                                             <td class="product-category">
-                                                <h3 class="title">Macbook Pro 15inch</h3>
+                                                <h3 class="title">{{ tome.title }}</h3>
                                             </td>
-                                            <td class="product-details"><span class="categories">Laptops</span></td>
-                                            <td class="action" data-title="Action">
+                                            <td class=""><div class="overflow-auto bg-light p-2" style=" height: 120px"><span class="summery">{{ tome.summary }}</span></div>
+                                            </td>
+                                            <td class="action actionTome" data-title="Action">
                                                 <div class="">
                                                     <ul class="list-inline justify-content-center">
                                                         <li class="list-inline-item">
@@ -138,66 +140,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td class="product-thumb">
-                                                <img width="80px" height="auto" src="images/products/products-2.jpg" alt="image description"></td>
-                                            <td class="product-category">
-                                                <h3 class="title">Macbook Pro 15inch</h3>
-                                            </td>
-                                            <td class="product-details"><span class="categories">Laptops</span></td>
-                                            <td class="action" data-title="Action">
-                                                <div class="">
-                                                    <ul class="list-inline justify-content-center">
-                                                        <li class="list-inline-item">
-                                                            <a data-toggle="tooltip" data-placement="top" title="View" class="add" href="">
-                                                                <i class="fa fa-plus-circle "></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">3</td>
-                                            <td class="product-thumb">
-                                                <img width="80px" height="auto" src="images/products/products-3.jpg" alt="image description"></td>
-                                            <td class="product-category">
-                                                <h3 class="title">Macbook Pro 15inch</h3>
-                                            </td>
-                                            <td class="product-details"><span class="categories">Laptops</span></td>
-                                            <td class="action" data-title="Action">
-                                                <div class="">
-                                                    <ul class="list-inline justify-content-center">
-                                                        <li class="list-inline-item">
-                                                            <a data-toggle="tooltip" data-placement="top" title="View" class="add" href="">
-                                                                <i class="fa fa-plus-circle "></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">4</td>
-                                            <td class="product-thumb">
-                                                <img width="80px" height="auto" src="images/products/products-4.jpg" alt="image description"></td>
-                                            <td class="product-category">
-                                                <h3 class="title">Macbook Pro 15inch</h3>
-                                            </td>
-                                            <td class="product-details"><span class="categories">Laptops</span></td>
-                                            <td class="action" data-title="Action">
-                                                <div class="">
-                                                    <ul class="list-inline justify-content-center">
-                                                        <li class="list-inline-item">
-                                                            <a data-toggle="tooltip" data-placement="top" title="View" class="add" href="">
-                                                                <i class="fa fa-plus-circle"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                       {% endfor %}
                                     </table>
                                 </div>
 
@@ -205,7 +148,7 @@
                                     <h3 class="tab-title">Commentaires</h3>
                                     <div class="product-review">
                                         <div class="media">
-
+                                            {% for comment in manga.comments %}
                                             <div class="media-body">
                                                 <!-- Ratings -->
                                                 <div class="ratings">
@@ -228,19 +171,20 @@
                                                     </ul>
                                                 </div>
                                                 <div class="name">
-                                                    <h5>Jessica Brown</h5>
+                                                    <h5>{{ comment.user.username }}</h5>
                                                 </div>
                                                 <div class="date">
-                                                    <p>Mar 20, 2018</p>
+                                                    <p>{{ comment.date | date('d-m-Y') }}</p>
                                                 </div>
                                                 <div class="review-comment">
-                                                    <p>
-                                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremqe laudant tota rem ape
-                                                        riamipsa eaque.
+                                                    <p>{{comment.message }}
                                                     </p>
                                                 </div>
                                             </div>
+                                            {% endfor %}
                                         </div>
+
+                                        {% if app.user %}
                                         <div class="review-submission">
                                             <h3 class="tab-title">Donne ton avis</h3>
                                             <!-- Rate -->
@@ -248,7 +192,8 @@
                                                 <div class="starrr"></div>
                                             </div>
                                             <div class="review-submit">
-                                                <form action="#" class="row">
+                                                {{ form(commentForm) }}
+                                               {# <form action="#" class="row">
                                                     <div class="col-lg-6">
                                                         <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                                                     </div>
@@ -258,9 +203,10 @@
                                                     <div class="col-12">
                                                         <button type="submit" class="btn btn-main">Sumbit</button>
                                                     </div>
-                                                </form>
+                                                </form>#}
                                             </div>
                                         </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
