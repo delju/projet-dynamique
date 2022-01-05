@@ -1,58 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/admin.html.twig' %}
 
 {% block content %}
 
-    <section class="dashboard section">
-        <!-- Container Start -->
-        <div class="container">
-            <!-- Row Start -->
-            <div class="row">
-                <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
-                    <div class="sidebar">
-
-                        <!-- Dashboard Links -->
-                        <div class="widget user-dashboard-menu">
-                            <ul>
-                                <li >
-                                    <a href="{{ url('admin-books') }}"><i class="fa fa-bookmark-o"></i> Livres</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('admin-reviews') }}"><i class="fa fa-comment-o"></i>Commentaires</a>
-                                </li>
-                                <li class="active">
-                                    <a href="{{ url('admin-messages') }}"><i class="fa fa-envelope-o"></i>Messages</a>
-                                </li>
-                            </ul>
-                        </div>
-
-
-                        <!-- Modal -->
-                        <!-- delete-account modal -->
-                        <div class="modal fade" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header border-bottom-0">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body text-center">
-                                        <img src="images/account/Account1.png" class="img-fluid mb-2" alt="">
-                                        <h6 class="py-2">Es-tu sur de vouloir le supprimer?</h6>
-
-                                    </div>
-                                    <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- delete account popup modal end-->
-                    </div>
-                </div>
-                <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
+                  <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
                     <!-- Recently Favorited -->
                     <div class="widget dashboard-container my-adslist">
                         <h2 class="widget-header">Les messages</h2>
@@ -119,11 +69,6 @@
                     </div>
                     <!-- pagination -->
 
-                </div>
-            </div>
-            <!-- Row End -->
-        </div>
-        <!-- Container End -->
-    </section>
+
 
 {% endblock content %}

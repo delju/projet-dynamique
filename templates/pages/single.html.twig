@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block section %}
 
     <!--===================================
 =            Store Section            =
@@ -12,12 +12,12 @@
                 <!-- Left sidebar -->
                 <div class="col-md-12">
                     <div class="product-details">
-                        <h1 class="product-title text-center">My Hero Academia</h1>
+                        <h1 class="product-title text-center">{{ manga.frenchTitle }}</h1>
 
                         <!-- product slider -->
 
                         <div class="col-md-8 mx-auto">
-                            <img class="img-fluid w-100" src="images/products/products-1.jpg" alt="product-img">
+                            <img class="img-fluid w-100" src="{{ asset('uploads/'~manga.photo.url) }}" alt="product-img">
                         </div>
 
                         <!-- product slider -->
@@ -44,27 +44,23 @@
                                         <tbody>
                                         <tr>
                                             <td >Titre Original</td>
-                                            <td >Boku no Hiro Akademia</td>
+                                            <td >{{ manga.originalTitle }}</td>
                                         </tr>
                                         <tr>
                                             <td >Auteur</td>
-                                            <td >Kohei Horikoshi</td>
+                                            <td >{{ manga.author.firstname }} {{ manga.author.lastname }}</td>
                                         </tr>
                                         <tr>
                                             <td >Edition</td>
-                                            <td >Ki-oon</td>
+                                            <td >{{ manga.editor.name }}</td>
                                         </tr>
                                         <tr>
                                             <td >Genre</td>
-                                            <td >Super Héro</td>
+                                            <td >{{ manga.genre.name}}</td>
                                         </tr>
                                         <tr>
                                             <td >Classification</td>
-                                            <td >Shonen</td>
-                                        </tr>
-                                        <tr>
-                                            <td >Année de sortie</td>
-                                            <td >2014</td>
+                                            <td >{{ manga.classification.name }}</td>
                                         </tr>
                                         <tr>
                                             <td >Nombre de tomes</td>
@@ -72,11 +68,15 @@
                                         </tr>
                                         <tr>
                                             <td >Adapté en animé</td>
-                                            <td >5 saisons</td>
+                                            <td > {% if manga.anime %}
+                                            Oui
+                                            {% else %}
+                                            Non
+                                            {% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td >Statut</td>
-                                            <td >En cours</td>
+                                            <td >{{ manga.statut.name }}</td>
                                         </tr>
                                         <tr>
                                             <td >Votes</td>
@@ -100,7 +100,7 @@
                                         </tr>
                                         <tr>
                                             <td >Résumé</td>
-                                            <td >gfrgrzgzrz</td>
+                                            <td >{{ manga.summary }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -205,8 +205,7 @@
                                     <h3 class="tab-title">Commentaires</h3>
                                     <div class="product-review">
                                         <div class="media">
-                                            <!-- Avater -->
-                                            <img src="images/user/user-thumb.jpg" alt="avater">
+
                                             <div class="media-body">
                                                 <!-- Ratings -->
                                                 <div class="ratings">
@@ -275,4 +274,4 @@
         <!-- Container End -->
     </section>
 
-{% endblock content %}
+{% endblock section %}

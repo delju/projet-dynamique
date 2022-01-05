@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block section %}
+<section class="dashboard section">
+    <!-- Container Start -->
+    <div class="container">
+        <!-- Row Start -->
+        <div class="row">
+            <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
+                <div class="sidebar">
+
+                    <!-- Dashboard Links -->
+                    <div class="widget user-dashboard-menu">
+                        <ul>
+                            <li {% if app.request.get('_route') == 'admin-books' %}class="active"{% endif%}>
+                                <a href="{{ url('admin-books') }}"><i class="fa fa-bookmark-o"></i> Livres</a>
+                            </li>
+                            <li {% if app.request.get('_route') == 'admin-reviews' %}class="active"{% endif%}>
+                                <a href="{{ url('admin-reviews') }}"><i class="fa fa-comment-o"></i>Commentaires</a>
+                            </li>
+                            <li {% if app.request.get('_route') == 'admin-messages' %}class="active"{% endif%}>
+                                <a href="{{ url('admin-messages') }}"><i class="fa fa-envelope-o"></i>Messages</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- delete-account modal -->
+            <!-- delete account popup modal start-->
+            <!-- Modal Delete -->
+            <div class="modal fade" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img src="images/account/Account1.png" class="img-fluid mb-2" alt="">
+                            <h6 class="py-2">Es-tu sur de vouloir le supprimer?</h6>
+                        </div>
+                        <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-danger">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- add item modal -->
+            <div class="modal fade" id="additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2 class="text-center">Que veux-tu ajouter?</h2>
+
+                            <fieldset class="p-4 modal-footer border-top-0 mb-3 mx-5 justify-content-center">
+
+                                <a href="{{ url('create-manga') }}"><button type="button" class="btn btn-primary" >Manga</button></a>
+
+                                <a href="{{ url('create-tome') }}"><button type="button" class="btn btn-primary" >Tome</button></a>
+
+                            </fieldset>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+{% block content %}
+            {% endblock content %}
+
+        </div>
+        <!-- Row End -->
+        <!-- Container End -->
+</section>
+{% endblock section %}

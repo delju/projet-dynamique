@@ -80,11 +80,14 @@ class DefaultController extends AbstractController
 
 
     /**
-     * @Route("/single", name="single")
+     * @Route("/single/{slug}", name="single")
      */
-    public function single(): Response
+    public function viewManga(string $slug, MangaRepository $mangaRepository, TomesRepository $tomesRepository): Response
     {
-        return $this->render('pages/single.html.twig');
+        $manga = $mangaRepository->findOneBySlug($slug);
+
+
+        return $this->render('pages/single.html.twig', ['manga' => $manga]);
     }
 
 
@@ -94,7 +97,7 @@ class DefaultController extends AbstractController
     public function adminBooks(TomesRepository $tomesRepository, MangaRepository $mangaRepository): Response
     {
         $manga = $mangaRepository->findAll();
-        return $this->render('pages/admin-books.html.twig', ['mangas' => $manga]);
+        return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $manga]);
     }
 
 
@@ -115,7 +118,7 @@ class DefaultController extends AbstractController
             $em->persist($manga);
             $em->flush();
 
-            return $this->redirectToRoute('admin-books');
+            return $this->redirectToRoute('pages/admin/admin-books');
         }
 
         return $this->render('pages/create-manga.html.twig', ['mangaForm' => $formManga->createView()]);
@@ -137,7 +140,7 @@ class DefaultController extends AbstractController
             $em->persist($tome);
             $em->flush();
 
-            return $this->redirectToRoute('admin-books');
+            return $this->redirectToRoute('pages/admin/admin-books');
         }
 
         return $this->render('pages/create-tome.html.twig', ['tomeForm' => $formTome->createView()]);
@@ -170,7 +173,7 @@ class DefaultController extends AbstractController
      */
     public function adminReviews(): Response
     {
-        return $this->render('pages/admin-reviews.html.twig');
+        return $this->render('pages/admin/admin-reviews.html.twig');
     }
 
     /**
@@ -180,7 +183,7 @@ class DefaultController extends AbstractController
     {
         $messages = $messageRepository->findBy([], ['date'=>'desc']);
 
-        return $this->render('pages/admin-messages.html.twig', ['messages'=>$messages]);
+        return $this->render('pages/admin/admin-messages.html.twig', ['messages'=>$messages]);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Repository\MangaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=MangaRepository::class)
@@ -42,6 +43,7 @@ class Manga
 
     /**
      * @ORM\Column(type="date")
+     * @Gedmo\Timestampable(on="create")
      */
     private $date;
 
@@ -87,6 +89,12 @@ class Manga
      * @ORM\JoinColumn(nullable=false)
      */
     private $photo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"frenchTitle"}, updatable= false)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -272,6 +280,18 @@ class Manga
 
     public function prePersist(): void {
         $this->date = new \DateTime();
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
 

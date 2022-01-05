@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TomesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=TomesRepository::class)
@@ -35,6 +36,7 @@ class Tomes
 
     /**
      * @ORM\Column(type="date")
+     * @Gedmo\Timestampable(on="create")
      */
     private $date;
 
