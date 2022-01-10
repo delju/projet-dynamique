@@ -15,6 +15,8 @@ use App\Form\TomeType;
 use App\Repository\MangaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
+use App\Search\Search;
+use App\Search\SearchFullType;
 use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,13 +34,7 @@ class DefaultController extends AbstractController
         return $this->render('pages/home.html.twig');
     }
 
-    /**
-     * @Route("/search", name="search")
-     */
-    public function search(): Response
-    {
-        return $this->render('pages/search.html.twig');
-    }
+
 
     /**
      * @Route("/collection", name="collection")
@@ -102,14 +98,6 @@ class DefaultController extends AbstractController
     }
 
 
-    /**
-     * @Route("/admin-books", name="admin-books")
-     */
-    public function adminBooks(TomesRepository $tomesRepository, MangaRepository $mangaRepository): Response
-    {
-        $manga = $mangaRepository->findAll();
-        return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $manga]);
-    }
 
 
     /**
@@ -180,30 +168,18 @@ class DefaultController extends AbstractController
 
 
     /**
-     * @Route("/admin-reviews", name="admin-reviews")
-     */
-    public function adminReviews(): Response
-    {
-        return $this->render('pages/admin/admin-reviews.html.twig');
-    }
-
-    /**
-     * @Route("/admin-messages", name="admin-messages")
-     */
-    public function adminMessages(MessageRepository $messageRepository): Response
-    {
-        $messages = $messageRepository->findBy([], ['date'=>'desc']);
-
-        return $this->render('pages/admin/admin-messages.html.twig', ['messages'=>$messages]);
-    }
-
-    /**
      *@Route("/search", name="search")
      */
-    public function viewGenre(): Response
+    public function search(MangaRepository $mangaRepository, Request $request): Response
     {
-
-        return $this->render('pages/search.html.twig');
+        $search = new Search();
+        $form = $this->createForm(SearchFullType::class, $search);
+        $form->handleRequest($request);
+        $result = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $result = $mangaRepository->findBySearch($search);
+        }
+        return $this->render('pages/search.html.twig', ['mangas' => $result, 'searchFullForm' => $form->createView() ]);
 
     }
 
