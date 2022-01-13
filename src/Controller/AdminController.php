@@ -17,9 +17,9 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin-books", name="admin-books")
      */
-    public function adminBooks(TomesRepository $tomesRepository, MangaRepository $mangaRepository ): Response
+    public function adminBooks(string $slug, MangaRepository $mangaRepository ): Response
     {
-        $manga = $mangaRepository->findAll();
+        $manga = $mangaRepository->findWithTomes($slug);
         return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $manga]);
     }
 

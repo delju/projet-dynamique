@@ -74,16 +74,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% for tome in manga.tomes %}
                                 <tr>
 
-                                    <td class="product-category"><span class="categories"></span></td>
+                                    <td class="product-category"><span class="categories">{{ manga.tome.number }}</span></td>
                                     <td class="product-thumb">
-                                        <img width="80px" height="auto" src="" alt="image description"></td>
+                                        <img width="80px" height="auto" src="{{ asset('uploads/'~manga.tome.photo.url) }}" alt="image description"></td>
                                     <td class="product-details">
-                                        <h3 class="title"></h3>
-                                        <span class="summery"></span>
+                                        <h3 class="title">{{ manga.tome.title }}</h3>
+                                        <span class="summery">{{ manga.tome.summary }}</span>
                                     </td>
-                                    <td class="product-category"><span class="categories"></span></td>
+                                    <td class="product-category"><span class="categories">{{ manga.tome.rel_date }}</span></td>
                                     <td class="action" data-title="Action">
                                         <div class="">
                                             <ul class="list-inline justify-content-center">
@@ -100,7 +101,7 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                {% endfor %}
                                 </tbody>
                             </table>
 

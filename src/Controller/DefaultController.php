@@ -29,9 +29,11 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(): Response
+    public function home(MangaRepository $mangaRepository, TomesRepository $tomesRepository): Response
     {
-        return $this->render('pages/home.html.twig');
+        $lastAdded = $mangaRepository->findBy([], ['date'=> 'DESC'], 4);
+        $lastRelease = $tomesRepository->findAfterDate(4);
+        return $this->render('pages/home.html.twig', ['lastAdded'=> $lastAdded, 'lastReleases'=>$lastRelease]);
     }
 
 
@@ -55,9 +57,10 @@ class DefaultController extends AbstractController
     /**
      * @Route("/next-releases", name="next-releases")
      */
-    public function nextReleases(): Response
+    public function nextReleases(TomesRepository $tomesRepository): Response
     {
-        return $this->render('pages/next-releases.html.twig');
+        $tomes = $tomesRepository->findUntilDate([], ['rel_date'=>'desc'], 30);
+        return $this->render('pages/next-releases.html.twig', ['tomes' => $tomes]);
     }
 
 
@@ -72,6 +75,7 @@ class DefaultController extends AbstractController
     if($form->isSubmitted() && $form->isValid()){
         $em->persist($message);
         $em->flush();
+        return $this->redirectToRoute('contact');
     }
       return $this->render('pages/contact.html.twig', ['messageForm' => $form->createView()]);
     }

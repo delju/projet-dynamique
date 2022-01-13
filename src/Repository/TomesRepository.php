@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Manga;
 use App\Entity\Tomes;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,14 +22,28 @@ class TomesRepository extends ServiceEntityRepository
     }
 
 
-    public function findAllWithTomes() : Tomes{
+    public function findUntilDate(){
         $qb = $this->createQueryBuilder('t')
-                    ->select('t')
-                    ->leftJoin('t.manga', 'm')
-                    ->addSelect('m');
+            ->Where('t.rel_date > (:date)')
+            ->orderBy('t.rel_date', 'ASC')
+            ->setParameter('date', new Date('date'));
+        ;
 
+            return $qb->getQuery()->getResult();
+    }
 
-        return $qb->getQuery()->getOneOrNullResult();
+    public function findAfterDate($limit = null){
+        $today = new \Datetime('');
+        $today = $today->format('yyyy-MM-dd');
+        $qb = $this->createQueryBuilder('t')
+            ->Where('t.rel_date < (:date)')
+            ->orderBy('t.rel_date', 'DESC')
+            ->setParameter('date', $today );
+
+        if (false === is_null($limit))
+            $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
     }
     // /**
     //  * @return Tomes[] Returns an array of Tomes objects

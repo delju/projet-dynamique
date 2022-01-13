@@ -288,7 +288,7 @@ class Manga
         $this->date = new \DateTime();
     }
 
-    public function getSlug(): ?string
+    public function getSlug(): string
     {
         return $this->slug;
     }

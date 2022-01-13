@@ -17,9 +17,11 @@ class SearchType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'method' => 'GET',
+            'csrf_protection'=> false,
             'data_class' => Search::class,
         ]);
     }

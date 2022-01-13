@@ -18,6 +18,9 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
+    /**
+     * @Route("/register", name="register")
+     */
     public function register(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response {
         $user = new User();
         $form = $this->createForm(UserRegisterType::class, $user);

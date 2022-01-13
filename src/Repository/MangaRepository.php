@@ -23,9 +23,6 @@ class MangaRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('a')
             ->where('a.frenchTitle LIKE :keyword')
-            ->orWhere('a.originalTitle LIKE :keyword')
-            ->orWhere('a.author.firstname LIKE :keyword ')
-            ->orWhere('a.author.lastname LIKE :keyword')
             ->setParameter('keyword', '%'.$search->getKeyword().'%')
         ;
 
@@ -55,6 +52,20 @@ class MangaRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findWithTomes(string $slug){
+        $qb = $this->createQueryBuilder('m')
+            ->where('m.slug in (:slug)')
+            ->setParameter('slug', $slug);
+
+        $qb->leftJoin('m.tomes', 'tomes')
+            ->orderBy('tomes.number', 'ASC')
+            ->addSelect('tomes')
+            ;
+        return $qb->getQuery()->getResult();
+
+
     }
 
     // /**

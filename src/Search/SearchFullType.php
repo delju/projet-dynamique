@@ -19,19 +19,13 @@ class SearchFullType extends SearchType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('keyword')
-            ->add('statuts', EntityType::class, ['class'=>Statut::class])
-            ->add('genres', EntityType::class, ['class'=>Genre::class, 'expanded' => true])
+            ->add('statuts', EntityType::class, ['class'=>Statut::class, 'multiple' => true, 'expanded'=>true])
+            ->add('genres', EntityType::class, ['class'=>Genre::class,'multiple' => true, 'expanded' => true])
             ->add('editors', EntityType::class, ['class'=>Editor::class])
-            ->add('classifications', EntityType::class, ['class'=>Classification::class, 'expanded' =>true])
+            ->add('classifications', EntityType::class, ['class'=>Classification::class,'multiple' => true, 'expanded' =>true])
             ->add('animes', CheckboxType::class, ['label' => 'Oui'])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Search::class,
-        ]);
-    }
+
 }

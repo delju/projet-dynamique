@@ -77,17 +77,17 @@ class Search
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getKeyword(): ?string
+    public function getKeyword(): string
     {
         return $this->keyword;
     }
 
     /**
-     * @param string|null $keyword
+     * @param string $keyword
      */
-    public function setKeyword(?string $keyword): void
+    public function setKeyword(string $keyword): void
     {
         $this->keyword = $keyword;
     }

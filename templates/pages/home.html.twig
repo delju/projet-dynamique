@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Otaku's Collection - Home{% endblock %}
+
 {% block section %}
 
     <!--===============================
@@ -182,6 +184,7 @@
                 <!-- offer 01 -->
                 <div class="col-lg-12">
                     <div class="trending-ads-slide">
+                        {% for lastRelease in lastReleases %}
                         <div class="col-sm-12 col-lg-4">
                             <!-- product card -->
                             <div class="product-item bg-light">
@@ -189,12 +192,12 @@
                                     <div class="thumb-content">
                                         <!-- <div class="price">$200</div> -->
                                         <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-1.jpg" alt="Card image cap">
+                                            <img class="card-img-top img-fluid" src="{{ asset('uploads/'~lastRelease.photo.url) }}" alt="Card image cap">
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
+                                        <h4 class="card-title"><a href="{{ path('single', {'slug': 'lastRelease.manga.slug'}) }}">{{ lastRelease.title }}</a></h4>
+                                        <p class="card-text">{{ lastRelease.rel_date | date('d-m-Y') }}</p>
                                         <div class="product-ratings">
                                             <ul class="list-inline">
                                                 <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
@@ -211,91 +214,7 @@
 
 
                         </div>
-                        <div class="col-sm-12 col-lg-4">
-                            <!-- product card -->
-                            <div class="product-item bg-light">
-                                <div class="card">
-                                    <div class="thumb-content">
-                                        <!-- <div class="price">$200</div> -->
-                                        <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-2.jpg" alt="Card image cap">
-                                        </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">Full Study Table Combo</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-                                        <div class="product-ratings">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                        <div class="col-sm-12 col-lg-4">
-                            <!-- product card -->
-                            <div class="product-item bg-light">
-                                <div class="card">
-                                    <div class="thumb-content">
-                                        <!-- <div class="price">$200</div> -->
-                                        <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-3.jpg" alt="Card image cap">
-                                        </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-                                        <div class="product-ratings">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                        <div class="col-sm-12 col-lg-4">
-                            <!-- product card -->
-                            <div class="product-item bg-light">
-                                <div class="card">
-                                    <div class="thumb-content">
-                                        <!-- <div class="price">$200</div> -->
-                                        <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-2.jpg" alt="Card image cap">
-                                        </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">Full Study Table Combo</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-                                        <div class="product-ratings">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -314,7 +233,6 @@
                 <div class="col-md-12">
                     <div class="section-title">
                         <h2>Récemment ajoutés</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, magnam.</p>
                     </div>
                 </div>
             </div>
@@ -322,19 +240,20 @@
                 <!-- offer 01 -->
                 <div class="col-lg-12">
                     <div class="trending-ads-slide">
+                        {% for lastAdd in lastAdded %}
                         <div class="col-sm-12 col-lg-4">
                             <!-- product card -->
                             <div class="product-item bg-light">
                                 <div class="card">
                                     <div class="thumb-content">
                                         <!-- <div class="price">$200</div> -->
-                                        <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-1.jpg" alt="Card image cap">
+                                        <a href="{{ url('single', {slug: lastAdd.slug}) }}">
+                                            <img class="card-img-top img-fluid" src="{{ asset('uploads/'~lastAdd.photo.url) }}" alt="Card image cap">
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
+                                        <h4 class="card-title"><a href="{{ url('single', {slug: lastAdd.slug})}}">{{ lastAdd.frenchTitle }}</a></h4>
+                                        <p class="card-text">{{ lastAdd.date | date('d-m-Y') }}</p>
                                         <div class="product-ratings">
                                             <ul class="list-inline">
                                                 <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
@@ -351,96 +270,11 @@
 
 
                         </div>
-                        <div class="col-sm-12 col-lg-4">
-                            <!-- product card -->
-                            <div class="product-item bg-light">
-                                <div class="card">
-                                    <div class="thumb-content">
-                                        <!-- <div class="price">$200</div> -->
-                                        <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-2.jpg" alt="Card image cap">
-                                        </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">Full Study Table Combo</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-                                        <div class="product-ratings">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                        <div class="col-sm-12 col-lg-4">
-                            <!-- product card -->
-                            <div class="product-item bg-light">
-                                <div class="card">
-                                    <div class="thumb-content">
-                                        <!-- <div class="price">$200</div> -->
-                                        <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-3.jpg" alt="Card image cap">
-                                        </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">11inch Macbook Air</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-                                        <div class="product-ratings">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                        <div class="col-sm-12 col-lg-4">
-                            <!-- product card -->
-                            <div class="product-item bg-light">
-                                <div class="card">
-                                    <div class="thumb-content">
-                                        <!-- <div class="price">$200</div> -->
-                                        <a href="single.html">
-                                            <img class="card-img-top img-fluid" src="images/products/products-2.jpg" alt="Card image cap">
-                                        </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title"><a href="single.html">Full Study Table Combo</a></h4>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>
-                                        <div class="product-ratings">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item selected"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                       {% endfor %}
                     </div>
                 </div>
-
-
             </div>
         </div>
     </section>
+
 {% endblock section %}

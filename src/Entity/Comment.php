@@ -100,12 +100,12 @@ class Comment
         return $this;
     }
 
-    public function getManga(): ?Manga
+    public function getManga(): string
     {
         return $this->manga;
     }
 
-    public function setManga(?Manga $manga): self
+    public function setManga(Manga $manga): self
     {
         $this->manga = $manga;
 
