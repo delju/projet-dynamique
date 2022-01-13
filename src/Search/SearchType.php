@@ -25,4 +25,10 @@ class SearchType extends AbstractType
             'data_class' => Search::class,
         ]);
     }
+
+    public function getBlockPrefix()
+    {
+        return '';
+    }
+
 }

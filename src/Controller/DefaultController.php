@@ -12,6 +12,7 @@ use App\Form\MangaType;
 use App\Form\MessageType;
 use App\Form\PhotoType;
 use App\Form\TomeType;
+use App\Repository\CommentRepository;
 use App\Repository\MangaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
@@ -29,11 +30,11 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(MangaRepository $mangaRepository, TomesRepository $tomesRepository): Response
+    public function home(MangaRepository $mangaRepository, CommentRepository $commentRepository): Response
     {
         $lastAdded = $mangaRepository->findBy([], ['date'=> 'DESC'], 4);
-        $lastRelease = $tomesRepository->findAfterDate(4);
-        return $this->render('pages/home.html.twig', ['lastAdded'=> $lastAdded, 'lastReleases'=>$lastRelease]);
+        $lastComment = $commentRepository->commentWithManga(4);
+        return $this->render('pages/home.html.twig', ['lastAdded'=> $lastAdded, 'lastComment'=>$lastComment]);
     }
 
 

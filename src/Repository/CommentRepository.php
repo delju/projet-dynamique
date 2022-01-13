@@ -19,6 +19,17 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function commentWithManga($limit= null){
+        $qb = $this->createQueryBuilder('c')
+            ->leftJoin('c.manga', 'm')
+            ->addSelect('m');
+
+        if (false === is_null($limit))
+            $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

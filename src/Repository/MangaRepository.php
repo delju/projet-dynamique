@@ -21,33 +21,33 @@ class MangaRepository extends ServiceEntityRepository
     }
     public function findBySearch(Search $search)
     {
-        $qb = $this->createQueryBuilder('a')
-            ->where('a.frenchTitle LIKE :keyword')
+        $qb = $this->createQueryBuilder('m')
+            ->where('m.frenchTitle LIKE (:keyword)')
             ->setParameter('keyword', '%'.$search->getKeyword().'%')
         ;
 
         if (count($search->getStatuts())) {
-            $qb->andWhere('a.statut in (:statuts)')
+            $qb->andWhere('m.statut in (:statuts)')
                 ->setParameter('categories', $search->getStatuts());
         }
 
         if(count($search->getGenres())) {
-            $qb->andWhere('a.genre in (:genres)')
+            $qb->andWhere('m.genre in (:genres)')
                 ->setParameter('genres', $search->getGenres());
         }
 
         if(count($search->getAnimes())){
-            $qb->andWhere('a.anime in (:animes)')
+            $qb->andWhere('m.anime in (:animes)')
             ->setParameter('animes', $search->getAnimes());
         }
 
         if(count($search->getClassifications())){
-            $qb->andWhere('a.classification in (:classifications)')
+            $qb->andWhere('m.classification in (:classifications)')
                 ->setParameter('classifications', $search->getClassifications());
         }
 
         if(count($search->getEditors())){
-            $qb->andWhere('a.editor in (:editors)')
+            $qb->andWhere('m.editor in (:editors)')
                 ->setParameter('editors', $search->getEditors());
         }
 

@@ -57,6 +57,13 @@ class Tomes
      */
     private $photo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=CollectionUser::class, inversedBy="tomes")
+     */
+    private $collectionUser;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,12 +161,19 @@ class Tomes
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-
-    public function prePersist(): void {
-        $this->date = new \DateTime();
+    public function getCollectionUser(): ?CollectionUser
+    {
+        return $this->collectionUser;
     }
+
+    public function setCollectionUser(?CollectionUser $collectionUser): self
+    {
+        $this->collectionUser = $collectionUser;
+
+        return $this;
+    }
+
+
+
 }
 

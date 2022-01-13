@@ -4,7 +4,7 @@ namespace App\Search;
 
 class Search
 {
-    private ?string $keyword = null;
+    private string $keyword;
     private $statuts;
     private $genres;
     private $classifications;
@@ -108,4 +108,8 @@ class Search
         $this->statuts = $statuts;
     }
 
+    public function __toString()
+    {
+        return 'search';
+    }
 }

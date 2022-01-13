@@ -64,6 +64,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToOne(targetEntity=CollectionUser::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $collectionUser;
+
+
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -79,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -96,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**
@@ -236,7 +243,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPlainPassword(): string
     {
-        return (string) $this->plainPassword;
+        return (string)$this->plainPassword;
     }
 
     /**
@@ -245,5 +252,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    public function getCollectionUser(): ?CollectionUser
+    {
+        return $this->collectionUser;
+    }
+
+    public function setCollectionUser(CollectionUser $collectionUser): self
+    {
+        // set the owning side of the relation if necessary
+        if ($collectionUser->getUser() !== $this) {
+            $collectionUser->setUser($this);
+        }
+
+        $this->collectionUser = $collectionUser;
+
+        return $this;
     }
 }

@@ -23,10 +23,12 @@ class TomesRepository extends ServiceEntityRepository
 
 
     public function findUntilDate(){
+        $today = new \Datetime('');
+        $today = $today->format('yyyy-MM-dd');
         $qb = $this->createQueryBuilder('t')
             ->Where('t.rel_date > (:date)')
             ->orderBy('t.rel_date', 'ASC')
-            ->setParameter('date', new Date('date'));
+            ->setParameter('date', $today);
         ;
 
             return $qb->getQuery()->getResult();

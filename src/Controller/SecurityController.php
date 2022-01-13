@@ -15,9 +15,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
 
-    /**
-     * @Route("/register", name="register")
-     */
+
     /**
      * @Route("/register", name="register")
      */
