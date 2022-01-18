@@ -12,9 +12,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('keyword');
-
-        ;
+            ->add('keyword', null, ['label'=>'Recherche']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

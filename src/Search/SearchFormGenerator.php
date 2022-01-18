@@ -26,7 +26,7 @@ class SearchFormGenerator
 
     public function getSearchForm(): FormView
     {
-        $form = $this->formFactory->create(SearchFullType::class, null, ["action" => $this->router->generate('search')]);
+        $form = $this->formFactory->create(SearchType::class, null, ["action" => $this->router->generate('search')]);
         $formView = $form->createView();
         return $formView;
     }

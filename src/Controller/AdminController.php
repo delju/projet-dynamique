@@ -6,6 +6,7 @@ use App\Repository\CommentRepository;
 use App\Repository\MangaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,18 +18,30 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin-books", name="admin-books")
      */
-    public function adminBooks(string $slug, MangaRepository $mangaRepository ): Response
+    public function adminBooks(MangaRepository $mangaRepository): Response
     {
-        $manga = $mangaRepository->findWithTomes($slug);
-        return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $manga]);
+        $mangas = $mangaRepository->findBy([], ['frenchTitle'=>'asc']);
+        return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $mangas]);
     }
+
+    /**
+     * @Route("/admin-tome/{slug}", name="admin-tome")
+     */
+    public function adminTome(string $slug, MangaRepository $mangaRepository, TomesRepository $tomesRepository): Response
+    {
+        $manga = $mangaRepository->findBySlug($slug);
+        $tomes = $manga->getTomes();
+
+        return $this->render('pages/admin/admin-tome.html.twig', ['mangas'=>$manga,'tomes'=>$tomes,'slug' => $manga->getSlug()]);
+    }
+
 
     /**
      * @Route("/admin-reviews", name="admin-reviews")
      */
     public function adminReviews(CommentRepository $commentRepository): Response
     {
-        $comment = $commentRepository->findBy([], ['date' => 'desc'], 20, 0 );
+        $comment = $commentRepository->commentWithManga(100);
         return $this->render('pages/admin/admin-reviews.html.twig', ['comments' => $comment]);
     }
 
@@ -37,9 +50,21 @@ class AdminController extends AbstractController
      */
     public function adminMessages(MessageRepository $messageRepository): Response
     {
-        $messages = $messageRepository->findBy([], ['date'=>'desc']);
+        $messages = $messageRepository->findBy([], ['date'=>'desc'], 20);
 
         return $this->render('pages/admin/admin-messages.html.twig', ['messages'=>$messages]);
     }
 
+    /**
+     * @Route("/{id<\d+>}/delete", name="delete")
+     */
+    public function adminDelete(int $id, MangaRepository $mangaRepository, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
+    {
+        $manga = $mangaRepository->find($id);
+        $tome = $tomesRepository->find($id);
+        $em->remove($manga);
+        $em->flush();
+
+        return $this->render('pages/admin/element/delete-items.html.twig', ['manga'=>$manga]);
+    }
 }

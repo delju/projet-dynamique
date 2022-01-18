@@ -1,0 +1,66 @@
+{% extends 'Layouts/admin.html.twig' %}
+
+{% block content %}
+    <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
+        <!-- Recently Favorited -->
+        <div class="widget dashboard-container my-adslist">
+            <div class="row">
+                <div class="col-md-10">
+                    <h2 class="widget-header">Les tomes</h2>
+                </div>
+                <div class="col-md-2 action">
+                    <a data-toggle="modal" data-placement="top" title="Add" class="add" href="" data-target="#additem">
+                        <i class="fa fa-plus-circle"></i>
+                    </a>
+                </div>
+            </div>
+            <table class="table table-responsive product-dashboard-table">
+                <table class="table table-bordered product-table">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Numéro</th>
+                        <th class="text-center">Couverture</th>
+                        <th class="text-center">Titre</th>
+                        <th class="text-center">Résumé</th>
+                        <th class="text-center">Ajouter</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tome in manga.tomes %}
+                        <tr>
+                            <td class="text-center">{{ tome.number }}</td>
+                            <td class="">
+                                <img width="80px" height="auto" src="{{ asset('uploads/'~tome.photo.url) }}" alt="image description"></td>
+                            <td class="product-category">
+                                <h3 class="title">{{ tome.title }}</h3>
+                            </td>
+                            <td class=""><div class="overflow-auto p-2" style=" height: 120px"><span class="summery">{{ tome.summary }}</span></div>
+                            </td>
+                        <td class="action" data-title="Action">
+                            <div class="">
+                                <ul class="list-inline justify-content-center">
+                                    <li class="list-inline-item">
+                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ url('edit_tome', {id: tome.id}) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a data-placement="top" title="Delete" class="delete" href="" data-toggle="modal" data-target="#deleteitem">													<i class="fa fa-trash"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+            </table>
+
+    </div>
+{% endblock content %}
+

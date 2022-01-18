@@ -19,10 +19,11 @@ class MangaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Manga::class);
     }
+
     public function findBySearch(Search $search)
     {
         $qb = $this->createQueryBuilder('m')
-            ->where('m.frenchTitle LIKE (:keyword)')
+            ->where('m.frenchTitle LIKE :keyword')
             ->setParameter('keyword', '%'.$search->getKeyword().'%')
         ;
 
@@ -54,12 +55,9 @@ class MangaRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findWithTomes(string $slug){
+    public function findWithTomes(){
         $qb = $this->createQueryBuilder('m')
-            ->where('m.slug in (:slug)')
-            ->setParameter('slug', $slug);
-
-        $qb->leftJoin('m.tomes', 'tomes')
+            ->leftJoin('m.tomes', 'tomes')
             ->orderBy('tomes.number', 'ASC')
             ->addSelect('tomes')
             ;
@@ -67,6 +65,9 @@ class MangaRepository extends ServiceEntityRepository
 
 
     }
+
+
+
 
     // /**
     //  * @return Manga[] Returns an array of Manga objects

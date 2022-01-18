@@ -4,7 +4,7 @@ namespace App\Search;
 
 class Search
 {
-    private string $keyword;
+    private ?string $keyword = null;
     private $statuts;
     private $genres;
     private $classifications;
@@ -79,7 +79,7 @@ class Search
     /**
      * @return string
      */
-    public function getKeyword(): string
+    public function getKeyword(): ?string
     {
         return $this->keyword;
     }
@@ -87,7 +87,7 @@ class Search
     /**
      * @param string $keyword
      */
-    public function setKeyword(string $keyword): void
+    public function setKeyword(?string $keyword): void
     {
         $this->keyword = $keyword;
     }
@@ -101,9 +101,9 @@ class Search
     }
 
     /**
-     * @param mixed $Statuts
+     * @param $statuts
      */
-    public function setstatuts($statuts): void
+    public function setStatuts($statuts): void
     {
         $this->statuts = $statuts;
     }

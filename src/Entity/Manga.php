@@ -29,7 +29,7 @@ class Manga
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $frenchTitle;
+    private string $frenchTitle;
 
     /**
      * @ORM\Column(type="text")
@@ -280,13 +280,6 @@ class Manga
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-
-    public function prePersist(): void {
-        $this->date = new \DateTime();
-    }
 
     public function getSlug(): string
     {

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CollectionUser;
 use App\Entity\Comment;
 use App\Entity\Manga;
 use App\Entity\Message;
@@ -19,6 +20,7 @@ use App\Repository\TomesRepository;
 use App\Search\Search;
 use App\Search\SearchFullType;
 use App\Service\MangaPhotoUploader;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,38 +32,45 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(MangaRepository $mangaRepository, CommentRepository $commentRepository): Response
+    public function home(MangaRepository $mangaRepository, CommentRepository $commentRepository, TomesRepository $tomesRepository): Response
     {
         $lastAdded = $mangaRepository->findBy([], ['date'=> 'DESC'], 4);
         $lastComment = $commentRepository->commentWithManga(4);
-        return $this->render('pages/home.html.twig', ['lastAdded'=> $lastAdded, 'lastComment'=>$lastComment]);
+        $lastRelease = $tomesRepository->findByLastReleases(4);
+        return $this->render('pages/home.html.twig', ['lastAdded'=> $lastAdded, 'lastComment'=>$lastComment, 'lastReleases'=>$lastRelease]);
     }
-
-
 
     /**
      * @Route("/collection", name="collection")
      */
-    public function collection(): Response
+    public function Collection(): Response
     {
-        return $this->render('pages/collection.html.twig');
+        return $this->render('pages/collection.html.twig', );
     }
 
     /**
-     * @Route("/wishlist", name="wishlist")
+     * @Route("/add-collection", name="addCollection")
      */
-    public function wishlist(): Response
+    public function AddCollection(int $id, TomesRepository $tomesRepository, EntityManager $em): Response
     {
-        return $this->render('pages/wishlist.html.twig');
+        $tomes = $tomesRepository->find($id);
+        $collection = new CollectionUser($tomes);
+        $collection->addTome($tomes);
+        $em->persist($tomes);
+        $em->persist($collection);
+        $em->flush();
+        return $this->render('pages/collection.html.twig', );
     }
+
+
 
     /**
      * @Route("/next-releases", name="next-releases")
      */
     public function nextReleases(TomesRepository $tomesRepository): Response
     {
-        $tomes = $tomesRepository->findUntilDate([], ['rel_date'=>'desc'], 30);
-        return $this->render('pages/next-releases.html.twig', ['tomes' => $tomes]);
+        $lastReleases = $tomesRepository->findUntilDate();
+        return $this->render('pages/next-releases.html.twig', ['lastReleases' => $lastReleases]);
     }
 
 
@@ -170,7 +179,25 @@ class DefaultController extends AbstractController
 
     }
 
+    /**
+     * @Route("/edit_tome/{id<\d+>}", name="edit_tome")
+     */
+    public function editTome(int $id, Request $request, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
+    {
+        $tome = $tomesRepository->find($id);
+        $form = $this->createForm(MangaType::class, $tome);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($tome);
+            $em->flush();
 
+            return $this->redirectToRoute('admin-books');
+
+        }
+
+        return $this->render('pages/create-manga.html.twig',['mangaForm' => $form->createView()]);
+
+    }
 
     /**
      *@Route("/search", name="search")

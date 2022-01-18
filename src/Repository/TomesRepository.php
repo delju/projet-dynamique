@@ -21,26 +21,37 @@ class TomesRepository extends ServiceEntityRepository
         parent::__construct($registry, Tomes::class);
     }
 
+    public function findWithManga() :void{
+        $qb = $this->createQueryBuilder('t')
+            ->leftJoin('t.manga', 'm')
+            ->addSelect('m')
+            ->addOrderBy('m.frenchTitle', 'ASC')
+            ->addOrderBy('t.number', 'ASC');
+
+        $qb->getQuery()->getResult();
+    }
+
+    // Fonction qui va rechercher les tomes qui ne sont pas encore sorti
 
     public function findUntilDate(){
-        $today = new \Datetime('');
-        $today = $today->format('yyyy-MM-dd');
+
         $qb = $this->createQueryBuilder('t')
-            ->Where('t.rel_date > (:date)')
-            ->orderBy('t.rel_date', 'ASC')
-            ->setParameter('date', $today);
+            ->Where('t.rel_date > :now')
+            ->orderBy('t.rel_date', 'DESC')
+            ->setParameter('now', new DateTime());
         ;
 
             return $qb->getQuery()->getResult();
     }
 
-    public function findAfterDate($limit = null){
-        $today = new \Datetime('');
-        $today = $today->format('yyyy-MM-dd');
+//    Fonction qui va rechercher les tomes avec leur manga qui ne sont sortis avant date d'aujourd'hui. Limit à 4
+    public function findByLastReleases($limit = null){
         $qb = $this->createQueryBuilder('t')
-            ->Where('t.rel_date < (:date)')
-            ->orderBy('t.rel_date', 'DESC')
-            ->setParameter('date', $today );
+            ->leftJoin('t.manga', 'manga')
+           ->addSelect('manga')
+            ->where('t.rel_date <= :now')
+            ->OrderBy('t.rel_date', 'ASC')
+            ->setParameter('now', new \DateTime());
 
         if (false === is_null($limit))
             $qb->setMaxResults($limit);

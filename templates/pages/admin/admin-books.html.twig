@@ -45,66 +45,23 @@
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ url('edit_manga', {'id': manga.id}) }}">
+                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ url('edit_manga', {id: manga.id}) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a data-placement="top" title="Delete" class="delete" href="" data-toggle="modal" data-target="#deleteitem">													<i class="fa fa-trash"></i>
+                                        <a data-placement="top" title="Delete" class="delete" href="{{ url('delete', {id: manga.id}) }}" data-toggle="modal" data-target="#deleteitem">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a data-toggle="tooltip" data-placement="top" title="Add" class="add" href="{{ url('admin-tome', {slug: manga.slug}) }}" >
+                                            <i class="fa fa-book"></i>
                                         </a>
                                     </li>
                                 </ul>
-                                <a data-toggle="collapse" href="#manga{{ manga.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Tomes
-                                </a>
+
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="tomes-details collapse" id="manga{{ manga.id }}">
-                            <h2 class="widget-header">Les Tomes</h2>
-                            <table class="table table-responsive product-dashboard-table">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">Numéro</th>
-                                    <th class="text-center">Image</th>
-                                    <th class="text-center">Informations</th>
-                                    <th class="text-center">Date de sortie</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for tome in manga.tomes %}
-                                <tr>
-
-                                    <td class="product-category"><span class="categories">{{ manga.tome.number }}</span></td>
-                                    <td class="product-thumb">
-                                        <img width="80px" height="auto" src="{{ asset('uploads/'~manga.tome.photo.url) }}" alt="image description"></td>
-                                    <td class="product-details">
-                                        <h3 class="title">{{ manga.tome.title }}</h3>
-                                        <span class="summery">{{ manga.tome.summary }}</span>
-                                    </td>
-                                    <td class="product-category"><span class="categories">{{ manga.tome.rel_date }}</span></td>
-                                    <td class="action" data-title="Action">
-                                        <div class="">
-                                            <ul class="list-inline justify-content-center">
-                                                <li class="list-inline-item">
-                                                    <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a data-placement="top" title="Delete" class="delete" href="" data-toggle="modal" data-target="#deleteitem">													<i class="fa fa-trash"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-
                         </td>
                     </tr>
 
