@@ -153,7 +153,7 @@ class DefaultController extends AbstractController
             $em->persist($tome);
             $em->flush();
 
-            return $this->redirectToRoute('pages/admin/admin-books');
+            return $this->redirectToRoute('admin-books');
         }
 
         return $this->render('pages/create-tome.html.twig', ['tomeForm' => $formTome->createView()]);

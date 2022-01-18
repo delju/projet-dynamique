@@ -22,7 +22,12 @@ class TomeType extends AbstractType
             ->add('number', null ,['label'=>'Numéro'])
             ->add('title', null, ['label'=>'Titre' ])
             ->add('summary', null, ['label'=>'Résumé' ])
-            ->add('rel_date', DateType::class, ['label'=>'Date de sortie' ])
+            ->add('rel_date', DateType::class, array(
+                'widget' => 'choice',
+                'years' => range(1950, date('Y')),
+                'months' => range(1, 12),
+                'days' => range(1, 31),
+            ))
             ->add('photo', PhotoType::class)
             ->add('submit', SubmitType::class)
         ;

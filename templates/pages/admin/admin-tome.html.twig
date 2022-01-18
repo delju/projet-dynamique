@@ -26,15 +26,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for tome in manga.tomes %}
+                    {% for manga in mangas %}
                         <tr>
-                            <td class="text-center">{{ tome.number }}</td>
+                            <td class="text-center">{{ manga.tomes.number }}</td>
                             <td class="">
-                                <img width="80px" height="auto" src="{{ asset('uploads/'~tome.photo.url) }}" alt="image description"></td>
+                                <img width="80px" height="auto" src="{{ asset('uploads/'~manga.tomes.photo.url) }}" alt="image description"></td>
                             <td class="product-category">
-                                <h3 class="title">{{ tome.title }}</h3>
+                                <h3 class="title">{{ manga.tomes.title }}</h3>
                             </td>
-                            <td class=""><div class="overflow-auto p-2" style=" height: 120px"><span class="summery">{{ tome.summary }}</span></div>
+                            <td class=""><div class="overflow-auto p-2" style=" height: 120px"><span class="summery">{{ manga.tomes.summary }}</span></div>
                             </td>
                         <td class="action" data-title="Action">
                             <div class="">
@@ -61,6 +61,7 @@
 
             </table>
 
+    </div>
     </div>
 {% endblock content %}
 

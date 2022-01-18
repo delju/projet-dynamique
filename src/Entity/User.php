@@ -65,15 +65,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $comments;
 
     /**
-     * @ORM\OneToOne(targetEntity=CollectionUser::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Tomes::class, mappedBy="user")
      */
-    private $collectionUser;
+    private $my_book;
+
+
 
 
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->my_book = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,20 +257,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->plainPassword = $plainPassword;
     }
 
-    public function getCollectionUser(): ?CollectionUser
+    /**
+     * @return Collection|Tomes[]
+     */
+    public function getMyBook(): Collection
     {
-        return $this->collectionUser;
+        return $this->my_book;
     }
 
-    public function setCollectionUser(CollectionUser $collectionUser): self
+    public function addMyBook(Tomes $myBook): self
     {
-        // set the owning side of the relation if necessary
-        if ($collectionUser->getUser() !== $this) {
-            $collectionUser->setUser($this);
+        if (!$this->my_book->contains($myBook)) {
+            $this->my_book[] = $myBook;
         }
-
-        $this->collectionUser = $collectionUser;
 
         return $this;
     }
+
+    public function removeMyBook(Tomes $myBook): self
+    {
+        $this->my_book->removeElement($myBook);
+
+        return $this;
+    }
+
+
 }

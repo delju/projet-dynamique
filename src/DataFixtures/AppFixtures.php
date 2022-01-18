@@ -104,6 +104,14 @@ class AppFixtures extends Fixture
         $photo3->setUrl('mhatome1-61bb140d48eab.jpg');
         $manager->persist($photo3);
 
+        $photo4 = new Photo();
+        $photo4->setUrl('2-61e6cd806ca57.jpg');
+        $manager->persist($photo4);
+
+        $photo5 = new Photo();
+        $photo5->setUrl('my_hero_academia_tome_3_all_might787425264432-61e6d1276babf.jpg');
+        $manager->persist($photo5);
+
         $admin = new User();
         $admin->setUsername("Julene1002");
         $admin->setLastname("Delvaux");
@@ -160,6 +168,24 @@ class AppFixtures extends Fixture
         $tome1->setRelDate(new \DateTime('2016-04-14'));
         $tome1->setPhoto($photo3);
         $manager->persist($tome1);
+
+        $tome2 = new Tomes();
+        $tome2->setManga($manga1);
+        $tome2->setNumber(2);
+        $tome2->setTitle('Déchaine-toi, maudit nerd!');
+        $tome2->setSummary('Pris pour cible par un super-vilain, Izuku est secouru de main de maître par son idole en personne ! Il découvre alors qu’All Might, très diminué par une ancienne blessure, ne peut plus utiliser son alter que trois heures par jour... Aussi, lorsque son camarade Katsuki est attaqué quelques instants plus tard, son sang ne fait qu’un tour : malgré sa terreur, il se précipite à la rescousse du jeune garçon ! Témoin de cet acte de bravoure, All Might décide de faire d’Izuku son successeur. Après un entraînement drastique, notre apprenti héros réussit à intégrer le prestigieux lycée Yuei, mais il y a un hic : impossible pour lui de maîtriser le One for All, le pouvoir hérité d’All Might...');
+        $tome2->setRelDate(new \DateTime('2016-04-14'));
+        $tome2->setPhoto($photo4);
+        $manager->persist($tome2);
+
+        $tome3 = new Tomes();
+        $tome3->setManga($manga1);
+        $tome3->setNumber(3);
+        $tome3->setTitle('All might');
+        $tome3->setSummary('Pris pour cible par un super-vilain, Izuku est secouru de main de maître par son idole en personne ! Il découvre alors qu’All Might, très diminué par une ancienne blessure, ne peut plus utiliser son alter que trois heures par jour... Aussi, lorsque son camarade Katsuki est attaqué quelques instants plus tard, son sang ne fait qu’un tour : malgré sa terreur, il se précipite à la rescousse du jeune garçon ! Témoin de cet acte de bravoure, All Might décide de faire d’Izuku son successeur. Après un entraînement drastique, notre apprenti héros réussit à intégrer le prestigieux lycée Yuei, mais il y a un hic : impossible pour lui de maîtriser le One for All, le pouvoir hérité d’All Might...');
+        $tome3->setRelDate(new \DateTime('2016-06-09'));
+        $tome3->setPhoto($photo5);
+        $manager->persist($tome3);
 
         $manager->flush();
     }

@@ -29,10 +29,9 @@ class AdminController extends AbstractController
      */
     public function adminTome(string $slug, MangaRepository $mangaRepository, TomesRepository $tomesRepository): Response
     {
-        $manga = $mangaRepository->findBySlug($slug);
-        $tomes = $manga->getTomes();
+        $manga = $mangaRepository->findWithTomes($slug);
 
-        return $this->render('pages/admin/admin-tome.html.twig', ['mangas'=>$manga,'tomes'=>$tomes,'slug' => $manga->getSlug()]);
+        return $this->render('pages/admin/admin-tome.html.twig', ['mangas'=>$manga]);
     }
 
 

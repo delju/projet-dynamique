@@ -55,11 +55,13 @@ class MangaRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findWithTomes(){
+    public function findWithTomes($slug){
         $qb = $this->createQueryBuilder('m')
+            ->where('m.slug = :slug')
             ->leftJoin('m.tomes', 'tomes')
             ->orderBy('tomes.number', 'ASC')
             ->addSelect('tomes')
+            ->setParameter('slug', $slug)
             ;
         return $qb->getQuery()->getResult();
 

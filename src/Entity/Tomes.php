@@ -57,10 +57,6 @@ class Tomes
      */
     private $photo;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=CollectionUser::class, inversedBy="tomes")
-     */
-    private $collectionUser;
 
 
 
@@ -161,17 +157,7 @@ class Tomes
         return $this;
     }
 
-    public function getCollectionUser(): ?CollectionUser
-    {
-        return $this->collectionUser;
-    }
 
-    public function setCollectionUser(?CollectionUser $collectionUser): self
-    {
-        $this->collectionUser = $collectionUser;
-
-        return $this;
-    }
 
 
 
