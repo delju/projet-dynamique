@@ -175,7 +175,7 @@ class Comparator
     }
 
     /**
-     * @deprecated Use non-static call to {@link compareSchemas()} instead.
+     * @deprecated Use non-static call to {@see compareSchemas()} instead.
      *
      * @return SchemaDiff
      *
@@ -373,7 +373,7 @@ class Comparator
             }
 
             [$removedColumn, $addedColumn] = $candidateColumns[0];
-            $removedColumnName             = strtolower($removedColumn->getName());
+            $removedColumnName             = $removedColumn->getName();
             $addedColumnName               = strtolower($addedColumn->getName());
 
             if (isset($tableDifferences->renamedColumns[$removedColumnName])) {
@@ -383,7 +383,7 @@ class Comparator
             $tableDifferences->renamedColumns[$removedColumnName] = $addedColumn;
             unset(
                 $tableDifferences->addedColumns[$addedColumnName],
-                $tableDifferences->removedColumns[$removedColumnName]
+                $tableDifferences->removedColumns[strtolower($removedColumnName)]
             );
         }
     }

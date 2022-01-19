@@ -1,6 +1,60 @@
 {% extends 'Layouts/admin.html.twig' %}
 
 {% block content %}
+
+    <!-- delete-account modal -->
+    <!-- delete account popup modal start-->
+    <!-- Modal Delete -->
+    <div class="modal fade" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="images/account/Account1.png" class="img-fluid mb-2" alt="">
+                    <h6 class="py-2">Es-tu sur de vouloir le supprimer?</h6>
+                </div>
+                <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-danger" href="{{ url('delete', {id: mangas.id}) }}">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- add item modal -->
+    <div class="modal fade" id="additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="text-center">Que veux-tu ajouter?</h2>
+
+                    <fieldset class="p-4 modal-footer border-top-0 mb-3 mx-5 justify-content-center">
+
+                        <a href="{{ url('create-manga') }}"><button type="button" class="btn btn-primary" >Manga</button></a>
+
+                        <a href="{{ url('create-tome') }}"><button type="button" class="btn btn-primary" >Tome</button></a>
+
+                    </fieldset>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist">
@@ -50,7 +104,7 @@
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a data-placement="top" title="Delete" class="delete" href="{{ url('delete', {id: manga.id}) }}" data-toggle="modal" data-target="#deleteitem">
+                                        <a data-placement="top" title="Delete" class="delete" href="" data-toggle="modal" data-target="#deleteitem">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </li>

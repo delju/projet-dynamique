@@ -24,6 +24,7 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\SQL\Parser;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Deprecations\Deprecation;
+use LogicException;
 use Throwable;
 use Traversable;
 
@@ -34,12 +35,15 @@ use function implode;
 use function is_int;
 use function is_string;
 use function key;
+use function method_exists;
+use function sprintf;
 
 /**
  * A database abstraction-level connection that implements features like events, transaction isolation levels,
  * configuration, emulated transaction nesting, lazy connecting and more.
  *
  * @psalm-import-type Params from DriverManager
+ * @psalm-consistent-constructor
  */
 class Connection
 {
@@ -52,6 +56,11 @@ class Connection
      * Represents an array of strings to be expanded by Doctrine SQL parsing.
      */
     public const PARAM_STR_ARRAY = ParameterType::STRING + self::ARRAY_PARAM_OFFSET;
+
+    /**
+     * Represents an array of ascii strings to be expanded by Doctrine SQL parsing.
+     */
+    public const PARAM_ASCII_STR_ARRAY = ParameterType::ASCII + self::ARRAY_PARAM_OFFSET;
 
     /**
      * Offset by which PARAM_* constants are detected as arrays of the param type.
@@ -72,7 +81,7 @@ class Connection
     protected $_eventManager;
 
     /**
-     * @deprecated Use {@link createExpressionBuilder()} instead.
+     * @deprecated Use {@see createExpressionBuilder()} instead.
      *
      * @var ExpressionBuilder
      */
@@ -131,7 +140,7 @@ class Connection
     /**
      * The schema manager.
      *
-     * @deprecated Use {@link createSchemaManager()} instead.
+     * @deprecated Use {@see createSchemaManager()} instead.
      *
      * @var AbstractSchemaManager|null
      */
@@ -291,7 +300,7 @@ class Connection
     /**
      * Gets the ExpressionBuilder for the connection.
      *
-     * @deprecated Use {@link createExpressionBuilder()} instead.
+     * @deprecated Use {@see createExpressionBuilder()} instead.
      *
      * @return ExpressionBuilder
      */
@@ -310,6 +319,8 @@ class Connection
     /**
      * Establishes the connection with the database.
      *
+     * @internal This method will be made protected in DBAL 4.0.
+     *
      * @return bool TRUE if the connection was successfully established, FALSE if
      *              the connection is already open.
      *
@@ -317,6 +328,12 @@ class Connection
      */
     public function connect()
     {
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4966',
+            'Public access to Connection::connect() is deprecated.'
+        );
+
         if ($this->_conn !== null) {
             return false;
         }
@@ -785,7 +802,7 @@ class Connection
 
     /**
      * The usage of this method is discouraged. Use prepared statements
-     * or {@link AbstractPlatform::quoteStringLiteral()} instead.
+     * or {@see AbstractPlatform::quoteStringLiteral()} instead.
      *
      * @param mixed                $value
      * @param int|string|Type|null $type
@@ -1255,10 +1272,9 @@ class Connection
     }
 
     /**
-     * Returns the savepoint name to use for nested transactions are false if they are not supported
-     * "savepointFormat" parameter is not set
+     * Returns the savepoint name to use for nested transactions.
      *
-     * @return mixed A string with the savepoint name or false.
+     * @return string
      */
     protected function _getNestedTransactionSavePointName()
     {
@@ -1498,17 +1514,44 @@ class Connection
     /**
      * Gets the wrapped driver connection.
      *
+     * @deprecated Use {@link getNativeConnection()} to access the native connection.
+     *
      * @return DriverConnection
      *
      * @throws Exception
      */
     public function getWrappedConnection()
     {
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4966',
+            'Connection::getWrappedConnection() is deprecated.'
+                . ' Use Connection::getNativeConnection() to access the native connection.'
+        );
+
         $this->connect();
 
         assert($this->_conn !== null);
 
         return $this->_conn;
+    }
+
+    /**
+     * @return resource|object
+     */
+    public function getNativeConnection()
+    {
+        $this->connect();
+
+        assert($this->_conn !== null);
+        if (! method_exists($this->_conn, 'getNativeConnection')) {
+            throw new LogicException(sprintf(
+                'The driver connection %s does not support accessing the native connection.',
+                get_class($this->_conn)
+            ));
+        }
+
+        return $this->_conn->getNativeConnection();
     }
 
     /**
@@ -1529,7 +1572,7 @@ class Connection
      * Gets the SchemaManager that can be used to inspect or change the
      * database schema through the connection.
      *
-     * @deprecated Use {@link createSchemaManager()} instead.
+     * @deprecated Use {@see createSchemaManager()} instead.
      *
      * @return AbstractSchemaManager
      *
@@ -1749,7 +1792,11 @@ class Connection
         }
 
         foreach ($types as $type) {
-            if ($type === self::PARAM_INT_ARRAY || $type === self::PARAM_STR_ARRAY) {
+            if (
+                $type === self::PARAM_INT_ARRAY
+                || $type === self::PARAM_STR_ARRAY
+                || $type === self::PARAM_ASCII_STR_ARRAY
+            ) {
                 return true;
             }
         }

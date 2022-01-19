@@ -7,7 +7,9 @@ use App\Repository\MangaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,10 +40,16 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin-reviews", name="admin-reviews")
      */
-    public function adminReviews(CommentRepository $commentRepository): Response
+    public function adminReviews(CommentRepository $commentRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $comment = $commentRepository->commentWithManga(100);
-        return $this->render('pages/admin/admin-reviews.html.twig', ['comments' => $comment]);
+
+        $queryBuilder = $commentRepository->commentWithManga(100);
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
+
+        return $this->render('pages/admin/admin-reviews.html.twig', ['pagination' => $pagination]);
     }
 
     /**
@@ -55,7 +63,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/{id<\d+>}/delete", name="delete")
+     * @Route("/delete/{id<\d+>}", name="delete")
      */
     public function adminDelete(int $id, MangaRepository $mangaRepository, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
