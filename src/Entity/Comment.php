@@ -29,10 +29,6 @@ class Comment
      */
     private $date;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $note;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
@@ -76,17 +72,7 @@ class Comment
         return $this;
     }
 
-    public function getNote(): ?int
-    {
-        return $this->note;
-    }
 
-    public function setNote(int $note): self
-    {
-        $this->note = $note;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {

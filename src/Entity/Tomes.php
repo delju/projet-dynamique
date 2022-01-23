@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TomesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -57,7 +59,16 @@ class Tomes
      */
     private $photo;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="my_book")
+     */
+    private $user;
 
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -137,13 +148,6 @@ class Tomes
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-
-    public function prePersis() :void{
-        $this->date = new \DateTime();
-    }
 
     public function getPhoto(): ?Photo
     {
@@ -156,7 +160,6 @@ class Tomes
 
         return $this;
     }
-
 
 
 

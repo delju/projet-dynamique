@@ -12,7 +12,7 @@ class Search
     private $editors;
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getClassifications()
     {
@@ -20,7 +20,7 @@ class Search
     }
 
     /**
-     * @param mixed $classifications
+     * @param array $classifications
      */
     public function setClassifications($classifications): void
     {
@@ -28,7 +28,7 @@ class Search
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getAnimes()
     {
@@ -36,7 +36,7 @@ class Search
     }
 
     /**
-     * @param mixed $animes
+     * @param array $animes
      */
     public function setAnimes($animes): void
     {
@@ -44,7 +44,7 @@ class Search
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getEditors()
     {
@@ -52,7 +52,7 @@ class Search
     }
 
     /**
-     * @param mixed $editors
+     * @param array $editors
      */
     public function setEditors($editors): void
     {
@@ -61,7 +61,7 @@ class Search
 
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getGenres()
     {
@@ -69,7 +69,7 @@ class Search
     }
 
     /**
-     * @param mixed $genres
+     * @param array $genres
      */
     public function setGenres($genres): void
     {
@@ -93,7 +93,7 @@ class Search
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getStatuts()
     {
@@ -101,12 +101,13 @@ class Search
     }
 
     /**
-     * @param $statuts
+     * @param array $statuts
      */
     public function setStatuts($statuts): void
     {
         $this->statuts = $statuts;
     }
+
 
     public function __toString()
     {

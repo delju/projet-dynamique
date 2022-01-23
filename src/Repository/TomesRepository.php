@@ -22,11 +22,7 @@ class TomesRepository extends ServiceEntityRepository
     }
 
     public function findWithManga() :void{
-        $qb = $this->createQueryBuilder('t')
-            ->leftJoin('t.manga', 'm')
-            ->addSelect('m')
-            ->addOrderBy('m.frenchTitle', 'ASC')
-            ->addOrderBy('t.number', 'ASC');
+        $qb = $this->createQueryBuilder('t');
 
         $qb->getQuery()->getResult();
     }
@@ -37,7 +33,7 @@ class TomesRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('t')
             ->Where('t.rel_date > :now')
-            ->orderBy('t.rel_date', 'DESC')
+            ->orderBy('t.rel_date', 'ASC')
             ->setParameter('now', new DateTime());
         ;
 
@@ -50,7 +46,7 @@ class TomesRepository extends ServiceEntityRepository
             ->leftJoin('t.manga', 'manga')
            ->addSelect('manga')
             ->where('t.rel_date <= :now')
-            ->OrderBy('t.rel_date', 'ASC')
+            ->OrderBy('t.rel_date', 'DESC')
             ->setParameter('now', new \DateTime());
 
         if (false === is_null($limit))

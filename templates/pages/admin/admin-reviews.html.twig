@@ -17,7 +17,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for comment in pagination %}
+                {% for comment in comments %}
                 <tr>
 
                     <td class="product-thumb">
@@ -40,13 +40,14 @@
                         </div>
                     </td>
                 </tr>
+
                 {% endfor %}
                 </tbody>
             </table>
 
         </div>
+        {{ knp_pagination_render(comments) }}
 
-        {{ knp_pagination_render(pagination) }}
     </div>
 
 

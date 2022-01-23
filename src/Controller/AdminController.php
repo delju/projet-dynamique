@@ -27,13 +27,14 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin-tome/{slug}", name="admin-tome")
+     * @Route("{slug}/admin-tome/", name="admin-tome")
      */
-    public function adminTome(string $slug, MangaRepository $mangaRepository, TomesRepository $tomesRepository): Response
+    public function adminTome(string $slug, MangaRepository $mangaRepository): Response
     {
-        $manga = $mangaRepository->findWithTomes($slug);
+        $manga = $mangaRepository->findOneBySlug($slug);
+        $tomes = $manga->getTomes();
 
-        return $this->render('pages/admin/admin-tome.html.twig', ['mangas'=>$manga]);
+        return $this->render('pages/admin/admin-tome.html.twig', ['tomes'=>$tomes] );
     }
 
 
@@ -43,35 +44,43 @@ class AdminController extends AbstractController
     public function adminReviews(CommentRepository $commentRepository, PaginatorInterface $paginator, Request $request): Response
     {
 
-        $queryBuilder = $commentRepository->commentWithManga(100);
-        $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
+        $comment = $commentRepository->commentWithManga(100);
+        $comment = $paginator->paginate(
+            $comment, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/);
+            1/*limit per page*/);
 
-        return $this->render('pages/admin/admin-reviews.html.twig', ['pagination' => $pagination]);
+        return $this->render('pages/admin/admin-reviews.html.twig', ['comments' => $comment]);
     }
 
     /**
      * @Route("/admin-messages", name="admin-messages")
      */
-    public function adminMessages(MessageRepository $messageRepository): Response
+    public function adminMessages(MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $messages = $messageRepository->findBy([], ['date'=>'desc'], 20);
 
-        return $this->render('pages/admin/admin-messages.html.twig', ['messages'=>$messages]);
+        $pagination = $paginator->paginate(
+            $messages, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
+
+        return $this->render('pages/admin/admin-messages.html.twig', ['messages'=>$pagination]);
     }
 
     /**
-     * @Route("/delete/{id<\d+>}", name="delete")
+     * @Route("/delete/{id<\d+>}", name="delete", methods={"DELETE"})
      */
-    public function adminDelete(int $id, MangaRepository $mangaRepository, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
+    public function deleteManga(int $id, MangaRepository $mangaRepository, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
         $manga = $mangaRepository->find($id);
-        $tome = $tomesRepository->find($id);
+
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
         $em->remove($manga);
         $em->flush();
 
-        return $this->render('pages/admin/element/delete-items.html.twig', ['manga'=>$manga]);
+        }
+
+        return $this->render('pages/admin/element/delete-items.html.twig');
     }
 }

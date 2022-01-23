@@ -2,26 +2,25 @@
 
 namespace App\Controller;
 
-use App\Entity\CollectionUser;
 use App\Entity\Comment;
 use App\Entity\Manga;
 use App\Entity\Message;
-use App\Entity\Photo;
 use App\Entity\Tomes;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\MangaType;
 use App\Form\MessageType;
-use App\Form\PhotoType;
 use App\Form\TomeType;
 use App\Repository\CommentRepository;
 use App\Repository\MangaRepository;
-use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
+use App\Repository\UserRepository;
 use App\Search\Search;
 use App\Search\SearchFullType;
 use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,34 +33,47 @@ class DefaultController extends AbstractController
      */
     public function home(MangaRepository $mangaRepository, CommentRepository $commentRepository, TomesRepository $tomesRepository): Response
     {
-        $lastAdded = $mangaRepository->findBy([], ['date'=> 'DESC'], 4);
+        $lastAdded = $mangaRepository->findBy([], ['date' => 'DESC'], 4);
         $lastComment = $commentRepository->commentWithManga(4);
         $lastRelease = $tomesRepository->findByLastReleases(4);
-        return $this->render('pages/home.html.twig', ['lastAdded'=> $lastAdded, 'lastComment'=>$lastComment, 'lastReleases'=>$lastRelease]);
+        return $this->render('pages/home.html.twig', ['lastAdded' => $lastAdded, 'lastComment' => $lastComment, 'lastReleases' => $lastRelease]);
     }
 
     /**
      * @Route("/collection", name="collection")
      */
-    public function Collection(): Response
+    public function Collection(PaginatorInterface $paginator, Request  $request): Response
     {
-        return $this->render('pages/collection.html.twig', );
+
+        $user = $this->getUser();
+        $mybooks = $user->getMyBook();
+
+        $pagination = $paginator->paginate(
+            $mybooks, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            15/*limit per page*/);
+
+        return $this->render('pages/collection.html.twig', ['mybooks' => $pagination]);
     }
 
     /**
-     * @Route("/add-collection", name="addCollection")
+     * @Route("/add-collection/{id<\d+>}", name="addCollection")
      */
-    public function AddCollection(int $id, TomesRepository $tomesRepository, EntityManager $em): Response
+    public function AddCollection(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
-        $tomes = $tomesRepository->find($id);
-        $collection = new CollectionUser($tomes);
-        $collection->addTome($tomes);
-        $em->persist($tomes);
-        $em->persist($collection);
-        $em->flush();
-        return $this->render('pages/collection.html.twig', );
-    }
+        // On récupère l'id de l'utilisateur
+        $user = $this->getUser();
 
+        $tomes = $tomesRepository->find($id);
+
+        $user->addMyBook($tomes);
+
+        $em->persist($tomes);
+        $em->persist($user);
+        $em->flush();
+
+        return $this->render('pages/collection.html.twig');
+    }
 
 
     /**
@@ -79,22 +91,22 @@ class DefaultController extends AbstractController
      */
     public function createMessage(Request $request, EntityManagerInterface $em): Response
     {
-    $message = new Message();
-    $form = $this->createForm(MessageType::class, $message);
-    $form->handleRequest($request);
-    if($form->isSubmitted() && $form->isValid()){
-        $em->persist($message);
-        $em->flush();
-        return $this->redirectToRoute('contact');
-    }
-      return $this->render('pages/contact.html.twig', ['messageForm' => $form->createView()]);
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($message);
+            $em->flush();
+            return $this->redirectToRoute('contact');
+        }
+        return $this->render('pages/contact.html.twig', ['messageForm' => $form->createView()]);
     }
 
 
     /**
      * @Route("/single/{slug}", name="single")
      */
-    public function viewManga(string $slug, MangaRepository $mangaRepository, TomesRepository $tomesRepository, Request $request, EntityManagerInterface $em): Response
+    public function viewManga(string $slug, MangaRepository $mangaRepository, Request $request, EntityManagerInterface $em, PaginatorInterface $paginator): Response
     {
         $manga = $mangaRepository->findOneBySlug($slug);
         $comment = new Comment();
@@ -108,10 +120,14 @@ class DefaultController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('single', ['slug' => $manga->getSlug()]);
         }
-        return $this->render('pages/single.html.twig', ['manga' => $manga, 'tomes'=>$tomes, 'commentForm'=>$commentForm->createView()]);
+
+        $pagination = $paginator->paginate(
+            $tomes, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
+
+        return $this->render('pages/single.html.twig', ['manga' => $manga, 'tomes' => $pagination, 'commentForm' => $commentForm->createView()]);
     }
-
-
 
 
     /**
@@ -123,7 +139,7 @@ class DefaultController extends AbstractController
         $manga = new Manga();
         $formManga = $this->createForm(MangaType::class, $manga);
         $formManga->handleRequest($request);
-        if($formManga->isSubmitted() && $formManga->isValid()){
+        if ($formManga->isSubmitted() && $formManga->isValid()) {
 
             $photo = $mangaPhotoUploader->uploadPhoto($formManga->get('photo')); // le service a bien entendu été injecté via les arguments de la method
             $manga->setPhoto($photo);
@@ -133,6 +149,8 @@ class DefaultController extends AbstractController
 
             return $this->redirectToRoute('pages/admin/admin-books');
         }
+
+
 
         return $this->render('pages/create-manga.html.twig', ['mangaForm' => $formManga->createView()]);
     }
@@ -173,9 +191,9 @@ class DefaultController extends AbstractController
 
             return $this->redirectToRoute('admin-books');
 
-            }
+        }
 
-            return $this->render('pages/create-manga.html.twig',['mangaForm' => $form->createView()]);
+        return $this->render('pages/create-manga.html.twig', ['mangaForm' => $form->createView()]);
 
     }
 
@@ -195,14 +213,14 @@ class DefaultController extends AbstractController
 
         }
 
-        return $this->render('pages/create-manga.html.twig',['mangaForm' => $form->createView()]);
+        return $this->render('pages/create-manga.html.twig', ['mangaForm' => $form->createView()]);
 
     }
 
     /**
-     *@Route("/search", name="search")
+     * @Route("/search", name="search")
      */
-    public function search(MangaRepository $mangaRepository, Request $request): Response
+    public function search(MangaRepository $mangaRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $search = new Search();
         $form = $this->createForm(SearchFullType::class, $search);
@@ -210,8 +228,16 @@ class DefaultController extends AbstractController
         $result = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $mangaRepository->findBySearch($search);
+        }else{
+            $result = $mangaRepository->findBy([], ['frenchTitle'=>'ASC']);
         }
-        return $this->render('pages/search.html.twig', ['mangas' => $result, 'searchFullForm' => $form->createView() ]);
+
+        $pagination = $paginator->paginate(
+            $result, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            30/*limit per page*/);
+
+        return $this->render('pages/search.html.twig', ['mangas' => $pagination, 'searchFullForm' => $form->createView()]);
 
     }
 

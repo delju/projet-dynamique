@@ -65,12 +65,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tomes::class, mappedBy="user")
+     * @ORM\ManyToMany(targetEntity=Tomes::class, inversedBy="user")
      */
     private $my_book;
-
-
-
 
 
     public function __construct()
@@ -280,6 +277,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
 
 }

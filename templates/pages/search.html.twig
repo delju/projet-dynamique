@@ -9,56 +9,39 @@
                     <!-- Header Content -->
                     <div class="content-block">
                         <h1>Otaku's Collection </h1>
-                        <p> </p>
 
                     </div>
-    <!-- Advance Search -->
-    <div class="advance-search">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12 col-md-12 align-content-center">
-                    <form>
-
-
-                      {{ form_start(searchFullForm) }}
-                        <div class="form-row">
-                            <div class="form-group col-md-10">
-                                {% set searchForm = getSearchForm() %}
-
-                                    {{ form_widget(searchForm) }}
-
-
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
-
-    </div>
-    </div>
-    </div>
     </section>
-
+    {{ form_start(searchFullForm) }}
     <section class="section-sm">
-        <div class="container">
 
+        <div class="container">
+            <div class="content-block mb-3">
+                <h2 class="text-center" >Recherche</h2>
+            </div>
+            <div class="mb-5 col-lg-10 ml-auto mr-auto">
+            {# Début du formulaire de recherche #}
+            {{ form_widget(searchFullForm.keyword) }}
+            </div>
             <div class="row">
+                {# Filtres du formulaire de recherche #}
                 <div class="col-md-3">
                     <div class="category-sidebar">
 
                         <!-- Filtre Classification-->
                         <div class="widget category-list">
                             <h4 class="widget-header">{{ form_label(searchFullForm.classifications) }}</h4>
-                           {{ form_widget(searchFullForm.classifications) }}
+                            {{ form_widget(searchFullForm.classifications) }}
                         </div>
 
 
                         <!-- Filtre par genre-->
                         <div class="widget category-list ">
                             <h4 class="widget-header">{{ form_label(searchFullForm.genres) }}</h4>
-                           {{ form_widget(searchFullForm.genres) }}
+                            {{ form_widget(searchFullForm.genres) }}
                         </div>
 
                         <!-- Filtre par édition -->
@@ -80,42 +63,52 @@
                         </div>
 
                     </div>
+                    {{ form_widget(searchFullForm.submit) }}
                 </div>
-{{ form_end(searchFullForm) }}
+
 
                 <div class="col-md-9">
-                    {#                    Boucle sur le résultat de recherche des manga. On affiche ceux trouvé, si pas trouvé on affiche une phrase  #}
+                    {# Boucle sur le résultat de recherche des manga. On affiche ceux trouvé, si pas trouvé on affiche une phrase #}
 
                     <div class="product-grid-list">
                         <div class="row mt-30">
                             {% for manga in mangas %}
-                            <div class="col-sm-12 col-lg-4 col-md-6">
-                                <!-- product card -->
-                                <div class="product-item bg-light">
-                                    <div class="card">
-                                        <div class="thumb-content">
-                                            <!-- <div class="price">$200</div> -->
-                                            <a href="{{ url('single', {slug: manga.slug}) }}">
-                                                <img class="card-img-top img-fluid" src="{{ asset('uploads/'~manga.photo.url) }}" alt="Card image cap">
-                                            </a>
-                                        </div>
-                                        <div class="card-body">
-                                            <h4 class="card-title"><a href={{ url('single', {slug: manga.slug}) }}>{{ manga.frenchTitle }}</a></h4>
-                                            <p class="card-text">{{ manga.summary }}</p>
+                                <div class="col-sm-12 col-lg-4 col-md-6">
+                                    <!-- product card -->
+                                    <div class="product-item bg-light">
+                                        <div class="card">
+                                            <div class="thumb-content">
+                                                <!-- <div class="price">$200</div> -->
+                                                <a href="{{ url('single', {slug: manga.slug}) }}">
+                                                    <img class="card-img-top img-fluid"
+                                                         src="{{ asset('uploads/'~manga.photo.url) }}"
+                                                         alt="Card image cap">
+                                                </a>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title"><a
+                                                            href={{ url('single', {slug: manga.slug}) }}>{{ manga.frenchTitle }}</a>
+                                                </h4>
+                                                <p class="card-text">
+                                                    <div class="overflow-auto p-2" style=" height: 120px">{{ manga.summary }}</div>
+                                                </p>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             {% else %}
                                 <h2>Il n'y a pas de Manga qui correspond à cette recherche</h2>
                             {% endfor %}
 
                         </div>
                     </div>
+                    <!-- pagination -->
+                    {{ knp_pagination_render(mangas) }}
+                    <!-- pagination -->
+                </div>
             </div>
         </div>
-        </div>
     </section>
-
+    {{ form_end(searchFullForm) }}
 {% endblock section %}

@@ -12,7 +12,7 @@
                 <!-- Left sidebar -->
                 <div class="col-md-12">
                     <div class="product-details">
-                        <h1 class="product-title text-center">{{ manga.frenchTitle }}</h1>
+                        <h1 class="product-title text-center mb-4">{{ manga.frenchTitle }}</h1>
 
                         <!-- product slider -->
 
@@ -63,10 +63,6 @@
                                             <td >{{ manga.classification.name }}</td>
                                         </tr>
                                         <tr>
-                                            <td >Nombre de tomes</td>
-                                            <td >32</td>
-                                        </tr>
-                                        <tr>
                                             <td >Adapté en animé</td>
                                             <td > {% if manga.anime %}
                                             Oui
@@ -77,26 +73,6 @@
                                         <tr>
                                             <td >Statut</td>
                                             <td >{{ manga.statut.name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td >Votes</td>
-                                            <td ><ul class="list-inline">
-                                                    <li class="list-inline-item">
-                                                        <i class="fa fa-star"></i>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <i class="fa fa-star"></i>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <i class="fa fa-star"></i>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <i class="fa fa-star"></i>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <i class="fa fa-star"></i>
-                                                    </li>
-                                                </ul></td>
                                         </tr>
                                         <tr>
                                             <td >Résumé</td>
@@ -120,19 +96,19 @@
                                         <tbody>
                                         {% for tome in manga.tomes %}
                                         <tr>
-                                            <td class="text-center">{{ tome.number }}</td>
+                                            <td class="text-center align-middle">{{ tome.number }}</td>
                                             <td class="">
                                                 <img width="80px" height="auto" src="{{ asset('uploads/'~tome.photo.url) }}" alt="image description"></td>
-                                            <td class="product-category">
+                                            <td class="product-category align-middle">
                                                 <h3 class="title">{{ tome.title }}</h3>
                                             </td>
                                             <td class=""><div class="overflow-auto p-2" style=" height: 120px"><span class="summery">{{ tome.summary }}</span></div>
                                             </td>
-                                            <td class="action actionTome" data-title="Action">
+                                            <td class="action actionTome align-middle" data-title="Action">
                                                 <div class="">
                                                     <ul class="list-inline justify-content-center">
                                                         <li class="list-inline-item">
-                                                            <a data-toggle="tooltip" data-placement="top" title="View" class="add" href="{{ url('addCollection') }}">
+                                                            <a data-toggle="tooltip" data-placement="top" title="View" class="add " href="{{ url('addCollection', {id: tome.id}) }}">
                                                                 <i class="fa fa-plus-circle "></i>
                                                             </a>
                                                         </li>
@@ -147,29 +123,9 @@
                                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                                     <h3 class="tab-title">Commentaires</h3>
                                     <div class="product-review">
-                                        <div class="media">
+                                        <div class="media-inline">
                                             {% for comment in manga.comments %}
                                             <div class="media-body">
-                                                <!-- Ratings -->
-                                                <div class="ratings">
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item">
-                                                            <i class="fa fa-star"></i>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <i class="fa fa-star"></i>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <i class="fa fa-star"></i>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <i class="fa fa-star"></i>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <i class="fa fa-star"></i>
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                                 <div class="name">
                                                     <h5>{{ comment.user.username }}</h5>
                                                 </div>
@@ -187,10 +143,6 @@
                                         {% if app.user %}
                                         <div class="review-submission">
                                             <h3 class="tab-title">Donne ton avis</h3>
-                                            <!-- Rate -->
-                                            <div class="rate">
-                                                <div class="starrr"></div>
-                                            </div>
                                             <div class="review-submit">
                                                 {{ form(commentForm) }}
                                                {# <form action="#" class="row">
