@@ -3,22 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Entity\Manga;
 use App\Entity\Message;
-use App\Entity\Tomes;
-use App\Entity\User;
 use App\Form\CommentType;
-use App\Form\MangaType;
 use App\Form\MessageType;
-use App\Form\TomeType;
 use App\Repository\CommentRepository;
 use App\Repository\MangaRepository;
 use App\Repository\TomesRepository;
-use App\Repository\UserRepository;
 use App\Search\Search;
 use App\Search\SearchFullType;
-use App\Service\MangaPhotoUploader;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -130,92 +122,6 @@ class DefaultController extends AbstractController
     }
 
 
-    /**
-     * @Route("/create-manga", name="create-manga")
-     */
-    public function createManga(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
-    {
-
-        $manga = new Manga();
-        $formManga = $this->createForm(MangaType::class, $manga);
-        $formManga->handleRequest($request);
-        if ($formManga->isSubmitted() && $formManga->isValid()) {
-
-            $photo = $mangaPhotoUploader->uploadPhoto($formManga->get('photo')); // le service a bien entendu été injecté via les arguments de la method
-            $manga->setPhoto($photo);
-            $em->persist($manga->getPhoto());
-            $em->persist($manga);
-            $em->flush();
-
-            return $this->redirectToRoute('pages/admin/admin-books');
-        }
-
-
-
-        return $this->render('pages/create-manga.html.twig', ['mangaForm' => $formManga->createView()]);
-    }
-
-
-    /**
-     * @Route("/create-tome", name="create-tome")
-     */
-    public function createTome(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
-    {
-        $tome = new Tomes();
-        $formTome = $this->createForm(TomeType::class, $tome);
-        $formTome->handleRequest($request);
-        if ($formTome->isSubmitted() && $formTome->isValid()) {
-            $photo = $mangaPhotoUploader->uploadPhoto($formTome->get('photo')); // le service a bien entendu été injecté via les arguments de la method
-            $tome->setPhoto($photo);
-            $em->persist($tome->getPhoto());
-            $em->persist($tome);
-            $em->flush();
-
-            return $this->redirectToRoute('admin-books');
-        }
-
-        return $this->render('pages/create-tome.html.twig', ['tomeForm' => $formTome->createView()]);
-    }
-
-    /**
-     * @Route("/edit_manga/{id<\d+>}", name="edit_manga")
-     */
-    public function editManga(int $id, Request $request, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
-    {
-        $manga = $mangaRepository->find($id);
-        $form = $this->createForm(MangaType::class, $manga);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($manga);
-            $em->flush();
-
-            return $this->redirectToRoute('admin-books');
-
-        }
-
-        return $this->render('pages/create-manga.html.twig', ['mangaForm' => $form->createView()]);
-
-    }
-
-    /**
-     * @Route("/edit_tome/{id<\d+>}", name="edit_tome")
-     */
-    public function editTome(int $id, Request $request, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
-    {
-        $tome = $tomesRepository->find($id);
-        $form = $this->createForm(MangaType::class, $tome);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($tome);
-            $em->flush();
-
-            return $this->redirectToRoute('admin-books');
-
-        }
-
-        return $this->render('pages/create-manga.html.twig', ['mangaForm' => $form->createView()]);
-
-    }
 
     /**
      * @Route("/search", name="search")
