@@ -12,6 +12,7 @@ use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
 use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,12 +35,17 @@ class AdminController extends AbstractController
     /**
      * @Route("{slug}/admin-tome/", name="admin-tome")
      */
-    public function adminTome(string $slug, MangaRepository $mangaRepository): Response
+    public function adminTome(string $slug, MangaRepository $mangaRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $manga = $mangaRepository->findOneBySlug($slug);
         $tomes = $manga->getTomes();
 
-        return $this->render('pages/admin/admin-tome.html.twig', ['tomes'=>$tomes] );
+        $pagination = $paginator->paginate(
+            $tomes, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
+
+        return $this->render('pages/admin/admin-tome.html.twig', ['tomes'=>$pagination] );
     }
 
 
@@ -90,7 +96,7 @@ class AdminController extends AbstractController
             $em->persist($manga);
             $em->flush();
 
-            return $this->redirectToRoute('pages/admin/admin-books');
+            return $this->redirectToRoute('admin-books');
         }
 
         return $this->render('pages/admin/create-manga.html.twig', ['mangaForm' => $formManga->createView()]);
@@ -144,7 +150,7 @@ class AdminController extends AbstractController
     public function editTome(int $id, Request $request, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
         $tome = $tomesRepository->find($id);
-        $form = $this->createForm(MangaType::class, $tome);
+        $form = $this->createForm(TomeType::class, $tome);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($tome);
