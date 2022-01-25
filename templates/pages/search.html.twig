@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     <!-- Header Content -->
                     <div class="content-block">
-                        <h1>Otaku's Collection </h1>
+                        <h1>Recherche </h1>
 
                     </div>
                 </div>
@@ -19,9 +19,7 @@
     <section class="section-sm">
 
         <div class="container">
-            <div class="content-block mb-3">
-                <h2 class="text-center" >Recherche</h2>
-            </div>
+
             <div class="mb-5 col-lg-10 ml-auto mr-auto">
             {# Début du formulaire de recherche #}
             {{ form_widget(searchFullForm.keyword) }}
@@ -75,7 +73,7 @@
                             {% for manga in mangas %}
                                 <div class="col-sm-12 col-lg-4 col-md-6">
                                     <!-- product card -->
-                                    <div class="product-item bg-light">
+                                    <div class="product-item searchCard">
                                         <div class="card">
                                             <div class="thumb-content">
                                                 <!-- <div class="price">$200</div> -->

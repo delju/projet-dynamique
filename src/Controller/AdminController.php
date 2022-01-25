@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Manga;
 use App\Entity\Tomes;
+use App\Entity\User;
 use App\Form\MangaType;
 use App\Form\TomeType;
 use App\Repository\CommentRepository;
 use App\Repository\MangaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
+use App\Repository\UserRepository;
 use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -165,9 +167,9 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id<\d+>}", name="delete", methods={"DELETE"})
+     * @Route("/delete-manga/{id<\d+>}", name="delete-manga")
      */
-    public function deleteManga(int $id, MangaRepository $mangaRepository, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
+    public function deleteManga(int $id, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
     {
         $manga = $mangaRepository->find($id);
          $em->remove($manga);
@@ -177,7 +179,19 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete-comment/{id<\d+>}", name="delete-comment", methods={"DELETE"})
+     * @Route("/delete-tome/{id<\d+>}", name="delete-tome")
+     */
+    public function deleteTome(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
+    {
+        $tome = $tomesRepository->find($id);
+        $em->remove($tome);
+        $em->flush();
+
+        return $this->render('pages/admin/element/delete-items.html.twig');
+    }
+
+    /**
+     * @Route("/delete-comment/{id<\d+>}", name="delete-comment")
      */
     public function deleteComments(int $id,CommentRepository $commentRepository, EntityManagerInterface $em): Response
     {
@@ -187,4 +201,19 @@ class AdminController extends AbstractController
 
         return $this->render('pages/admin/element/delete-items.html.twig');
     }
+
+    /**
+     * @Route("/delete-message/{id<\d+>}", name="delete-message")
+     */
+    public function deleteMessages(int $id, MessageRepository $messageRepository,  EntityManagerInterface $em): Response
+    {
+        $message = $messageRepository->find($id);
+        $em->remove($message);
+        $em->flush();
+
+        return $this->render('pages/admin/element/delete-items.html.twig');
+    }
+
+
+
 }

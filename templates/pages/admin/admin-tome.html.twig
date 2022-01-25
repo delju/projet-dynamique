@@ -1,8 +1,9 @@
 {% extends 'Layouts/admin.html.twig' %}
 
 {% block content %}
+
     <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
-        <!-- Recently Favorited -->
+
         <div class="widget dashboard-container my-adslist">
             <div class="row">
                 <div class="col-md-10">
@@ -40,7 +41,7 @@
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a data-placement="top" title="Delete" class="delete" href="" data-toggle="modal" data-target="#deleteitem">													<i class="fa fa-trash"></i>
+                                        <a data-placement="top" title="Delete" class="delete" href="{{ path('delete-tome', {'id': tome.id}) }}"  data-target="#deleteitem">													<i class="fa fa-trash"></i>
                                         </a>
                                     </li>
                                 </ul>

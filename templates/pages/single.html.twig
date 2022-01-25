@@ -90,7 +90,9 @@
                                             <th class="text-center">Couverture</th>
                                             <th class="text-center">Titre</th>
                                             <th class="text-center">Résumé</th>
+                                            {% if app.user %}
                                             <th class="text-center">Ajouter</th>
+                                            {% endif %}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -104,6 +106,7 @@
                                             </td>
                                             <td class=""><div class="overflow-auto p-2" style=" height: 120px"><span class="summery">{{ tome.summary }}</span></div>
                                             </td>
+                                            {% if app.user %}
                                             <td class="action actionTome align-middle" data-title="Action">
                                                 <div class="">
                                                     <ul class="list-inline justify-content-center">
@@ -115,6 +118,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
+                                            {% endif %}
                                         </tr>
                                        {% endfor %}
                                     </table>

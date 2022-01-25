@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block section %}
-    {% if app.user %}
+    {% if app.user and mybooks is not empty %}
+
         <section class="dashboard section">
             <!-- Container Start -->
             <div class="container">
@@ -83,8 +84,7 @@
                                                 </a>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a data-placement="top" title="Delete" class="delete" href=""
-                                                   data-toggle="modal" data-target="#deleteitem"> <i
+                                                <a data-placement="top" title="Delete" class="delete" href="{{ url('delete-collection', {id: mybook.id}) }}"> <i
                                                             class="fa fa-trash"></i>
                                                 </a>
                                             </li>
@@ -110,10 +110,18 @@
             </div>
             <!-- Container End -->
         </section>
-    {% else %}
-        <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
-            <h2>Vous devez vous connecter pour créer votre collection</h2>
-            <p><a href="{{ url('app_login') }}">Se connecter</a></p>
-        </div>
+    {% elseif app.user and mybooks is empty %}
+                {% for addCollection in app.flashes('addCollection') %}
+                    <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
+                        {{ addCollection }}
+                    </div>
+                {% endfor %}
+
+    {% elseif not app.user and mybooks is empty %}
+        {% for message in app.flashes('login') %}
+            <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
 {% endblock section %}

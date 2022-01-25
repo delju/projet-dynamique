@@ -10,7 +10,15 @@
                         <h3 class="bg-gray p-4">Register Now</h3>
                         <form action="#">
                             <fieldset class="p-4">
-                               {{ form(registerForm) }}
+                                {{ form_start(registerForm) }}
+                                {{ form_row(registerForm.username) }}
+                                {{ form_errors(registerForm.username) }}
+                                {{ form_row(registerForm.email) }}
+                                {{ form_errors(registerForm.email) }}
+                                {{ form_row(registerForm.plainPassword) }}
+                                {{ form_errors(registerForm.plainPassword) }}
+                                {{ form_row(registerForm.submit)}}
+                                {{ form_end(registerForm) }}
                             </fieldset>
                         </form>
                     </div>

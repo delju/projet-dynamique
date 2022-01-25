@@ -68,7 +68,7 @@ class Manga
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Tomes::class, mappedBy="manga")
+     * @ORM\OneToMany(targetEntity=Tomes::class, mappedBy="manga", orphanRemoval="true")
      */
     private $tomes;
 

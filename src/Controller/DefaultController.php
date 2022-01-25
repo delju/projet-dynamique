@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Message;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\MessageType;
 use App\Repository\CommentRepository;
@@ -41,11 +42,15 @@ class DefaultController extends AbstractController
         $mybooks = $user->getMyBook();
 
         $pagination = $paginator->paginate(
-            $mybooks, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            15/*limit per page*/);
+                $mybooks, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                15/*limit per page*/);
 
-        return $this->render('pages/collection.html.twig', ['mybooks' => $pagination]);
+
+            $this->addFlash('login', 'Vous devez vous connecter pour créer votre collection');
+            $this->addFlash('addCollection', 'Vous devez ajouter des tomes dans votre collection');
+
+        return $this->render('pages/collection.html.twig', ['mybooks'=>$pagination]);
     }
 
     /**
@@ -58,12 +63,15 @@ class DefaultController extends AbstractController
 
         $tomes = $tomesRepository->find($id);
 
-        $user->addMyBook($tomes);
+        if($tomes !== null) {
+            $user->addMyBook($tomes);
 
-        $em->persist($tomes);
-        $em->persist($user);
-        $em->flush();
+            $em->persist($tomes);
+            $em->persist($user);
+            $em->flush();
 
+            $this->redirectToRoute('collection', ['mybooks'=>$tomes] );
+        }
         return $this->render('pages/collection.html.twig');
     }
 
@@ -121,7 +129,19 @@ class DefaultController extends AbstractController
         return $this->render('pages/single.html.twig', ['manga' => $manga, 'tomes' => $pagination, 'commentForm' => $commentForm->createView()]);
     }
 
+    /**
+     * @Route("/delete-collection/{id<\d+>}", name="delete-collection")
+     */
+    public function deleteCollection(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $tomes = $tomesRepository->find($id);
+        $collection = $user->removeMyBook($tomes);
+        $em->persist($collection);
+        $em->flush();
 
+        return $this->render('pages/admin/element/delete-items.html.twig');
+    }
 
     /**
      * @Route("/search", name="search")

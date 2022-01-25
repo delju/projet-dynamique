@@ -27,6 +27,7 @@ class SecurityController extends AbstractController
             $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
             $user->setRoles(['ROLE_USER']);
             $em->persist($user);
+            dump($user);
             $em->flush();
             return $this->redirectToRoute('app_login');
         }
