@@ -4,17 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Manga;
 use App\Entity\Tomes;
-use App\Entity\User;
 use App\Form\MangaType;
 use App\Form\TomeType;
 use App\Repository\CommentRepository;
 use App\Repository\MangaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TomesRepository;
-use App\Repository\UserRepository;
 use App\Service\MangaPhotoUploader;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,12 +27,14 @@ class AdminController extends AbstractController
      */
     public function adminBooks(MangaRepository $mangaRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $mangas = $mangaRepository->findBy([], ['frenchTitle'=>'asc']);
-
+        //On récupère les manga trié par leur titre
+        $mangas = $mangaRepository->findBy([], ['frenchTitle' => 'asc']);
+        //Pagination sur les manga
         $pagination = $paginator->paginate(
             $mangas, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/);
+
         return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $pagination]);
     }
 
@@ -44,15 +43,17 @@ class AdminController extends AbstractController
      */
     public function adminTome(string $slug, MangaRepository $mangaRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        //On récupère le manga avec son slug
         $manga = $mangaRepository->findOneBySlug($slug);
+        //On récupère les tomes liés au manga
         $tomes = $manga->getTomes();
-
+        //Pagination du résultat
         $pagination = $paginator->paginate(
             $tomes, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/);
 
-        return $this->render('pages/admin/admin-tome.html.twig', ['tomes'=>$pagination] );
+        return $this->render('pages/admin/admin-tome.html.twig', ['tomes' => $pagination]);
     }
 
 
@@ -61,8 +62,9 @@ class AdminController extends AbstractController
      */
     public function adminReviews(CommentRepository $commentRepository, PaginatorInterface $paginator, Request $request): Response
     {
-
+        //ON récupère les commentaires avec le manga qui lui est lié
         $comment = $commentRepository->commentWithManga(100);
+        //Pagination du résultat
         $comment = $paginator->paginate(
             $comment, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -76,14 +78,15 @@ class AdminController extends AbstractController
      */
     public function adminMessages(MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $messages = $messageRepository->findBy([], ['date'=>'desc'], 20);
+        //ON récupère les messages triés par leur date 
+        $messages = $messageRepository->findBy([], ['date' => 'desc'], 20);
 
         $pagination = $paginator->paginate(
             $messages, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/);
 
-        return $this->render('pages/admin/admin-messages.html.twig', ['messages'=>$pagination]);
+        return $this->render('pages/admin/admin-messages.html.twig', ['messages' => $pagination]);
     }
 
     /**
@@ -91,10 +94,11 @@ class AdminController extends AbstractController
      */
     public function createManga(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
     {
-
+        //ON crée un nouveau manga avec le formulaire mangatype
         $manga = new Manga();
         $formManga = $this->createForm(MangaType::class, $manga);
         $formManga->handleRequest($request);
+        //SI le formulaire est envoyé et valide, on télécharge la photo selon le service mangaPhotoUploader
         if ($formManga->isSubmitted() && $formManga->isValid()) {
 
             $photo = $mangaPhotoUploader->uploadPhoto($formManga->get('photo')); // le service a bien entendu été injecté via les arguments de la method
@@ -102,7 +106,7 @@ class AdminController extends AbstractController
             $em->persist($manga->getPhoto());
             $em->persist($manga);
             $em->flush();
-
+            //On retourne a la page admin-books
             return $this->redirectToRoute('admin-books');
         }
 
@@ -115,16 +119,18 @@ class AdminController extends AbstractController
      */
     public function createTome(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
     {
+        //Création d'un tome selon le formulaire tometype
         $tome = new Tomes();
         $formTome = $this->createForm(TomeType::class, $tome);
         $formTome->handleRequest($request);
+        //Si le formulaire est envoyé et valide, on charge la photo avec le sercie photo uplaoder et on le lie au tome
         if ($formTome->isSubmitted() && $formTome->isValid()) {
             $photo = $mangaPhotoUploader->uploadPhoto($formTome->get('photo')); // le service a bien entendu été injecté via les arguments de la method
             $tome->setPhoto($photo);
             $em->persist($tome->getPhoto());
             $em->persist($tome);
             $em->flush();
-
+            //On revient a la page admin-books
             return $this->redirectToRoute('admin-books');
         }
 
@@ -136,13 +142,15 @@ class AdminController extends AbstractController
      */
     public function editManga(int $id, Request $request, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
     {
+        //ON récupère le manga selon son id que l'on revoie dans le formulaire mangatype
         $manga = $mangaRepository->find($id);
         $form = $this->createForm(MangaType::class, $manga);
         $form->handleRequest($request);
+        //Si le formulaire est envoyé et valide on persist
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($manga);
             $em->flush();
-
+            //On retourne vers admin-books
             return $this->redirectToRoute('admin-books');
 
         }
@@ -156,13 +164,16 @@ class AdminController extends AbstractController
      */
     public function editTome(int $id, Request $request, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
+        //On récupère le tome selon son id que l'on renvoie dans le formulaire tometype
         $tome = $tomesRepository->find($id);
         $form = $this->createForm(TomeType::class, $tome);
         $form->handleRequest($request);
+
+        //Si le formulaire est envoyé et valid on persist le tome
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($tome);
             $em->flush();
-
+            //ON retourne a la page admin-books
             return $this->redirectToRoute('admin-books');
 
         }
@@ -176,12 +187,14 @@ class AdminController extends AbstractController
      */
     public function deleteManga(int $id, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
     {
+
+        //On récupère le manga selon son id et on le supprime
         $manga = $mangaRepository->find($id);
-         $em->remove($manga);
-            $em->flush();
-
+        $em->remove($manga);
+        $em->flush();
+        //Message lors de la suppression du manga qui s'affichera dans le layout de l'admin
         $this->addFlash('deleteManga', 'Le manga a bien été supprimé');
-
+        //ON retourne vers admin-books
         return $this->redirectToRoute('admin-books');
     }
 
@@ -190,42 +203,49 @@ class AdminController extends AbstractController
      */
     public function deleteTome(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
+        //On récupère le tome selon son id et on le supprime
         $tome = $tomesRepository->find($id);
         $em->remove($tome);
         $em->flush();
 
+        //Message lors de la suppression du tome qui s'affichera dans le layout de l'admin
         $this->addFlash('deleteTome', 'Ce tome a bien été supprimé');
-
+        //ON retourne vers admin-books
         return $this->redirectToRoute('admin-books');
     }
 
     /**
      * @Route("/delete-comment/{id<\d+>}", name="delete-comment")
      */
-    public function deleteComments(int $id,CommentRepository $commentRepository, EntityManagerInterface $em): Response
+    public function deleteComments(int $id, CommentRepository $commentRepository, EntityManagerInterface $em): Response
     {
-            $comment = $commentRepository->find($id);
-            $em->remove($comment);
-            $em->flush();
+        //On récupère le commentaire selon son id et on le supprime
 
+        $comment = $commentRepository->find($id);
+        $em->remove($comment);
+        $em->flush();
+
+        //Message lors de la suppression du commentaire qui s'affichera dans le layout de l'admin
         $this->addFlash('deleteComment', 'Ce commentaire a bien été supprimé');
-
+        //ON retourne vers admin-books
         return $this->redirectToRoute('admin-reviews');
     }
 
     /**
      * @Route("/delete-message/{id<\d+>}", name="delete-message")
      */
-    public function deleteMessages(int $id, MessageRepository $messageRepository,  EntityManagerInterface $em): Response
+    public function deleteMessages(int $id, MessageRepository $messageRepository, EntityManagerInterface $em): Response
     {
+        //On récupère le message selon son id et on le supprime
+
         $message = $messageRepository->find($id);
         $em->remove($message);
         $em->flush();
+        //Message lors de la suppression du message qui s'affichera dans le layout de l'admin
         $this->addFlash('deleteMessage', 'Ce message a bien été supprimé');
-
+        //ON retourne vers admin-books
         return $this->redirectToRoute('admin-messages');
     }
-
 
 
 }
