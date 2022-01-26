@@ -127,24 +127,27 @@ class DefaultController extends AbstractController
     {
         //Récupération des mangas par son slug.
         $manga = $mangaRepository->findOneBySlug($slug);
+        //On récupère les tomes du manga
+        $tomes = $manga->getTomes();
         //Création d'un commentaire
         $comment = new Comment();
-        //On écrit
+        //On écrit le commentaire au manga correspondant
         $comment->setManga($manga);
-        $tomes = $manga->getTomes();
         $commentForm = $this->createForm(CommentType::class, $comment);
 
         $commentForm->handleRequest($request);
+        //Si formulaire est envoyé et valide on persist les commentaires et on redirige la page vers le single
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $em->persist($comment);
             $em->flush();
             return $this->redirectToRoute('single', ['slug' => $manga->getSlug()]);
         }
-
+        //Pagination pour les tomes
         $pagination = $paginator->paginate(
             $tomes, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/);
+
 
         return $this->render('pages/single.html.twig', ['manga' => $manga, 'tomes' => $pagination, 'commentForm' => $commentForm->createView()]);
     }
@@ -154,14 +157,17 @@ class DefaultController extends AbstractController
      */
     public function deleteCollection(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
+        //On récupère l'utilisateur actuel
         $user = $this->getUser();
+        //On va recherché le tome par son id
         $tomes = $tomesRepository->find($id);
+        //On retire le tome de la collection de l'utilisateur identifié
         $collection = $user->removeMyBook($tomes);
         $em->persist($collection);
         $em->flush();
-
+        //Message lors de la suppression du tome de la collection
         $this->addFlash('deleteCollection', 'Ce tome a bien été supprimé de votre collection');
-
+        //Redirection vers la page collection
         return $this->redirectToRoute('collection');
     }
 
@@ -170,16 +176,20 @@ class DefaultController extends AbstractController
      */
     public function search(MangaRepository $mangaRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        //Création d'un recherche
         $search = new Search();
+        //Retourne le formulaire de recherche
         $form = $this->createForm(SearchFullType::class, $search);
         $form->handleRequest($request);
         $result = [];
+        //Si le formulaire est envoyé et valide, on effectue la recherche selon les critères de findbysearch
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $mangaRepository->findBySearch($search);
+            //Sinon, on récupère les manga triés par leur titre
         } else {
             $result = $mangaRepository->findBy([], ['frenchTitle' => 'ASC']);
         }
-
+        //Pagination des résultats
         $pagination = $paginator->paginate(
             $result, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -194,11 +204,13 @@ class DefaultController extends AbstractController
      */
     public function reportComment(Comment $comment, EntityManagerInterface $em)
     {
+        //Création d'un flag pour reporter les commentaires
         $flag = new CommentFlag();
+        //On l'écrit dans le commentaire correspondant
         $flag->setComment($comment);
         $em->persist($flag);
         $em->flush();
-
+        //Rendu de la réponse via flag response.
         return $this->render('pages/element/flag-response.html.twig');
     }
 
