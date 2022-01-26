@@ -18,10 +18,14 @@
                     <h2 class="text-center">Que veux-tu ajouter?</h2>
 
                     <fieldset class="p-4 modal-footer border-top-0 mb-3 mx-5 justify-content-center">
-
-                        <a href="{{ url('create-manga') }}"><button type="button" class="btn btn-primary" >Manga</button></a>
-
-                        <a href="{{ url('create-tome') }}"><button type="button" class="btn btn-primary" >Tome</button></a>
+                        //Lien pour créer un manga
+                        <a href="{{ url('create-manga') }}">
+                            <button type="button" class="btn btn-primary">Manga</button>
+                        </a>
+                        //Lien pour créer un tome
+                        <a href="{{ url('create-tome') }}">
+                            <button type="button" class="btn btn-primary">Tome</button>
+                        </a>
 
                     </fieldset>
 
@@ -37,9 +41,11 @@
         <div class="widget dashboard-container my-adslist">
             <div class="row">
                 <div class="col-md-10">
+                    //Affichage du nombre de manga affichés
                     <h2 class="widget-header">Les livres({{ mangas.getTotalItemCount }})</h2>
                 </div>
                 <div class="col-md-2 action">
+                    //Lien vers le modal addItem
                     <a data-toggle="modal" data-placement="top" title="Add" class="add" href="" data-target="#additem">
                         <i class="fa fa-plus-circle"></i>
                     </a>
@@ -56,39 +62,50 @@
                 </tr>
                 </thead>
                 <tbody>
-
+                //Boucle pour afficher les manga récupérés
                 {% for manga in mangas %}
 
 
                     <tr>
                         <td class="product-thumb">
-                            <img width="120px" height="auto" src="{{ asset('uploads/'~manga.photo.url) }}" alt="image description"></td>
+                            <img width="120px" height="auto" src="{{ asset('uploads/'~manga.photo.url) }}"
+                                 alt="image description"></td>
                         <td class="product-details">
                             <h3 class="title">{{ manga.frenchTitle }}</h3>
-                            <div class="overflow-auto p-2" style=" height: 100px"><span class="summery">{{ manga.summary }}</span></div>
+                            <div class="overflow-auto p-2" style=" height: 100px"><span
+                                        class="summery">{{ manga.summary }}</span></div>
                         </td>
+                        //Affiche le nombre de tome lié au manga
                         <td class="tomes"><span class="categories">{{ manga.tomes |length }}</span></td>
                         <td><span class="categories">{{ manga.author }}</span></td>
                         <td class="action" data-title="Action">
                             <div class="">
                                 <ul class="list-inline justify-content-center">
                                     <li class="list-inline-item">
-                                        <a data-toggle="tooltip" data-placement="top" title="View" class="view" href="{{ url('single', {slug: manga.slug}) }}">
+                                        //Le lien vers la page single du manga
+                                        <a data-toggle="tooltip" data-placement="top" title="View" class="view"
+                                           href="{{ url('single', {slug: manga.slug}) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </li>
+                                    //Lien vers la page affichant les tomes liés au manga
                                     <li class="list-inline-item">
-                                        <a data-toggle="tooltip" data-placement="top" title="Tome" class="tome" href="{{ url('admin-tome', {slug: manga.slug}) }}" >
+                                        <a data-toggle="tooltip" data-placement="top" title="Tome" class="tome"
+                                           href="{{ url('admin-tome', {slug: manga.slug}) }}">
                                             <i class="fa fa-book"></i>
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ url('edit_manga', {id: manga.id}) }}">
+                                        //Lien vers le formulaire pour éditer le manga selon son id
+                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit"
+                                           href="{{ url('edit_manga', {id: manga.id}) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a data-placement="top" title="Delete" class="delete" href="{{ path('delete-manga', {id: manga.id}) }}">
+                                        //Lien pour supprimer le manga selon son id
+                                        <a data-placement="top" title="Delete" class="delete"
+                                           href="{{ path('delete-manga', {id: manga.id}) }}">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </li>
@@ -104,8 +121,6 @@
             </table>
 
         </div>
-
-        <!-- pagination -->
         <!-- pagination -->
         <div class="pagination justify-content-center">
         </div>

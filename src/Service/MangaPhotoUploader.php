@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Form\PhotoType;
 
+
+//Service de chargement de photo
 class MangaPhotoUploader
 {
     private $parameterBag;
@@ -26,7 +28,6 @@ class MangaPhotoUploader
     public function uploadPhoto(FormInterface $photoField): ?Photo {
 
         $imageFile = $photoField->get('image')->getData();
-        dump($imageFile);
         if ($imageFile) {
             $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
             // this is needed to safely include the file name as part of the URL

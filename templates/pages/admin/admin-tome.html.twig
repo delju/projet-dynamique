@@ -7,7 +7,8 @@
         <div class="widget dashboard-container my-adslist">
             <div class="row">
                 <div class="col-md-10">
-                    <h2 class="widget-header">Les tomes</h2>
+                    //afficher le nombre de tomes qui sont affichés
+                    <h2 class="widget-header">Les tomes({{ tomes.getTotalItemCount }}</h2>
                 </div>
             </div>
             <table class="table table-responsive product-dashboard-table">
@@ -22,38 +23,48 @@
                     </tr>
                     </thead>
                     <tbody>
+
+                    //Boucle pour afficher les tomes récupérés
                     {% for tome in tomes %}
                         <tr>
                             <td class="text-center">{{ tome.number }}</td>
                             <td class="">
-                                <img width="80px" height="auto" src="{{ asset('uploads/'~tome.photo.url) }}" alt="image description"></td>
+                                <img width="80px" height="auto" src="{{ asset('uploads/'~tome.photo.url) }}"
+                                     alt="image description"></td>
                             <td class="product-category">
                                 <h3 class="title">{{ tome.title }}</h3>
                             </td>
-                            <td class="product-details product-collection"><div class="overflow-auto p-2" style=" height: 120px"><span class="summery">{{ tome.summary }}</span></div>
+                            <td class="product-details product-collection">
+                                <div class="overflow-auto p-2" style=" height: 120px"><span
+                                            class="summery">{{ tome.summary }}</span></div>
                             </td>
-                        <td class="action" data-title="Action">
-                            <div class="">
-                                <ul class="list-inline justify-content-center">
-                                    <li class="list-inline-item">
-                                        <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ url('edit_tome', {id: tome.id}) }}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a data-placement="top" title="Delete" class="delete" href="{{ path('delete-tome', {'id': tome.id}) }}"  data-target="#deleteitem">													<i class="fa fa-trash"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                            <td class="action" data-title="Action">
+                                <div class="">
+                                    <ul class="list-inline justify-content-center">
+                                        <li class="list-inline-item">
+                                            //LIien pour éditer le tome selon son id
+                                            <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit"
+                                               href="{{ url('edit_tome', {id: tome.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            //Lien pour supprimer le tome selon son id
+                                            <a data-placement="top" title="Delete" class="delete"
+                                               href="{{ path('delete-tome', {'id': tome.id}) }}"
+                                               data-target="#deleteitem"> <i class="fa fa-trash"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
 
-                            </div>
-                        </td>
-                    </tr>
+                                </div>
+                            </td>
+                        </tr>
 
 
-                {% endfor %}
-                </tbody>
-            </table>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 <!-- pagination -->
                 <div class="pagination justify-content-center">
                     {{ knp_pagination_render(tomes) }}
@@ -62,7 +73,7 @@
 
             </table>
 
-    </div>
+        </div>
     </div>
 {% endblock content %}
 
