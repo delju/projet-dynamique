@@ -5,6 +5,7 @@
     <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist">
+            //on affiche le nombre de commentaire affiché.
             <h2 class="widget-header">Les commentaires({{ comments.getTotalItemCount }})</h2>
             <table class="table table-responsive product-dashboard-table">
                 <thead>
@@ -18,6 +19,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                //Boucle pour récupéré les commentaires
                 {% for comment in comments %}
                     <tr>
 
@@ -29,14 +31,16 @@
                         </td>
                         <td class="tomes"><span>{{ comment.manga }}</span></td>
                         <td class="product-details"><p>{{ comment.message }}</p></td>
-                        <td>
+                        <td> //Permet d'avoir le nombre de signalement effectué sur un commentaire
                             <p>{{ comment.commentFlags | length }}</p>
                         </td>
                         <td class="action" data-title="Action">
                             <div class="">
                                 <ul class="list-inline justify-content-center">
                                     <li class="list-inline-item">
-                                        <a data-placement="top" title="Delete" class="delete" href="{{ url('delete-comment', {id: comment.id}) }}">
+                                        //Chemin pour supprimer le commentaire
+                                        <a data-placement="top" title="Delete" class="delete"
+                                           href="{{ url('delete-comment', {id: comment.id}) }}">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </li>
@@ -44,7 +48,7 @@
                             </div>
                         </td>
                     </tr>
-
+                    //Fin de la boucle
                 {% endfor %}
                 </tbody>
             </table>

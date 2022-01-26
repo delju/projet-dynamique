@@ -38,6 +38,7 @@ class SearchFullType extends AbstractType
         ]);
     }
 
+    //détermine le préfix
     public function getBlockPrefix()
     {
         return '';

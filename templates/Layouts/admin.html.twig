@@ -4,28 +4,28 @@
 <section class="dashboard section">
     <!-- Container Start -->
     <div class="container">
-
+        //Message lors de la suppression d'un manga
         {% for message in app.flashes('deleteManga') %}
             <div class="alert alert-success">
                 {{ message }}
             </div>
 
         {% endfor %}
-
+        //Message lors de la suppression d'un tome
         {% for messageTome in app.flashes('deleteTome') %}
             <div class="alert alert-success">
                 {{ messageTome }}
             </div>
 
         {% endfor %}
-
+        //Message lors de la suppression d'un commentaire
         {% for messageComment in app.flashes('deleteComment') %}
             <div class="alert alert-success">
                 {{ messageComment }}
             </div>
 
         {% endfor %}
-
+        //Message lors de la suppression d'un message
         {% for messageMessage in app.flashes('deleteMessage') %}
             <div class="alert alert-success">
                 {{ messageMessage }}
@@ -42,6 +42,7 @@
                     <!-- Dashboard Links -->
                     <div class="widget user-dashboard-menu">
                         <ul>
+                            //Lien vers les différentes éléments de la partie admin avec la class active en fonction de la page affichée
                             <li {% if app.request.get('_route') == 'admin-books' %}class="active"{% endif%}>
                                 <a href="{{ url('admin-books') }}"><i class="fa fa-bookmark-o"></i> Livres</a>
                             </li>
@@ -57,7 +58,7 @@
             </div>
 
 
-
+            //Emplacement des block ayant le layout admin
             {% block content %}
             {% endblock content %}
 
