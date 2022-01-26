@@ -1,46 +1,48 @@
 {% extends 'base.html.twig' %}
+{% block title %}Otaku's Collection - Prochaines sorties {% endblock %}
 
 {% block section %}
 
 
-<section class="hero-area bg-1 text-center overly">
-    <!-- Container Start -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- Header Contetnt -->
-                <div class="content-block">
-                    <h1>Otaku's Collection </h1>
-                    <p> </p>
+    <section class="hero-area bg-1 text-center overly">
+        <!-- Container Start -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Header Contetnt -->
+                    <div class="content-block">
+                        <h1>Otaku's Collection </h1>
+                        <p></p>
+
+                    </div>
 
                 </div>
-
             </div>
         </div>
-    </div>
-    <!-- Container End -->
-</section>
+        <!-- Container End -->
+    </section>
 
 
-<section class="popular-deals section bg-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-title">
-                    <h2>Prochaines sorties</h2>
+    <section class="popular-deals section bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2>Prochaines sorties</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="product-grid-list">
-            <div class="row mt-30">
-                {% for lastRelease in lastReleases %}
-                {{ include('pages/element/tomes.html.twig') }}
-                {% endfor %}
+            <div class="product-grid-list">
+                <div class="row mt-30">
+                    {# Boucle sur les derniers tomes sorties #}
+                    {% for lastRelease in lastReleases %}
+                        {{ include('pages/element/tomes.html.twig') }}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
 
-    </div>
-</section>
+        </div>
+    </section>
 
 
 

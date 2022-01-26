@@ -5,7 +5,7 @@
     <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
     <!-- Recently Favorited -->
     <div class="widget dashboard-container my-adslist">
-        //Détermine le nombre de message affichés
+        {# Détermine le nombre de message affichés #}
         <h2 class="widget-header">Les messages({{ messages.getTotalItemCount }})</h2>
         <table class="table table-responsive product-dashboard-table">
             <thead>
@@ -18,7 +18,7 @@
             </tr>
             </thead>
             <tbody>
-            //Boucle sur les messages a afficher
+            {# Boucle sur les messages a afficher #}
             {% for message in messages %}
                 <tr>
                     <td class="product-category">
@@ -36,8 +36,9 @@
                         <div class="">
                             <ul class="list-inline justify-content-center">
                                 <li class="list-inline-item">
-                                    //LIen pour supprimer le message
-                                    <a data-placement="top" title="Delete" class="delete" href="{{ url('delete-message', {id: message.id}) }}" > <i class="fa fa-trash"></i>
+                                    {# LIen pour supprimer le message #}
+                                    <a data-placement="top" title="Delete" class="delete"
+                                       href="{{ url('delete-message', {id: message.id}) }}"> <i class="fa fa-trash"></i>
                                     </a>
                                 </li>
 
@@ -45,7 +46,7 @@
                         </div>
                     </td>
                 </tr>
-                //Fin de la boucle
+                {# Fin de la boucle #}
             {% endfor %}
             </tbody>
         </table>

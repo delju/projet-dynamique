@@ -7,6 +7,7 @@
     <title>{% block title %}Otaku's Collection{% endblock %}</title>
     {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
+    {# Block pour les éléments css #}
     {% block stylesheets %}
         <!-- PLUGINS CSS STYLE -->
         <!-- <link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"> -->
@@ -50,7 +51,9 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            {# La class active est activé selon la route actul #}
                             <ul class="navbar-nav ml-auto main-nav ">
+
                                 <li class="nav-item {% if app.request.get('_route') == 'home' %}active{% endif %} ">
                                     <a class="nav-link" href="{{ url('home') }}">Home</a>
                                 </li>
@@ -73,6 +76,7 @@
                             </ul>
                             <ul class="navbar-nav ml-auto mt-10">
                                 <li class="nav-item">
+                                    {# Si l'utilisateur est connecté on affiche le lien vers la deconnexion si non vers le lien de connexion #}
                                     {% if app.user %}
                                         <a class="nav-link login-button" href="{{ url('app_logout') }}">Déconnexion</a>
 
@@ -80,6 +84,7 @@
                                         <a class="nav-link login-button" href="{{ url('app_login') }}">Connexion</a>
                                     {% endif %}
                                 </li>
+                                {# Si l'utilisateur est un administrateur alors il a accès au lien vers la partie adminitration #}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li class="nav-item">
                                         <a class="nav-link text-white add-button" href="{{ url('admin-books') }}">
@@ -133,6 +138,7 @@
                     </div>
                 </div>
                 <!-- Link list -->
+                {# Les liens ne peuvent être vu que par un administrateur #}
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="col-lg-3 col-md-3 offset-md-1 offset-lg-0">
                         <div class="block">

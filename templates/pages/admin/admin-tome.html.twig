@@ -7,7 +7,7 @@
         <div class="widget dashboard-container my-adslist">
             <div class="row">
                 <div class="col-md-10">
-                    //afficher le nombre de tomes qui sont affichés
+                    {# afficher le nombre de tomes qui sont affichés #}
                     <h2 class="widget-header">Les tomes({{ tomes.getTotalItemCount }}</h2>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>
 
-                    //Boucle pour afficher les tomes récupérés
+                    {# Boucle pour afficher les tomes récupérés #}
                     {% for tome in tomes %}
                         <tr>
                             <td class="text-center">{{ tome.number }}</td>
@@ -42,14 +42,14 @@
                                 <div class="">
                                     <ul class="list-inline justify-content-center">
                                         <li class="list-inline-item">
-                                            //LIien pour éditer le tome selon son id
+                                            {# Lien pour éditer le tome selon son id #}
                                             <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit"
                                                href="{{ url('edit_tome', {id: tome.id}) }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
-                                            //Lien pour supprimer le tome selon son id
+                                            {# Lien pour supprimer le tome selon son id #}
                                             <a data-placement="top" title="Delete" class="delete"
                                                href="{{ path('delete-tome', {'id': tome.id}) }}"
                                                data-target="#deleteitem"> <i class="fa fa-trash"></i>

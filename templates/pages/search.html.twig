@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+{% block title %}Otaku's Collection - Recherche{% endblock %}
+
 
 {% block section %}
     <section class="hero-area bg-1 text-center overly">
@@ -15,14 +17,15 @@
             </div>
         </div>
     </section>
+    {# Affichage du formilaire de recherche #}
     {{ form_start(searchFullForm) }}
     <section class="section-sm">
 
         <div class="container">
 
             <div class="mb-5 col-lg-10 ml-auto mr-auto">
-            {# Début du formulaire de recherche #}
-            {{ form_widget(searchFullForm.keyword) }}
+                {# Début du formulaire de recherche #}
+                {{ form_widget(searchFullForm.keyword) }}
             </div>
             <div class="row">
                 {# Filtres du formulaire de recherche #}
@@ -70,6 +73,8 @@
 
                     <div class="product-grid-list">
                         <div class="row mt-30">
+
+                            {# Boucle sur les mangas récupérés selon les critères de recherche #}
                             {% for manga in mangas %}
                                 <div class="col-sm-12 col-lg-4 col-md-6">
                                     <!-- product card -->
@@ -88,13 +93,15 @@
                                                             href={{ url('single', {slug: manga.slug}) }}>{{ manga.frenchTitle }}</a>
                                                 </h4>
                                                 <p class="card-text">
-                                                    <div class="overflow-auto p-2" style=" height: 120px">{{ manga.summary }}</div>
+                                                <div class="overflow-auto p-2"
+                                                     style=" height: 120px">{{ manga.summary }}</div>
                                                 </p>
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                {# Si pas de résulats on affiche cette phrase #}
                             {% else %}
                                 <h2>Il n'y a pas de Manga qui correspond à cette recherche</h2>
                             {% endfor %}
@@ -103,7 +110,7 @@
                     </div>
                     <!-- pagination -->
                     <div class="pagination justify-content-center">
-                    {{ knp_pagination_render(mangas) }}
+                        {{ knp_pagination_render(mangas) }}
                     </div>
                     <!-- pagination -->
                 </div>

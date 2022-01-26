@@ -1,70 +1,70 @@
 {% extends 'base.html.twig' %}
 
 {% block section %}
-<section class="dashboard section">
-    <!-- Container Start -->
-    <div class="container">
-        //Message lors de la suppression d'un manga
-        {% for message in app.flashes('deleteManga') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
+    <section class="dashboard section">
+        <!-- Container Start -->
+        <div class="container">
+            {# Message lors de la suppression d'un manga #}
+            {% for message in app.flashes('deleteManga') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
 
-        {% endfor %}
-        //Message lors de la suppression d'un tome
-        {% for messageTome in app.flashes('deleteTome') %}
-            <div class="alert alert-success">
-                {{ messageTome }}
-            </div>
+            {% endfor %}
+            {# Message lors de la suppression d'un tome #}
+            {% for messageTome in app.flashes('deleteTome') %}
+                <div class="alert alert-success">
+                    {{ messageTome }}
+                </div>
 
-        {% endfor %}
-        //Message lors de la suppression d'un commentaire
-        {% for messageComment in app.flashes('deleteComment') %}
-            <div class="alert alert-success">
-                {{ messageComment }}
-            </div>
+            {% endfor %}
+            {# Message lors de la suppression d'un commentaire #}
+            {% for messageComment in app.flashes('deleteComment') %}
+                <div class="alert alert-success">
+                    {{ messageComment }}
+                </div>
 
-        {% endfor %}
-        //Message lors de la suppression d'un message
-        {% for messageMessage in app.flashes('deleteMessage') %}
-            <div class="alert alert-success">
-                {{ messageMessage }}
-            </div>
+            {% endfor %}
+            {# Message lors de la suppression d'un message #}
+            {% for messageMessage in app.flashes('deleteMessage') %}
+                <div class="alert alert-success">
+                    {{ messageMessage }}
+                </div>
 
-        {% endfor %}
+            {% endfor %}
 
 
-        <!-- Row Start -->
-        <div class="row">
-            <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
-                <div class="sidebar">
+            <!-- Row Start -->
+            <div class="row">
+                <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
+                    <div class="sidebar">
 
-                    <!-- Dashboard Links -->
-                    <div class="widget user-dashboard-menu">
-                        <ul>
-                            //Lien vers les différentes éléments de la partie admin avec la class active en fonction de la page affichée
-                            <li {% if app.request.get('_route') == 'admin-books' %}class="active"{% endif%}>
-                                <a href="{{ url('admin-books') }}"><i class="fa fa-bookmark-o"></i> Livres</a>
-                            </li>
-                            <li {% if app.request.get('_route') == 'admin-reviews' %}class="active"{% endif%}>
-                                <a href="{{ url('admin-reviews') }}"><i class="fa fa-comment-o"></i>Commentaires</a>
-                            </li>
-                            <li {% if app.request.get('_route') == 'admin-messages' %}class="active"{% endif%}>
-                                <a href="{{ url('admin-messages') }}"><i class="fa fa-envelope-o"></i>Messages</a>
-                            </li>
-                        </ul>
+                        <!-- Dashboard Links -->
+                        <div class="widget user-dashboard-menu">
+                            <ul>
+                                {# Lien vers les différentes éléments de la partie admin avec la class active en fonction de la page affichée #}
+                                <li {% if app.request.get('_route') == 'admin-books' %}class="active"{% endif %}>
+                                    <a href="{{ url('admin-books') }}"><i class="fa fa-bookmark-o"></i> Livres</a>
+                                </li>
+                                <li {% if app.request.get('_route') == 'admin-reviews' %}class="active"{% endif %}>
+                                    <a href="{{ url('admin-reviews') }}"><i class="fa fa-comment-o"></i>Commentaires</a>
+                                </li>
+                                <li {% if app.request.get('_route') == 'admin-messages' %}class="active"{% endif %}>
+                                    <a href="{{ url('admin-messages') }}"><i class="fa fa-envelope-o"></i>Messages</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
+
+                {# Emplacement des block ayant le layout admin #}
+                {% block content %}
+                {% endblock content %}
+
             </div>
-
-
-            //Emplacement des block ayant le layout admin
-            {% block content %}
-            {% endblock content %}
-
+            <!-- Row End -->
+            <!-- Container End -->
         </div>
-        <!-- Row End -->
-        <!-- Container End -->
-    </div>
-</section>
+    </section>
 {% endblock section %}

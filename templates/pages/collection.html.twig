@@ -1,122 +1,94 @@
 {% extends 'base.html.twig' %}
 
 {% block section %}
+    {# Si l'utilisateur est connecté et que l'élément mybooks n'est pas vide on affiche le tableau avec la collection de l'utilisateur #}
     {% if app.user and mybooks is not empty %}
 
         <section class="dashboard section">
             <!-- Container Start -->
             <div class="container">
-                <!-- Row Start -->
-                <div class="row">
-
-
-                    <!-- delete-account modal -->
-                    <!-- delete account popup modal start-->
-                    <!-- Modal -->
-                    <div class="modal fade" id="deleteitem" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalCenterTitle"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header border-bottom-0">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <img src="{{ asset('images/account/Account1.png') }}" class="img-fluid mb-2" alt="">
-                                    <h6 class="py-2">Es-tu sur de vouloir le supprimer?</h6>
-
-                                </div>
-                                <div class="modal-footer border-top-0 mb-3 mx-5 justify-content-lg-between justify-content-center">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
-                                    <button type="button" class="btn btn-danger">Supprimer</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- delete account popup modal end-->
-                    <!-- delete-account modal -->
-
+                <div class="content-block mb-3">
+                    <h2 class="text-center">Ma collection</h2>
                 </div>
-            </div>
-
-            <div class="content-block mb-3">
-                <h2 class="text-center">Ma collection</h2>
-            </div>
-            <div class="col-md-12 offset-md-1 col-lg-9 offset-lg-0 m-auto">
-                <!-- Recently Favorited -->
-                <div class="widget dashboard-container my-adslist">
-                    <table class="table table-responsive product-dashboard-table">
-                        <thead>
-                        <tr>
-                            <th class="text-center">Série</th>
-                            <th class="text-center">Image</th>
-                            <th class="text-center">Number</th>
-                            <th class="text-center">Tomes</th>
-                            <th class="text-center">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for mybook in mybooks %}
+                <div class="col-md-12 offset-md-1 col-lg-9 offset-lg-0 m-auto">
+                    <!-- Recently Favorited -->
+                    <div class="widget dashboard-container my-adslist">
+                        <table class="table table-responsive product-dashboard-table">
+                            <thead>
                             <tr>
-
-                                <td class="product-thumb">
-                                    <h3 class="title text-center">{{ mybook.manga.frenchTitle }}</h3>
-
-                                <td class="">
-                                    <img width="80px" height="auto" src="{{ asset('uploads/'~mybook.photo.url) }}"
-                                         alt="image description">
-                                </td>
-                                <td class="text-center">{{ mybook.number }}</td>
-                                <td class=" product-collection product-details ">
-                                    <h3 class="title">{{ mybook.title }}</h3>
-                                    <div class="overflow-auto p-2" style=" height: 120px"><span
-                                                class="summery">{{ mybook.summary }}</span></div>
-                                </td>
-                                <td class="action" data-title="Action">
-                                    <div class="">
-                                        <ul class="list-inline justify-content-center">
-                                            <li class="list-inline-item">
-                                                <a data-toggle="tooltip" data-placement="top" title="View" class="view"
-                                                   href="{{ url('single', {slug: mybook.manga.slug}) }}">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a data-placement="top" title="Delete" class="delete" href="{{ url('delete-collection', {id: mybook.id}) }}"> <i
-                                                            class="fa fa-trash"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
+                                <th class="text-center">Série</th>
+                                <th class="text-center">Image</th>
+                                <th class="text-center">Number</th>
+                                <th class="text-center">Tomes</th>
+                                <th class="text-center">Action</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {# Boucle pour afficher la collection de l'utilisateur #}
+                            {% for mybook in mybooks %}
+                                <tr>
+
+                                    <td class="product-thumb">
+                                        <h3 class="title text-center">{{ mybook.manga.frenchTitle }}</h3>
+
+                                    <td class="">
+                                        <img width="80px" height="auto" src="{{ asset('uploads/'~mybook.photo.url) }}"
+                                             alt="image description">
+                                    </td>
+                                    <td class="text-center">{{ mybook.number }}</td>
+                                    <td class=" product-collection product-details ">
+                                        <h3 class="title">{{ mybook.title }}</h3>
+                                        <div class="overflow-auto p-2" style=" height: 120px"><span
+                                                    class="summery">{{ mybook.summary }}</span></div>
+                                    </td>
+                                    <td class="action" data-title="Action">
+                                        <div class="">
+                                            <ul class="list-inline justify-content-center">
+                                                <li class="list-inline-item">
+                                                    <a data-toggle="tooltip" data-placement="top" title="View"
+                                                       class="view"
+                                                       href="{{ url('single', {slug: mybook.manga.slug}) }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a data-placement="top" title="Delete" class="delete"
+                                                       href="{{ url('delete-collection', {id: mybook.id}) }}"> <i
+                                                                class="fa fa-trash"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <!-- pagination -->
+                    <div class="pagination justify-content-center">
+                        {{ knp_pagination_render(mybooks) }}
+                    </div>
+                    <!-- pagination -->
 
                 </div>
 
-                <!-- pagination -->
-                <div class="pagination justify-content-center">
-                    {{ knp_pagination_render(mybooks) }}
-                </div>
-                <!-- pagination -->
-
+                <!-- Row End -->
             </div>
 
-            <!-- Row End -->
-            </div>
             <!-- Container End -->
         </section>
-    {% elseif app.user and mybooks is empty %}
-                {% for addCollection in app.flashes('addCollection') %}
-                    <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
-                        {{ addCollection }}
-                    </div>
-                {% endfor %}
 
+        {# Si l'utilisateur est connecté mais que sa collection est vide on affiche un message #}
+    {% elseif app.user and mybooks is empty %}
+        {% for addCollection in app.flashes('addCollection') %}
+            <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
+                {{ addCollection }}
+            </div>
+        {% endfor %}
+        {# Si l'utilisateur n'est pas connecté et que mybooks est vide, on affiche un autre message #}
     {% elseif not app.user and mybooks is empty %}
         {% for message in app.flashes('login') %}
             <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
@@ -124,4 +96,5 @@
             </div>
         {% endfor %}
     {% endif %}
+
 {% endblock section %}
