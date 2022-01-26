@@ -28,10 +28,15 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin-books", name="admin-books")
      */
-    public function adminBooks(MangaRepository $mangaRepository): Response
+    public function adminBooks(MangaRepository $mangaRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $mangas = $mangaRepository->findBy([], ['frenchTitle'=>'asc']);
-        return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $mangas]);
+
+        $pagination = $paginator->paginate(
+            $mangas, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
+        return $this->render('pages/admin/admin-books.html.twig', ['mangas' => $pagination]);
     }
 
     /**
@@ -203,7 +208,9 @@ class AdminController extends AbstractController
             $em->remove($comment);
             $em->flush();
 
-        return $this->render('pages/admin/element/delete-items.html.twig');
+        $this->addFlash('deleteComment', 'Ce commentaire a bien été supprimé');
+
+        return $this->redirectToRoute('admin-reviews');
     }
 
     /**
@@ -214,8 +221,9 @@ class AdminController extends AbstractController
         $message = $messageRepository->find($id);
         $em->remove($message);
         $em->flush();
+        $this->addFlash('deleteMessage', 'Ce message a bien été supprimé');
 
-        return $this->render('pages/admin/element/delete-items.html.twig');
+        return $this->redirectToRoute('admin-messages');
     }
 
 

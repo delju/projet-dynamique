@@ -18,6 +18,22 @@
             </div>
 
         {% endfor %}
+
+        {% for messageComment in app.flashes('deleteComment') %}
+            <div class="alert alert-success">
+                {{ messageComment }}
+            </div>
+
+        {% endfor %}
+
+        {% for messageMessage in app.flashes('deleteMessage') %}
+            <div class="alert alert-success">
+                {{ messageMessage }}
+            </div>
+
+        {% endfor %}
+
+
         <!-- Row Start -->
         <div class="row">
             <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">

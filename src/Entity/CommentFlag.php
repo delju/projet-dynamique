@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentFlagRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CommentFlagRepository::class)
@@ -19,6 +20,7 @@ class CommentFlag
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     private $date;
 
@@ -31,13 +33,14 @@ class CommentFlag
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\Blameable(on="create")
      */
     private $author;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $handled;
+    private $handled = false;
 
     public function getId(): ?int
     {

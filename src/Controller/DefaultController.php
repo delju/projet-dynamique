@@ -27,9 +27,14 @@ class DefaultController extends AbstractController
      */
     public function home(MangaRepository $mangaRepository, CommentRepository $commentRepository, TomesRepository $tomesRepository): Response
     {
+        //J'affiche les 4 derniers ajoutés
         $lastAdded = $mangaRepository->findBy([], ['date' => 'DESC'], 4);
+        //Je récupère les 4 derniers commentaires
         $lastComment = $commentRepository->commentWithManga(4);
+        //Je récupère les 4 derniers sortis
         $lastRelease = $tomesRepository->findByLastReleases(4);
+
+        //Je les affiche dans la page home
         return $this->render('pages/home.html.twig', ['lastAdded' => $lastAdded, 'lastComment' => $lastComment, 'lastReleases' => $lastRelease]);
     }
 
@@ -38,17 +43,18 @@ class DefaultController extends AbstractController
      */
     public function Collection(PaginatorInterface $paginator, Request $request): Response
     {
-
+        //Je récupère l'utilisateur actuel et je vais recherche les tomes qui lui sont liés dans la collection
         $user = $this->getUser();
         $mybooks = $user->getMyBook();
-
+        //Pagination des résultats
         $pagination = $paginator->paginate(
             $mybooks, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             15/*limit per page*/);
 
-
+        //Message a affiché si l'utilisateur n'est pas connecté
         $this->addFlash('login', 'Vous devez vous connecter pour créer votre collection');
+       //Message a affiché si l'utilisateur n'a pas encore de tome dans sa collection
         $this->addFlash('addCollection', 'Vous devez ajouter des tomes dans votre collection');
 
         return $this->render('pages/collection.html.twig', ['mybooks' => $pagination]);
@@ -59,31 +65,40 @@ class DefaultController extends AbstractController
      */
     public function AddCollection(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
-        // On récupère l'id de l'utilisateur
+        // On récupère l'utilisateur actuel
         $user = $this->getUser();
-
+        //On va recherche le tome par son id
         $tomes = $tomesRepository->find($id);
-
+        //Si le tome n'est pas null on l'ajoute dans la collection de l'utilisateur
         if ($tomes !== null) {
             $user->addMyBook($tomes);
-
+        //On persist le tout
             $em->persist($tomes);
             $em->persist($user);
             $em->flush();
+            //Si cela fonctionne on retourne a la collection
 
-            $this->redirectToRoute('collection', ['mybooks' => $tomes]);
         }
-        return $this->render('pages/collection.html.twig');
+        return $this->redirectToRoute('collection');
     }
 
 
     /**
      * @Route("/next-releases", name="next-releases")
      */
-    public function nextReleases(TomesRepository $tomesRepository): Response
+    public function nextReleases(TomesRepository $tomesRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        //Je récupère les tomes dont la date de sortie n'est pas encore passée.
         $lastReleases = $tomesRepository->findUntilDate();
-        return $this->render('pages/next-releases.html.twig', ['lastReleases' => $lastReleases]);
+        //Pagination du résulat
+        $pagination = $paginator->paginate(
+            $lastReleases,
+            $request->query->getInt('page', 1),
+            20
+
+        );
+
+        return $this->render('pages/next-releases.html.twig', ['lastReleases' => $pagination]);
     }
 
 
@@ -92,6 +107,7 @@ class DefaultController extends AbstractController
      */
     public function createMessage(Request $request, EntityManagerInterface $em): Response
     {
+        //Création d'un nouveau message a partir du formulaire MessageTYPE dans la page contact
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
@@ -109,8 +125,11 @@ class DefaultController extends AbstractController
      */
     public function viewManga(string $slug, MangaRepository $mangaRepository, Request $request, EntityManagerInterface $em, PaginatorInterface $paginator): Response
     {
+        //Récupération des mangas par son slug.
         $manga = $mangaRepository->findOneBySlug($slug);
+        //Création d'un commentaire
         $comment = new Comment();
+        //On écrit
         $comment->setManga($manga);
         $tomes = $manga->getTomes();
         $commentForm = $this->createForm(CommentType::class, $comment);
@@ -141,7 +160,9 @@ class DefaultController extends AbstractController
         $em->persist($collection);
         $em->flush();
 
-        return $this->render('pages/admin/element/delete-items.html.twig');
+        $this->addFlash('deleteCollection', 'Ce tome a bien été supprimé de votre collection');
+
+        return $this->redirectToRoute('collection');
     }
 
     /**

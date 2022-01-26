@@ -23,6 +23,9 @@ class AppFixtures extends Fixture
 {
 
     private $encoder;
+    private const USER_REFERENCE = 'user-';
+    private const TOME_REFERENCE = 'tome-';
+
 
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
@@ -154,35 +157,11 @@ class AppFixtures extends Fixture
         $photo9->setUrl('elfenlied.jpg');
         $manager->persist($photo9);
 
-        /********* Utilisateurs ********/
+        $photo10 = new Photo();
+        $photo10->setUrl('tome_32_japonjpg1-61f01ad1bfe4c.jpg');
+        $manager->persist($photo10);
 
-        $admin = new User();
-        $admin->setUsername("Julene1002");
-        $admin->setPassword($this->encoder->encodePassword($admin, "Arthnhoa2812"));
-        $admin->setEmail("julene.delvaux@gmail.com");
-        $admin->setRoles(["ROLE_ADMIN"]);
-        $manager->persist($admin);
 
-        $user1 = new User();
-        $user1->setUsername("User");
-        $user1->setPassword($this->encoder->encodePassword($user1, "azerty"));
-        $user1->setEmail("user@fixture");
-        $user1->setRoles(["ROLE_USER"]);
-        $manager->persist($user1);
-
-        $user2 = new User();
-        $user2->setUsername("Bibi");
-        $user2->setPassword($this->encoder->encodePassword($user2, "azerty"));
-        $user2->setEmail("user2@fixture");
-        $user2->setRoles(["ROLE_USER"]);
-        $manager->persist($user2);
-
-        $user3 = new User();
-        $user3->setUsername("Zenitsu");
-        $user3->setPassword($this->encoder->encodePassword($user3, "azerty"));
-        $user3->setEmail("user3@fixture");
-        $user3->setRoles(["ROLE_USER"]);
-        $manager->persist($user3);
 
         /********* Manga ********/
 
@@ -254,6 +233,8 @@ class AppFixtures extends Fixture
                                     En même temps, Izuku tente d\'entrer à la prestigieuse Hero Academia et ce nouveau pouvoir est la chance qu\'il attendait... cependant, il ne le maîtrise pas beaucoup et son corps est très fortement affecté chaque fois qu\'il l\'utilise... Et l\'année ne fait que commencer...');
         $tome1->setRelDate(new \DateTime('2016-04-14'));
         $tome1->setPhoto($photo3);
+        $this->addReference(self::TOME_REFERENCE.'1', $tome1);
+
         $manager->persist($tome1);
 
         $tome2 = new Tomes();
@@ -263,6 +244,7 @@ class AppFixtures extends Fixture
         $tome2->setSummary('Pris pour cible par un super-vilain, Izuku est secouru de main de maître par son idole en personne ! Il découvre alors qu’All Might, très diminué par une ancienne blessure, ne peut plus utiliser son alter que trois heures par jour... Aussi, lorsque son camarade Katsuki est attaqué quelques instants plus tard, son sang ne fait qu’un tour : malgré sa terreur, il se précipite à la rescousse du jeune garçon ! Témoin de cet acte de bravoure, All Might décide de faire d’Izuku son successeur. Après un entraînement drastique, notre apprenti héros réussit à intégrer le prestigieux lycée Yuei, mais il y a un hic : impossible pour lui de maîtriser le One for All, le pouvoir hérité d’All Might...');
         $tome2->setRelDate(new \DateTime('2016-04-14'));
         $tome2->setPhoto($photo4);
+        $this->addReference(self::TOME_REFERENCE.'2', $tome2);
         $manager->persist($tome2);
 
         $tome3 = new Tomes();
@@ -272,6 +254,7 @@ class AppFixtures extends Fixture
         $tome3->setSummary('Pris pour cible par un super-vilain, Izuku est secouru de main de maître par son idole en personne ! Il découvre alors qu’All Might, très diminué par une ancienne blessure, ne peut plus utiliser son alter que trois heures par jour... Aussi, lorsque son camarade Katsuki est attaqué quelques instants plus tard, son sang ne fait qu’un tour : malgré sa terreur, il se précipite à la rescousse du jeune garçon ! Témoin de cet acte de bravoure, All Might décide de faire d’Izuku son successeur. Après un entraînement drastique, notre apprenti héros réussit à intégrer le prestigieux lycée Yuei, mais il y a un hic : impossible pour lui de maîtriser le One for All, le pouvoir hérité d’All Might...');
         $tome3->setRelDate(new \DateTime('2016-06-09'));
         $tome3->setPhoto($photo5);
+        $this->addReference(self::TOME_REFERENCE.'3', $tome3);
         $manager->persist($tome3);
 
         $tome4 = new Tomes();
@@ -283,6 +266,7 @@ class AppFixtures extends Fixture
         Grâce à son talent pour l\'improvisation, Deku se hisse à la première place du classement à la toute fin de l\'épreuve, une course d\'obstacle façon Yuei . Mais parviendra - t - il à conserver son titre lors de la bataille de cavaliers ? Toujours plus loin, plus ultra !');
         $tome4->setRelDate(new \DateTime('2016-07-07'));
         $tome4->setPhoto($photo6);
+        $this->addReference(self::TOME_REFERENCE.'4', $tome4);
         $manager->persist($tome4);
 
         $tome5 = new Tomes();
@@ -290,20 +274,77 @@ class AppFixtures extends Fixture
         $tome5->setNumber(5);
         $tome5->setTitle('Shoto Todoroki: Les origines');
         $tome5->setSummary('Et c\'est parti pour la troisième épreuve du championnat ! Les 16 élèves encore en lice vont s\'affronter lors d\'un tournoi sans merci... Confronté à un alter de contrôle mental, Deku parvient à gagner son premier duel en activant le One for All dans deux de ses doigts avant d\'envoyer son adversaire hors du ring !
-Mais le prochain match s\'annonce ardu, car son opposant n\'est autre que Shoto, et le jeune garçon est bien décidé à l\'emporter. De son côté, Ochaco s\'apprête à se mesurer à Katsuki... Le combat promet d\'être explosif !');
+        Mais le prochain match s\'annonce ardu, car son opposant n\'est autre que Shoto, et le jeune garçon est bien décidé à l\'emporter. De son côté, Ochaco s\'apprête à se mesurer à Katsuki... Le combat promet d\'être explosif !');
         $tome5->setRelDate(new \DateTime('2016-09-08'));
         $tome5->setPhoto($photo7);
+        $this->addReference(self::TOME_REFERENCE.'5', $tome5);
         $manager->persist($tome5);
+
+        $tome6 = new Tomes();
+        $tome6->setManga($manga1);
+        $tome6->setNumber(32);
+        $tome6->setTitle('A ton tour!');
+        $tome6->setSummary(' Bientôt dipsonible');
+        $tome6->setRelDate(new \DateTime('2022-04-07'));
+        $tome6->setPhoto($photo10);
+        $manager->persist($tome6);
+
+        /********* Utilisateurs ********/
+
+        $admin = new User();
+        $admin->setUsername("Julene1002");
+        $admin->setPassword($this->encoder->encodePassword($admin, "Arthnhoa2812"));
+        $admin->setEmail("julene.delvaux@gmail.com");
+        $admin->setRoles(["ROLE_ADMIN"]);
+        $this->addReference(self::USER_REFERENCE.'3', $admin);
+        $admin->addMyBook($this->getReference('tome-1'));
+        $admin->addMyBook($this->getReference('tome-2'));
+        $admin->addMyBook($this->getReference('tome-3'));
+
+        $manager->persist($admin);
+
+        $user1 = new User();
+        $user1->setUsername("User");
+        $user1->setPassword($this->encoder->encodePassword($user1, "azerty"));
+        $user1->setEmail("user@fixture");
+        $user1->setRoles(["ROLE_USER"]);
+        $manager->persist($user1);
+
+        $user2 = new User();
+        $user2->setUsername("Bibi");
+        $user2->setPassword($this->encoder->encodePassword($user2, "azerty"));
+        $user2->setEmail("user2@fixture");
+        $user2->setRoles(["ROLE_USER"]);
+        $manager->persist($user2);
+
+        $user3 = new User();
+        $user3->setUsername("Zenitsu");
+        $user3->setPassword($this->encoder->encodePassword($user3, "azerty"));
+        $user3->setEmail("user3@fixture");
+        $user3->setRoles(["ROLE_USER"]);
+        $user3->addMyBook($this->getReference('tome-1'));
+        $manager->persist($user3);
+
+        $prof = new User();
+        $prof->setUsername("Jona");
+        $prof->setPassword($this->encoder->encodePassword($user3, "azerty"));
+        $prof->setEmail("prof@fixture");
+        $prof->setRoles(["ROLE_ADMIN"]);
+        $prof->addMyBook($this->getReference('tome-1'));
+        $prof->addMyBook($this->getReference('tome-2'));
+        $prof->addMyBook($this->getReference('tome-3'));
+        $manager->persist($prof);
+
 
         /********* Messages ********/
 
-        $message1= new Message();
+        $message1 = new Message();
         $message1->setTitle('My Hero Academia');
         $message1->setContent('il y a une erreur dans la photo de couverture');
         $message1->setCategory($categories_message[3]);
         $manager->persist($message1);
 
-        $message2= new Message();
+        $message2 = new Message();
         $message2->setTitle('Assassinate CLassroom');
         $message2->setContent('Je ne retrouve pas ce manga . C\'est possible de l\'ajouter?');
         $message2->setCategory($categories_message[0]);
@@ -415,43 +456,43 @@ Mais le prochain match s\'annonce ardu, car son opposant n\'est autre que Shoto,
         $manager->persist($comment7);
 
         $comment8 = new Comment();
-        $comment8->setManga($manga1);
-        $comment8->setUser($admin);
+        $comment8->setManga($manga3);
+        $comment8->setUser($user2);
         $comment8->setDate(new \DateTime());
-        $comment8->setMessage('Ce Manga est génial!');
+        $comment8->setMessage('J\'adore celui-là! Vraiment trop romantique!');
         $manager->persist($comment8);
 
         $comment9 = new Comment();
-        $comment9->setManga($manga1);
-        $comment9->setUser($admin);
+        $comment9->setManga($manga4);
+        $comment9->setUser($user2);
         $comment9->setDate(new \DateTime());
-        $comment9->setMessage('Ce Manga est génial!');
+        $comment9->setMessage('Ce manga est vraiment top! Mais pas pour les enfants!');
         $manager->persist($comment9);
 
         $comment10 = new Comment();
         $comment10->setManga($manga1);
-        $comment10->setUser($admin);
+        $comment10->setUser($user3);
         $comment10->setDate(new \DateTime());
-        $comment10->setMessage('Ce Manga est génial!');
+        $comment10->setMessage('J\'ai hâte d\'avoir le prochain dans ma collection');
         $manager->persist($comment10);
 
         $comment11 = new Comment();
-        $comment11->setManga($manga1);
-        $comment11->setUser($admin);
+        $comment11->setManga($manga2);
+        $comment11->setUser($user1);
         $comment11->setDate(new \DateTime());
-        $comment11->setMessage('Ce Manga est génial!');
+        $comment11->setMessage('Il y a trop de personnage trop cool! Je ne saurais pas dire mon préféré');
         $manager->persist($comment11);
 
         $comment12 = new Comment();
-        $comment12->setManga($manga1);
+        $comment12->setManga($manga4);
         $comment12->setUser($admin);
         $comment12->setDate(new \DateTime());
-        $comment12->setMessage('Ce Manga est génial!');
+        $comment12->setMessage('Ce manga est particulier, ce n\'est pas pour tout le monde');
         $manager->persist($comment12);
 
         /********* Collection **********/
 
-        $collection1 =
+
             $manager->flush();
     }
 }

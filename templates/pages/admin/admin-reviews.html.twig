@@ -5,7 +5,7 @@
     <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
         <!-- Recently Favorited -->
         <div class="widget dashboard-container my-adslist">
-            <h2 class="widget-header">Les commentaires</h2>
+            <h2 class="widget-header">Les commentaires({{ comments.getTotalItemCount }})</h2>
             <table class="table table-responsive product-dashboard-table">
                 <thead>
                 <tr>
@@ -13,6 +13,7 @@
                     <th class="text-center">Utilisateur</th>
                     <th class="text-center">Manga</th>
                     <th class="text-center">Commentaires</th>
+                    <th class="text-center">Signalement</th>
                     <th class="text-center">Action</th>
                 </tr>
                 </thead>
@@ -26,8 +27,11 @@
                         <td class="author">
                             <span>{{ comment.user.username }}</span>
                         </td>
-                        <td class="tomes"><span></span></td>
+                        <td class="tomes"><span>{{ comment.manga }}</span></td>
                         <td class="product-details"><p>{{ comment.message }}</p></td>
+                        <td>
+                            <p>{{ comment.commentFlags | length }}</p>
+                        </td>
                         <td class="action" data-title="Action">
                             <div class="">
                                 <ul class="list-inline justify-content-center">
