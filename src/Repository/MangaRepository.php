@@ -20,36 +20,40 @@ class MangaRepository extends ServiceEntityRepository
         parent::__construct($registry, Manga::class);
     }
 
+    //Récupéré les éléments selon un mot clé qui correspond au titre français, au titre original
     public function findBySearch(Search $search)
-    { dump($search);
+    {
         $qb = $this->createQueryBuilder('m')
             ->where('m.frenchTitle LIKE :keyword')
             ->orderBy('m.frenchTitle', 'ASC')
-            ->setParameter('keyword', '%'.$search->getKeyword().'%')
-        ;
+            ->orWhere('m.originalTitle LIKE :keyword')
+            ->setParameter('keyword', '%' . $search->getKeyword() . '%');
 
-       if (count($search->getStatuts())) {
+        //SI statut compté, on recherche selon le statut
+        if (count($search->getStatuts())) {
             $qb->andWhere('m.statut in (:statuts)')
                 ->setParameter('statuts', $search->getStatuts());
         }
-
-       if(count($search->getGenres())) {
-             $qb->andWhere('m.genre in (:genres)')
-                 ->setParameter('genres', $search->getGenres());
-         }
-
-       if($search->getAnimes() == true){
+        //SI genre compté, on recherche selon le genre
+        if (count($search->getGenres())) {
+            $qb->andWhere('m.genre in (:genres)')
+                ->setParameter('genres', $search->getGenres());
+        }
+        //Si on demande que l'anime est vrai alors on affiche les éléments correspondants
+        if ($search->getAnimes() == true) {
             $qb->andWhere('m.anime in (:animes)')
-            ->setParameter('animes', $search->getAnimes());
+                ->setParameter('animes', $search->getAnimes());
         }
 
-      if(count($search->getClassifications())){
+        //SI classifications compté, on recherche selon la classification
+        if (count($search->getClassifications())) {
 
             $qb->andWhere('m.classification in (:classifications)')
                 ->setParameter('classifications', $search->getClassifications());
         }
 
-        if($search->getEditors()){
+        //Si on choisi un éditeur, alors on recherche selon l'éditeur choisis
+        if ($search->getEditors()) {
             $qb->andWhere('m.editor in (:editors)')
                 ->setParameter('editors', $search->getEditors());
         }
@@ -57,14 +61,15 @@ class MangaRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findWithTomes($slug){
+    //On recherche les mangas grâce a leur slug et leurs tomes trié selon le numéro des tomes
+    public function findWithTomes($slug)
+    {
         $qb = $this->createQueryBuilder('m')
             ->where('m.slug = :slug')
             ->leftJoin('m.tomes', 'tomes')
             ->orderBy('tomes.number', 'ASC')
             ->addSelect('tomes')
-            ->setParameter('slug', $slug)
-            ;
+            ->setParameter('slug', $slug);
         return $qb->getQuery()->getResult();
 
 

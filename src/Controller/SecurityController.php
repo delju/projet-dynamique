@@ -20,15 +20,19 @@ class SecurityController extends AbstractController
      * @Route("/register", name="register")
      */
     public function register(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response {
+
+        //Création d'un nouvem utilisateur
         $user = new User();
+        //On le fait via le formulaire USerRegister
         $form = $this->createForm(UserRegisterType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            //Si formulaire envoyé et valide, on hash le mot de passe et on définit le role sur USER
             $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
             $user->setRoles(['ROLE_USER']);
             $em->persist($user);
-            dump($user);
             $em->flush();
+            //Si cela se fait on revient sur la page de connexion
             return $this->redirectToRoute('app_login');
         }
         return $this->render("security/register.html.twig", ['registerForm'=> $form->createView()]);
@@ -39,7 +43,7 @@ class SecurityController extends AbstractController
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
-    {
+    {       //Connexion de l'utilisateur
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
@@ -57,6 +61,8 @@ class SecurityController extends AbstractController
      */
     public function logout(): void
     {
+        //Chemin vers la deconnection
+
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

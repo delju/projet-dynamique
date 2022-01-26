@@ -19,6 +19,7 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    //Joint la table des manga avec celui des commentaires avec une limit du nombre de résultat
     public function commentWithManga($limit= null){
         $qb = $this->createQueryBuilder('c')
             ->leftJoin('c.manga', 'm')
