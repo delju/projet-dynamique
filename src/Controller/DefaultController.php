@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\CommentFlag;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\CommentType;
@@ -35,22 +36,22 @@ class DefaultController extends AbstractController
     /**
      * @Route("/collection", name="collection")
      */
-    public function Collection(PaginatorInterface $paginator, Request  $request): Response
+    public function Collection(PaginatorInterface $paginator, Request $request): Response
     {
 
         $user = $this->getUser();
         $mybooks = $user->getMyBook();
 
         $pagination = $paginator->paginate(
-                $mybooks, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                15/*limit per page*/);
+            $mybooks, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            15/*limit per page*/);
 
 
-            $this->addFlash('login', 'Vous devez vous connecter pour créer votre collection');
-            $this->addFlash('addCollection', 'Vous devez ajouter des tomes dans votre collection');
+        $this->addFlash('login', 'Vous devez vous connecter pour créer votre collection');
+        $this->addFlash('addCollection', 'Vous devez ajouter des tomes dans votre collection');
 
-        return $this->render('pages/collection.html.twig', ['mybooks'=>$pagination]);
+        return $this->render('pages/collection.html.twig', ['mybooks' => $pagination]);
     }
 
     /**
@@ -63,14 +64,14 @@ class DefaultController extends AbstractController
 
         $tomes = $tomesRepository->find($id);
 
-        if($tomes !== null) {
+        if ($tomes !== null) {
             $user->addMyBook($tomes);
 
             $em->persist($tomes);
             $em->persist($user);
             $em->flush();
 
-            $this->redirectToRoute('collection', ['mybooks'=>$tomes] );
+            $this->redirectToRoute('collection', ['mybooks' => $tomes]);
         }
         return $this->render('pages/collection.html.twig');
     }
@@ -154,18 +155,30 @@ class DefaultController extends AbstractController
         $result = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $mangaRepository->findBySearch($search);
-        }else{
-            $result = $mangaRepository->findBy([], ['frenchTitle'=>'ASC']);
+        } else {
+            $result = $mangaRepository->findBy([], ['frenchTitle' => 'ASC']);
         }
 
         $pagination = $paginator->paginate(
             $result, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            30/*limit per page*/);
+            12/*limit per page*/);
 
         return $this->render('pages/search.html.twig', ['mangas' => $pagination, 'searchFullForm' => $form->createView()]);
 
     }
 
+    /**
+     * @Route("/report-comment/{id}", name="reportComment", methods={"GET"})
+     */
+    public function reportComment(Comment $comment, EntityManagerInterface $em)
+    {
+        $flag = new CommentFlag();
+        $flag->setComment($comment);
+        $em->persist($flag);
+        $em->flush();
+
+        return $this->render('pages/element/flag-response.html.twig');
+    }
 
 }

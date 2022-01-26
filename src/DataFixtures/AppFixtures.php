@@ -234,7 +234,8 @@ class AppFixtures extends Fixture
         $manga4 = new Manga();
         $manga4->setOriginalTitle('Erufen Rito');
         $manga4->setFrenchTitle('Elfen Lied');
-        $manga4->setSummary('Le jour de son anniversaire, un yôkai lui fait une révélation surprenante : à partir de ce jour, si un monstre boit son sang, il prolonge sa durée de vie ; s\'il mange sa chair, il devient immortel et s\'il fait d\'elle sa femme, il assure la prospérité de son clan !');
+        $manga4->setSummary('Lucy, une diclonius, arrive à s\'échapper du laboratoire en massacrant les gardes avant d\'être touchée à la tête par un sniper, ce qui la précipite dans l\'océan. 
+    Le lendemain elle se réveille sur une plage et est secourue par un jeune garçon nommé Kôta et sa cousine Yuka, cependant elle à perdu la mémoire.');
         $manga4->setAnime(1);
         $manga4->setGenre($genres[2]);
         $manga4->setEditor($editors[8]);

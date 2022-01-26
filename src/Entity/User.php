@@ -56,10 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $my_book;
 
 
+
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->my_book = new ArrayCollection();
+        $this->commentFlags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -225,6 +228,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeMyBook(Tomes $myBook): self
     {
         $this->my_book->removeElement($myBook);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentFlag[]
+     */
+    public function getCommentFlags(): Collection
+    {
+        return $this->commentFlags;
+    }
+
+    public function addCommentFlag(CommentFlag $commentFlag): self
+    {
+        if (!$this->commentFlags->contains($commentFlag)) {
+            $this->commentFlags[] = $commentFlag;
+            $commentFlag->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentFlag(CommentFlag $commentFlag): self
+    {
+        if ($this->commentFlags->removeElement($commentFlag)) {
+            // set the owning side to null (unless already changed)
+            if ($commentFlag->getAuthor() === $this) {
+                $commentFlag->setAuthor(null);
+            }
+        }
 
         return $this;
     }

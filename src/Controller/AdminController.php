@@ -175,7 +175,9 @@ class AdminController extends AbstractController
          $em->remove($manga);
             $em->flush();
 
-        return $this->render('pages/admin/element/delete-items.html.twig');
+        $this->addFlash('deleteManga', 'Le manga a bien été supprimé');
+
+        return $this->redirectToRoute('admin-books');
     }
 
     /**
@@ -187,7 +189,9 @@ class AdminController extends AbstractController
         $em->remove($tome);
         $em->flush();
 
-        return $this->render('pages/admin/element/delete-items.html.twig');
+        $this->addFlash('deleteTome', 'Ce tome a bien été supprimé');
+
+        return $this->redirectToRoute('admin-books');
     }
 
     /**

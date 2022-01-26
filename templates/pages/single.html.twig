@@ -130,10 +130,11 @@
                                         <div class="media-inline">
                                             {% for comment in manga.comments %}
                                             <div class="media-body">
-                                                <div class="name">
-                                                    <h5>{{ comment.user.username }}</h5>
+                                                <div class="reportedComment">
+                                                    <a href="{{ path('reportComment', {id: comment.id}) }}" class="flag"><i class="fa fa-flag"></i> </a>
                                                 </div>
-                                                <div class="date">
+                                                <div class="name">
+                                                    <h5 class="{% if advert.user == comment.author %}author{% endif %}">{{ comment.user.username }}</h5>
                                                     <p>{{ comment.date | date('d-m-Y') }}</p>
                                                 </div>
                                                 <div class="review-comment">

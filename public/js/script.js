@@ -1,6 +1,15 @@
 (function ($) {
   'use strict';
 
+  $(document).ready(() => {
+    $('a.flag').click(e => {
+      e.preventDefault();
+      $.get(e.currentTarget.href, res => {
+        $(e.currentTarget).parents('.media-body').append(res);
+      });
+    });
+  });
+
   //  Count Up
   function counter() {
     var oTop;

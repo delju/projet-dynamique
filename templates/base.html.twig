@@ -30,7 +30,29 @@
         <link href="{{ asset('/images/favicon.png') }}" rel="shortcut icon">
     {% endblock favicon %}
 
-
+    {% block javascripts %}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- JAVASCRIPTS -->
+    <script src="{{ asset('plugins/jQuery/jquery.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap-slider.js') }}"></script>
+    <!-- tether js -->
+    <script src="{{ asset('plugins/tether/js/tether.min.js') }}"></script>
+    <script src="{{ asset('plugins/raty/jquery.raty-fa.js') }}"></script>
+    <script src="{{ asset('plugins/slick-carousel/slick/slick.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('plugins/fancybox/jquery.fancybox.pack.js') }}"></script>
+    <script src="{{ asset('plugins/smoothscroll/SmoothScroll.min.js') }}"></script>
+    <!-- google map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
+    <script src="{{ asset('plugins/google-map/gmap.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </head>
 <body>
 {% block body %}
@@ -190,29 +212,7 @@
 
 {% endblock %}
 
-{% block javascripts %}
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- JAVASCRIPTS -->
-    <script src="{{ asset('plugins/jQuery/jquery.min.js') }}"></script>
-    <script src="{{ asset('plugins/bootstrap/js/popper.min.js') }}"></script>
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap-slider.js') }}"></script>
-    <!-- tether js -->
-    <script src="{{ asset('plugins/tether/js/tether.min.js') }}"></script>
-    <script src="{{ asset('plugins/raty/jquery.raty-fa.js') }}"></script>
-    <script src="{{ asset('plugins/slick-carousel/slick/slick.min.js') }}"></script>
-    <script src="{{ asset('plugins/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
-    <script src="{{ asset('plugins/fancybox/jquery.fancybox.pack.js') }}"></script>
-    <script src="{{ asset('plugins/smoothscroll/SmoothScroll.min.js') }}"></script>
-    <!-- google map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
-    <script src="{{ asset('plugins/google-map/gmap.js') }}"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
+
 {% endblock %}
 </body>
 </html>

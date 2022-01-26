@@ -4,6 +4,20 @@
 <section class="dashboard section">
     <!-- Container Start -->
     <div class="container">
+
+        {% for message in app.flashes('deleteManga') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+        {% for messageTome in app.flashes('deleteTome') %}
+            <div class="alert alert-success">
+                {{ messageTome }}
+            </div>
+
+        {% endfor %}
         <!-- Row Start -->
         <div class="row">
             <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
