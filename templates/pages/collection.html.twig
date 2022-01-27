@@ -2,7 +2,7 @@
 
 {% block section %}
     {# Si l'utilisateur est connecté et que l'élément mybooks n'est pas vide on affiche le tableau avec la collection de l'utilisateur #}
-    {% if app.user and mybooks is not empty %}
+    {% if mybooks is not empty %}
 
         <section class="dashboard section">
             <!-- Container Start -->
@@ -82,19 +82,14 @@
         </section>
 
         {# Si l'utilisateur est connecté mais que sa collection est vide on affiche un message #}
-    {% elseif app.user and mybooks is empty %}
+    {% else %}
         {% for addCollection in app.flashes('addCollection') %}
             <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
                 {{ addCollection }}
             </div>
         {% endfor %}
         {# Si l'utilisateur n'est pas connecté et que mybooks est vide, on affiche un autre message #}
-    {% elseif not app.user and mybooks is empty %}
-        {% for message in app.flashes('login') %}
-            <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0 text-center m-auto ">
-                {{ message }}
-            </div>
-        {% endfor %}
+
     {% endif %}
 
 {% endblock section %}

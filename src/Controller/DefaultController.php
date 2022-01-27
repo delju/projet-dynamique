@@ -52,8 +52,6 @@ class DefaultController extends AbstractController
             $request->query->getInt('page', 1)/*page number*/,
             15/*limit per page*/);
 
-        //Message a affiché si l'utilisateur n'est pas connecté
-        $this->addFlash('login', 'Vous devez vous connecter pour créer votre collection');
        //Message a affiché si l'utilisateur n'a pas encore de tome dans sa collection
         $this->addFlash('addCollection', 'Vous devez ajouter des tomes dans votre collection');
 
@@ -61,7 +59,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/add-collection/{id<\d+>}", name="addCollection")
+     * @Route("/collection/add-collection/{id<\d+>}", name="addCollection")
      */
     public function AddCollection(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {

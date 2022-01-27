@@ -326,7 +326,7 @@ class AppFixtures extends Fixture
         $manager->persist($user3);
 
         $prof = new User();
-        $prof->setUsername("Jona");
+        $prof->setUsername("Prof");
         $prof->setPassword($this->encoder->encodePassword($user3, "azerty"));
         $prof->setEmail("prof@fixture");
         $prof->setRoles(["ROLE_ADMIN"]);
