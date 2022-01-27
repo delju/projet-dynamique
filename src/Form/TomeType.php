@@ -24,7 +24,7 @@ class TomeType extends AbstractType
             ->add('summary', null, ['label'=>'Résumé' ])
             ->add('rel_date', DateType::class, array(
                 'widget' => 'choice',
-                'years' => range(1950, date('Y')),
+                'years' => range(1970, date('Y')+20),
                 'months' => range(1, 12),
                 'days' => range(1, 31),
             ))

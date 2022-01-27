@@ -90,7 +90,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/create-manga", name="create-manga")
+     * @Route("/admin/create-manga", name="create-manga")
      */
     public function createManga(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
     {
@@ -115,7 +115,7 @@ class AdminController extends AbstractController
 
 
     /**
-     * @Route("/create-tome", name="create-tome")
+     * @Route("/admin/create-tome", name="create-tome")
      */
     public function createTome(Request $request, EntityManagerInterface $em, MangaPhotoUploader $mangaPhotoUploader): Response
     {
@@ -138,7 +138,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/edit_manga/{id<\d+>}", name="edit_manga")
+     * @Route("/admin/edit_manga/{id<\d+>}", name="edit_manga")
      */
     public function editManga(int $id, Request $request, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
     {
@@ -160,7 +160,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/edit_tome/{id<\d+>}", name="edit_tome")
+     * @Route("/admin/edit_tome/{id<\d+>}", name="edit_tome")
      */
     public function editTome(int $id, Request $request, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
@@ -178,12 +178,12 @@ class AdminController extends AbstractController
 
         }
 
-        return $this->render('pages/admin/create-manga.html.twig', ['mangaForm' => $form->createView()]);
+        return $this->render('pages/admin/create-tome.html.twig', ['tomeForm' => $form->createView()]);
 
     }
 
     /**
-     * @Route("/delete-manga/{id<\d+>}", name="delete-manga")
+     * @Route("/admin/delete-manga/{id<\d+>}", name="delete-manga")
      */
     public function deleteManga(int $id, MangaRepository $mangaRepository, EntityManagerInterface $em): Response
     {
@@ -199,7 +199,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete-tome/{id<\d+>}", name="delete-tome")
+     * @Route("/admin/delete-tome/{id<\d+>}", name="delete-tome")
      */
     public function deleteTome(int $id, TomesRepository $tomesRepository, EntityManagerInterface $em): Response
     {
@@ -215,7 +215,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete-comment/{id<\d+>}", name="delete-comment")
+     * @Route("/admin/delete-comment/{id<\d+>}", name="delete-comment")
      */
     public function deleteComments(int $id, CommentRepository $commentRepository, EntityManagerInterface $em): Response
     {
@@ -232,7 +232,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete-message/{id<\d+>}", name="delete-message")
+     * @Route("/admin/delete-message/{id<\d+>}", name="delete-message")
      */
     public function deleteMessages(int $id, MessageRepository $messageRepository, EntityManagerInterface $em): Response
     {
